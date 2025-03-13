@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     --color-green-black: #20272F;
     --color-green-white: #3C5768;
     --color-green-border: #132227;
+    --color-green-weak-border: #223843;
     --color-green-strong: #193038;
     --color-green-weak: #46CE7A40;
     --color-green-neutral: #46CE7A;
@@ -35,12 +36,25 @@ const GlobalStyle = createGlobalStyle`
     --text-medium: 16px;
     --text-xsmall: 14px;
     --text-small: 12px;
+
+    // Radious
+    --radius: 10px;
   }
 
-  body{
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     font-family: "Nunito", sans-serif;
+
+    a, button {
+      color: ${({ theme }) => theme.colors.text};
+    }
   }
 `
 
