@@ -42,7 +42,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.text};
     font-family: "Nunito", sans-serif;
   }
-
 `
 
 export default GlobalStyle
