@@ -6,7 +6,7 @@ const Header = () => {
     <S.Header>
       <S.ContainerLangs>
         <S.Lang>PT</S.Lang>
-        <S.Lang>/</S.Lang>
+        <p>/</p>
         <S.Lang>EN</S.Lang>
       </S.ContainerLangs>
       <S.Items>

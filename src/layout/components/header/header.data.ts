@@ -1,7 +1,7 @@
 const items = [
   {
     name: 'Hello',
-    href: '/hello',
+    href: '/',
   },
   {
     name: 'Lab',
@@ -13,11 +13,11 @@ const items = [
   },
   {
     name: 'Carreira',
-    href: '/carreira',
+    href: '/career',
   },
   {
     name: 'Contanto',
-    href: '/contanto',
+    href: '/contat',
   },
 ]
 
