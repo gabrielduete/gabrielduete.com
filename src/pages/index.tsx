@@ -1,20 +1,25 @@
 import Layout from '@/layout'
+import { getLangProps } from '@/utils/getLangProps'
+import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 
 const Home = () => {
+  const { t } = useTranslation('common')
+
   return (
     <>
       <Head>
         <title>Gabriel Duete</title>
         <meta name='description' content='My blog xd' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <link rel='icon' href='/favicon.ico' />
       </Head>
       <Layout>
-        <h1>a</h1>
+        <h1>{t('greeting')}</h1>
       </Layout>
     </>
   )
 }
+
+export const getStaticProps = getLangProps(['common'])
 
 export default Home
