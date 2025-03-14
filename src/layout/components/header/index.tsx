@@ -1,4 +1,4 @@
-import items from './header.data'
+import Navigator from './components/navigator'
 import * as S from './styles'
 
 const Header = () => {
@@ -9,17 +9,7 @@ const Header = () => {
         <p>/</p>
         <S.Lang>EN</S.Lang>
       </S.ContainerLangs>
-      <S.Items>
-        {items.map(({ name, href }) => {
-          return (
-            <S.Item key='name'>
-              <S.Link href={href} target='_self' isSelect={false}>
-                {name}
-              </S.Link>
-            </S.Item>
-          )
-        })}
-      </S.Items>
+      <Navigator />
       <p>Toggle</p>
     </S.Header>
   )
