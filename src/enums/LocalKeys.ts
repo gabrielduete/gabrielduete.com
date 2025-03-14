@@ -1,3 +1,4 @@
 export const LocalKeys = {
-  THEME: 'theme',
+  THEME: 'THEME',
+  LANG: 'LANG',
 }
