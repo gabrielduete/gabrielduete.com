@@ -1,16 +1,13 @@
 import Navigator from './components/navigator'
+import ToggleLang from './components/toggleLang'
 import * as S from './styles'
 
 const Header = () => {
   return (
     <S.Header>
-      <S.ContainerLangs>
-        <S.Lang>PT</S.Lang>
-        <p>/</p>
-        <S.Lang>EN</S.Lang>
-      </S.ContainerLangs>
+      <ToggleLang />
       <Navigator />
-      <p>Toggle</p>
+      <p>tema</p>
     </S.Header>
   )
 }
