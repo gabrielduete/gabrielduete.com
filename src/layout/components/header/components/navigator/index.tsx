@@ -4,13 +4,12 @@ import items from './navigator.data'
 import * as S from './styles'
 
 const Navigator = () => {
-  const router = useRouter()
+  const { pathname } = useRouter()
 
   const isSelect = (path: string) => {
-    const query = router.pathname
-
     return (
-      query === `/${path.toLowerCase()}` || (query === '/' && path === 'Hello')
+      pathname === `/${path.toLowerCase()}` ||
+      (pathname === '/' && path === 'Hello')
     )
   }
 
