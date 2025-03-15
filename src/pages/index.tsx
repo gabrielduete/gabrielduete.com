@@ -4,7 +4,11 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 
 const Home = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
+
+  console.debug('Idioma atual:', i18n.language)
+  console.debug('Namespaces carregados:', i18n.reportNamespaces)
+  console.debug('Tradução de greeting:', t('greeting'))
 
   return (
     <>

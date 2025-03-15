@@ -1,7 +1,8 @@
+// utils/getLangProps.ts
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const getLangProps =
-  (namespaces = ['common']) =>
+  (namespaces: string[]) =>
   async ({ locale }: { locale: string }) => {
     return {
       props: {
