@@ -1,10 +1,11 @@
 import { LocalKeys } from '@/enums/LocalKeys'
 import GlobalStyle from '@/styles/GlobalStyles'
 import { darkTheme, lightTheme } from '@/styles/theme'
+import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const theme =
     (typeof window !== 'undefined' &&
       window.localStorage.getItem(LocalKeys.THEME)) ||
@@ -17,3 +18,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   )
 }
+
+export default appWithTranslation(App)
