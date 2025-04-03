@@ -1,4 +1,4 @@
-export const LocalKeys = {
+export const Storages = {
   THEME: 'THEME',
   LANG: 'LANG',
 }
