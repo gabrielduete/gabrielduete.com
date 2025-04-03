@@ -26,10 +26,13 @@ export const Link = styled.a<{ isSelect: boolean }>`
   color: ${({ isSelect, theme }) => {
     if (isSelect) {
       return theme.mode === 'dark'
-        ? theme.colors.green.neutral
-        : theme.colors.white
+        ? 'var(--color-green-neutral)'
+        : 'var(--color-white)'
     }
-    return theme.mode === 'dark' ? theme.colors.white : theme.colors.green.black
+
+    return theme.mode === 'dark'
+      ? 'var(--color-white)'
+      : 'var(--color-green-black)'
   }};
   transition: color 0.2s;
 
