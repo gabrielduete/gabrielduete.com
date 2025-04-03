@@ -1,23 +1,25 @@
+import Paths from '@/enums/Paths'
+
 const items = [
   {
     name: 'Hello',
-    href: '/',
+    href: Paths.ROOT,
   },
   {
     name: 'Lab',
-    href: '/lab',
+    href: Paths.LAB,
   },
   {
     name: 'Blog',
-    href: '/blog',
+    href: Paths.BLOG,
   },
   {
     name: 'Carreira',
-    href: '/career',
+    href: Paths.CAREER,
   },
   {
     name: 'Contanto',
-    href: '/contat',
+    href: Paths.CONTAT,
   },
 ]
 
