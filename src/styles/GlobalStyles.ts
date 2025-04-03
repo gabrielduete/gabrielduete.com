@@ -39,18 +39,24 @@ const GlobalStyle = createGlobalStyle`
 
     // Radious
     --radius: 10px;
+
+    // Transitions
+    --transition-slow: 0.3s;
   }
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color var(--transition-slow) ease, color var(--transition-slow) ease, border-color var(--transition-slow) ease;
   }
 
   body {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     font-family: "Nunito", sans-serif;
+    transition: background-color var(--transition-slow) ease, color var(--transition-slow) ease;
+
 
     a, button {
       color: ${({ theme }) => theme.colors.text};
