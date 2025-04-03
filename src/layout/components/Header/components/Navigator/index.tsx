@@ -5,7 +5,6 @@ import * as S from './styles'
 
 const Navigator = () => {
   const router = useRouter()
-  const { lang } = router.query
   const { pathname } = useRouter()
 
   const isSelect = (path: string) => {
@@ -20,11 +19,7 @@ const Navigator = () => {
       {items.map(({ name, href }) => {
         return (
           <S.Item key='name'>
-            <S.Link
-              href={`/${lang}/${href}`}
-              target='_self'
-              isSelect={isSelect(name)}
-            >
+            <S.Link href={href} target='_self' isSelect={isSelect(name)}>
               {name}
             </S.Link>
           </S.Item>

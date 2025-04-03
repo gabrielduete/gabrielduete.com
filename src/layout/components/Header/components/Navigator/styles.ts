@@ -2,7 +2,9 @@ import styled from 'styled-components'
 
 export const Items = styled.ul`
   background-color: ${({ theme }) =>
-    theme.mode === 'dark' ? 'var(--color-green-black)' : 'var(--color-white)'};
+    theme.mode === 'dark'
+      ? 'var(--color-green-black)'
+      : 'var(--color-green-neutral)'};
   border: 1px solid var(--color-green-weak-border);
   border-radius: var(--radius);
   width: 1000px;
@@ -21,8 +23,14 @@ export const Item = styled.li`
 
 export const Link = styled.a<{ isSelect: boolean }>`
   text-decoration: none;
-  color: ${({ isSelect }) =>
-    isSelect ? 'var(--color-green-neutral)' : 'var(--color-white)'};
+  color: ${({ isSelect, theme }) => {
+    if (isSelect) {
+      return theme.mode === 'dark'
+        ? theme.colors.green.neutral
+        : theme.colors.white
+    }
+    return theme.mode === 'dark' ? theme.colors.white : theme.colors.green.black
+  }};
   transition: color 0.2s;
 
   &:hover {
