@@ -1,4 +1,3 @@
-import Layout from '@/layout'
 import { getLangProps } from '@/utils/getLangProps'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
@@ -13,9 +12,7 @@ const Home = () => {
         <meta name='description' content='My blog xd' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
-      <Layout>
-        <h1>{t('greeting')}</h1>
-      </Layout>
+      <h1>{t('greeting')}</h1>
     </>
   )
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import Layout from '@/layout'
 import GlobalStyle from '@/styles/GlobalStyles'
 import { darkTheme, lightTheme } from '@/styles/theme'
 import { appWithTranslation } from 'next-i18next'
@@ -32,7 +33,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     >
       <ThemeWithStyled>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeWithStyled>
     </NextThemeProvider>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -7,7 +7,7 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = memo(({ children }: LayoutProps) => {
   return (
     <>
       <Header />
@@ -15,6 +15,6 @@ const Layout = ({ children }: LayoutProps) => {
       <Footer />
     </>
   )
-}
+})
 
 export default Layout
