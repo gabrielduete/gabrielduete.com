@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     --radius: 10px;
 
     // Transitions
-    --transition-slow: 0.3s;
+    --transition-slow: 0.2s;
   }
 
   * {
@@ -55,8 +55,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     font-family: "Nunito", sans-serif;
-    transition: background-color var(--transition-slow) ease, color var(--transition-slow) ease;
-
 
     a, button {
       color: ${({ theme }) => theme.colors.text};

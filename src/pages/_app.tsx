@@ -1,64 +1,40 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { ThemeContextProvider, useTheme } from '@/contexts/useTheme'
-import { Storages } from '@/enums/Storages'
 import GlobalStyle from '@/styles/GlobalStyles'
 import { darkTheme, lightTheme } from '@/styles/theme'
 import { appWithTranslation } from 'next-i18next'
-import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes'
+import { AppProps } from 'next/app'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 
-const AppContent = ({ Component, pageProps }: AppProps) => {
-  const { isDarkMode, setIsDarkMode } = useTheme()
+const App = ({ Component, pageProps }: AppProps) => {
+  function ThemeWithStyled({ children }: { children: React.ReactNode }) {
+    const { resolvedTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem(Storages.THEME)
+    useEffect(() => {
+      setMounted(true)
+    }, [])
 
-    if (savedTheme) {
-      return setIsDarkMode(savedTheme === 'dark')
-    }
+    if (!mounted) return null
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const systemTheme = mediaQuery.matches ? 'dark' : 'light'
+    const theme = resolvedTheme === 'dark' ? darkTheme : lightTheme
 
-    setIsDarkMode(systemTheme === 'dark')
-    window.localStorage.setItem(Storages.THEME, systemTheme)
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      const newTheme = event.matches ? 'dark' : 'light'
-
-      setIsDarkMode(event.matches)
-      window.localStorage.setItem(Storages.THEME, newTheme)
-    }
-
-    mediaQuery.addEventListener('change', handleChange)
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange)
-    }
-  }, [])
-
-  useEffect(() => {
-    const storedTheme = window.localStorage.getItem(Storages.THEME)
-
-    if (storedTheme) {
-      setIsDarkMode(storedTheme === 'dark')
-    }
-  }, [isDarkMode])
+    return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+  }
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ThemeProvider>
-  )
-}
-
-const App = (props: AppProps) => {
-  return (
-    <ThemeContextProvider>
-      <AppContent {...props} />
-    </ThemeContextProvider>
+    <NextThemeProvider
+      attribute='class'
+      defaultTheme='system'
+      enableSystem={true}
+      themes={['light', 'dark']}
+    >
+      <ThemeWithStyled>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeWithStyled>
+    </NextThemeProvider>
   )
 }
 

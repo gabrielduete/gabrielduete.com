@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useTheme } from '@/contexts/useTheme'
+import { useTheme } from 'next-themes'
 
 import * as S from './styles'
 
 const ToggleTheme = () => {
-  const { isDarkMode, toggleTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
-  return <S.Circle isDark={isDarkMode} onClick={toggleTheme} />
+  const isDark = resolvedTheme === 'dark'
+
+  return (
+    <S.Circle
+      isDark={isDark}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+    />
+  )
 }
 
 export default ToggleTheme
