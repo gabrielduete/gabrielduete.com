@@ -16,6 +16,10 @@ const WithStyledTheme = ({ children }: { children: React.ReactNode }) => {
     setMounted(true)
   }, [])
 
+  if (!mounted) {
+    return null
+  }
+
   const theme = resolvedTheme === 'light' ? lightTheme : darkTheme
 
   return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
