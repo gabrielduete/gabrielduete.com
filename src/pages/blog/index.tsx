@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const Blog = () => {
-  return <Layout>Blog</Layout>
+  return <>Blog</>
 }
 
 export default Blog

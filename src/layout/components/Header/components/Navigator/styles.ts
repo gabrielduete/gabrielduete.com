@@ -21,8 +21,9 @@ export const Item = styled.li`
   font-size: var(--subtitle-small);
 `
 
-export const Link = styled.a<{ isSelect: boolean }>`
+export const Link = styled.p<{ isSelect: boolean }>`
   text-decoration: none;
+  cursor: pointer;
   color: ${({ isSelect, theme }) => {
     if (isSelect) {
       return theme.mode === 'dark'

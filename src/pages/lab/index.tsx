@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const Lab = () => {
-  return <Layout>Lab</Layout>
+  return <>Lab</>
 }
 
 export default Lab

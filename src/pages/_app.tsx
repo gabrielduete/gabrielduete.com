@@ -8,35 +8,34 @@ import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes'
 import { AppProps } from 'next/app'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 
+const WithStyledTheme = ({ children }: { children: React.ReactNode }) => {
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const theme = resolvedTheme === 'light' ? lightTheme : darkTheme
+
+  return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+}
+
 const App = ({ Component, pageProps }: AppProps) => {
-  function ThemeWithStyled({ children }: { children: React.ReactNode }) {
-    const { resolvedTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
-
-    useEffect(() => {
-      setMounted(true)
-    }, [])
-
-    if (!mounted) return null
-
-    const theme = resolvedTheme === 'dark' ? darkTheme : lightTheme
-
-    return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
-  }
-
   return (
     <NextThemeProvider
       attribute='class'
       defaultTheme='system'
       enableSystem={true}
+      disableTransitionOnChange={false}
       themes={['light', 'dark']}
     >
-      <ThemeWithStyled>
+      <WithStyledTheme>
         <GlobalStyle />
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </ThemeWithStyled>
+      </WithStyledTheme>
     </NextThemeProvider>
   )
 }

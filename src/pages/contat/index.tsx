@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 
 const Contat = () => {
-  return <Layout>Contat</Layout>
+  return <>Contat</>
 }
 
 export default Contat

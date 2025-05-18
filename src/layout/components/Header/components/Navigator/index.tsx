@@ -1,10 +1,10 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import items from './navigator.data'
 import * as S from './styles'
 
 const Navigator = () => {
-  const router = useRouter()
   const { pathname } = useRouter()
 
   const isSelect = (path: string) => {
@@ -18,10 +18,10 @@ const Navigator = () => {
     <S.Items>
       {items.map(({ name, href }) => {
         return (
-          <S.Item key='name'>
-            <S.Link href={href} target='_self' isSelect={isSelect(name)}>
-              {name}
-            </S.Link>
+          <S.Item key={name}>
+            <Link href={href} passHref legacyBehavior>
+              <S.Link isSelect={isSelect(name)}>{name}</S.Link>
+            </Link>
           </S.Item>
         )
       })}
