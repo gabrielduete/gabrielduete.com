@@ -1,4 +1,4 @@
-import Paths from '@/enums/Paths'
+import { Paths } from '@/enums/Paths'
 
 const items = [
   {

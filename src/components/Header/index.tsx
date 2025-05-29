@@ -1,5 +1,3 @@
-'use client'
-
 import Navigator from './components/Navigator'
 import ToggleLang from './components/ToggleLang'
 import ToggleTheme from './components/ToggleTheme'

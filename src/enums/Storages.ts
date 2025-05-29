@@ -1,4 +1,4 @@
-export const Storages = {
-  THEME: 'THEME',
-  LANG: 'LANG',
+export enum Storages {
+  THEME = 'THEME',
+  LANG = 'LANG',
 }
