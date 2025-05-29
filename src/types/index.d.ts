@@ -1,5 +1,5 @@
 declare global {
-  type Langs = 'en' | 'pt-BR'
+  type Langs = 'en' | 'pt-br'
 }
 
 export {}
