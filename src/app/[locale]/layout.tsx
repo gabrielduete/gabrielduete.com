@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { routing } from '@/i18n/routing'
 import '@/styles/globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { ThemeProvider } from 'next-themes'
 import { notFound } from 'next/navigation'
 
 import Footer from '../../components/Footer'
@@ -15,7 +16,7 @@ export const metadata = {
 
 type Props = {
   children: ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -27,7 +28,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body data-theme='dark'>
+      <body>
         <NextIntlClientProvider>
           <Header />
           <main>{children}</main>

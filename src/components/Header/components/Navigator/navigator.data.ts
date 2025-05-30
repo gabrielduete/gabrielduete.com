@@ -19,7 +19,7 @@ const items = [
   },
   {
     name: 'Contanto',
-    href: Paths.CONTAT,
+    href: Paths.CONTACT,
   },
 ]
 
