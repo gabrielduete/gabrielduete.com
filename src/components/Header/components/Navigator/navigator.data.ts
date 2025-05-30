@@ -15,10 +15,12 @@ const items = [
   },
   {
     name: 'Carreira',
+    name_en: 'Career',
     href: Paths.CAREER,
   },
   {
     name: 'Contanto',
+    name_en: 'Contact',
     href: Paths.CONTACT,
   },
 ]
