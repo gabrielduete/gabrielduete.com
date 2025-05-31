@@ -63,6 +63,9 @@ body {
   --color-green-weak: #46ce7a40;
   --color-green-neutral: #46ce7a;
 
+  /* Icons */
+  --color-icons-primary: var(--secondary);
+
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);

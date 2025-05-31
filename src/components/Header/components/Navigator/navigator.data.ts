@@ -2,7 +2,8 @@ import { Paths } from '@/enums/Paths'
 
 const items = [
   {
-    name: 'Hello',
+    name: 'Olá',
+    name_en: 'Hello',
     href: Paths.ROOT,
   },
   {
