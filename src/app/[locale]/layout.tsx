@@ -5,8 +5,8 @@ import '@/styles/globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
+import Footer from './components/Footer'
+import Header from './components/Header'
 
 export const metadata = {
   title: 'Gabriel Duete',
