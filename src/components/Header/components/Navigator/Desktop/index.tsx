@@ -5,19 +5,14 @@ import { useLocale } from 'next-intl'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import items from './navigator.data'
+import { isSelect } from '../helpers/isSelect'
+import { removeLangPath } from '../helpers/removeLangPath'
+import items from '../navigator.data'
 
-const Navigator = () => {
-  const pathname = usePathname().replace(/^\/(en|pt-br)?/, '')
+const NavigatorDesktop = () => {
+  const pathname = removeLangPath(usePathname())
   const locale = useLocale()
   const isEn = locale === Locales.EN
-
-  const isSelect = (path: string) => {
-    return (
-      pathname === `/${path.toLowerCase()}` ||
-      (pathname === '' && path === 'Hello')
-    )
-  }
 
   return (
     <ul
@@ -31,7 +26,7 @@ const Navigator = () => {
               <p
                 className={`
                   cursor-pointer transition-colors text-primary hover:text-secondary
-                  ${isSelect(name_en ?? name) && 'text-secondary'}`}
+                  ${isSelect(pathname, name_en ?? name) && 'text-secondary'}`}
               >
                 {isEn ? (name_en ?? name) : name}
               </p>
@@ -43,4 +38,4 @@ const Navigator = () => {
   )
 }
 
-export default Navigator
+export default NavigatorDesktop

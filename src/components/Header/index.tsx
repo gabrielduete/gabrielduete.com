@@ -1,13 +1,11 @@
-import Navigator from './components/Navigator'
-import ToggleLang from './components/ToggleLang'
-import ToggleTheme from './components/ToggleTheme'
+import MenuDesktop from './components/MenuDesktop'
+import MenuMobile from './components/MenuMobile'
 
 const Header = () => {
   return (
-    <header className='flex items-center justify-around m-xxxlarge'>
-      <ToggleLang />
-      <Navigator />
-      <ToggleTheme />
+    <header>
+      <MenuDesktop />
+      <MenuMobile />
     </header>
   )
 }
