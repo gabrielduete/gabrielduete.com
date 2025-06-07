@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
@@ -10,6 +11,9 @@
     background-color var(--transition-slow) ease,
     color var(--transition-slow) ease,
     border-color var(--transition-slow) ease;
+}
+
+html {
   font-family: 'Nunito', sans-serif;
 }
 
@@ -93,6 +97,7 @@ body {
   --container-ultrawidemin: 1520px;
 
   /* Typography */
+  --font-asc: 'Nunito', sans-serif;
   --text-xlarge: 24px;
   --text-large: 20px;
   --text-medium: 16px;
