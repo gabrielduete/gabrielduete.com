@@ -30,7 +30,7 @@ const LocaleLayout = async ({ children, params }: Props) => {
       <body>
         <NextIntlClientProvider>
           <Header />
-          <main>{children}</main>
+          <main className='w-full max-w-content m-auto'>{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>
