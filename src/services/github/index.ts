@@ -1,14 +1,5 @@
 const BASE_URL = 'https://api.github.com/users'
 
-export type GithubUser = {
-  avatar_url: string
-  name: string
-  login: string
-  bio: string
-  public_repos: number
-  html_url: string
-}
-
 export type GithubRepo = {
   id: number
   name: string
