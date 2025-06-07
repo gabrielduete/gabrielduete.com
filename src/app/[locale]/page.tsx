@@ -18,18 +18,18 @@ const Home = async () => {
   ]
 
   return (
-    <section className='w-full bg-bg-cards rounded-sm text-white p-xxxlarge mt-giant flex gap-xxlarge drop-shadow-lg'>
+    <section className='w-full bg-bg-cards rounded-sm text-white p-xxxlarge mt-giant flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg'>
       <Image
         src={ProfilePic}
         alt='Profile Pic'
         className='max-w-[148px] max-h-[148px] rounded-sm'
       />
-      <div>
+      <div className='text-center lg:text-left'>
         <h1 className='text-xlarge font-bold'>Gabriel Duete</h1>
-        <h2 className='text-medium whitespace-pre-line leading-[160%] mt-xsmall mb-large'>
+        <h2 className='text-medium whitespace-break-spaces leading-[160%] mt-xsmall mb-large'>
           {t('about')}
         </h2>
-        <div className='flex gap-large'>
+        <div className='flex gap-large flex-wrap justify-center lg:justify-start'>
           {MediasLink.map(({ Icon, name, link }, index) => (
             <Link
               key={index}
