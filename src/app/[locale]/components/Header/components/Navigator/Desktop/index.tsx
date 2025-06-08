@@ -17,7 +17,7 @@ const NavigatorDesktop = () => {
   return (
     <ul
       className='bg-bg-primary rounded-sm border-[1px] border-green-weak-border w-full max-w-[1000px]
-      p-(--spacing-base) flex items-center justify-center gap-(--spacing-xxxxlarge) list-none'
+      p-base flex items-center justify-center gap-(--spacing-xxxxlarge) list-none'
     >
       {items.map(({ name, name_en, href }) => {
         return (
