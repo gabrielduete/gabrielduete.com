@@ -40,6 +40,7 @@ const Home = async () => {
             >
               <Icon
                 className='text-green-white group-hover:text-icons-primary transition-colors'
+                data-testid={`home-page__icon-${name}`}
                 size={20}
               />
               <p className='text-xsmall text-white group-hover:text-icons-primary transition-colors'>

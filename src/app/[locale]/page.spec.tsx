@@ -5,22 +5,6 @@ import { getTranslations } from 'next-intl/server'
 
 import Home from './page'
 
-jest.mock('next-intl/server', () => ({
-  getTranslations: jest.fn(),
-}))
-
-jest.mock('next/image', () => props => <img {...props} />)
-
-jest.mock('@/constants/SocialMediaItems', () => ({
-  SocialMediaItems: [
-    {
-      Icon: () => <svg data-testid='mock-icon' />,
-      name: 'Mock Social Media',
-      link: 'https://mock-social-media.com',
-    },
-  ],
-}))
-
 describe('<Home />', () => {
   beforeEach(() => {
     ;(getTranslations as jest.Mock).mockResolvedValue(
@@ -67,13 +51,16 @@ describe('<Home />', () => {
     )
   })
 
-  it('should render social media icons', async () => {
-    render(await Home())
+  it.each(SocialMediaItems)(
+    'should render the icon for %s',
+    async ({ name }) => {
+      render(await Home())
 
-    const icons = screen.getAllByTestId('mock-icon')
+      const icon = screen.getByTestId(`home-page__icon-${name}`)
 
-    expect(icons).toHaveLength(SocialMediaItems.length)
-  })
+      expect(icon).toBeInTheDocument()
+    },
+  )
 
   it('ensures links open in a new tab with proper attributes', async () => {
     render(await Home())
