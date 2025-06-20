@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
   --transition-slow: 0.2s;
@@ -9,6 +11,10 @@
     background-color var(--transition-slow) ease,
     color var(--transition-slow) ease,
     border-color var(--transition-slow) ease;
+}
+
+html {
+  font-family: 'Nunito', sans-serif;
 }
 
 body {
@@ -32,6 +38,7 @@ body {
   --bg-theme: #132227;
   --bg-primary: #20272f;
   --bg-secondary: #46ce7a;
+  --bg-cards: #193038;
 }
 
 [data-theme='light'] {
@@ -69,6 +76,7 @@ body {
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
+  --color-bg-cards: var(--bg-cards);
 
   /* Spacings */
   --spacing-xxsmall: 4px;
@@ -83,6 +91,10 @@ body {
   --spacing-xxxxlarge: 48px;
   --spacing-giant: 64px;
   --spacing-xgiant: 80px;
+
+  /* Screns */
+  --container-content: 1000px;
+  --container-ultrawidemin: 1520px;
 
   /* Typography */
   --text-xlarge: 24px;

@@ -30,7 +30,7 @@ const ToggleTheme = () => {
 
   return (
     <div
-      className={`rounded-full cursor-pointer w-large h-large bg-bg-secondary`}
+      className='rounded-full cursor-pointer w-large h-large bg-bg-secondary'
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label='Toggle theme'
       role='button'

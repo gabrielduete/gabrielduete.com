@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-const Carrer = async () => {
+const Career = async () => {
   const t = await getTranslations('IndexPage')
 
   return (
@@ -10,4 +10,4 @@ const Carrer = async () => {
   )
 }
 
-export default Carrer
+export default Career

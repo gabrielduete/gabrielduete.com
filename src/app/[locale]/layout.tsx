@@ -5,8 +5,8 @@ import '@/styles/globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
+import Footer from './components/Footer'
+import Header from './components/Header'
 
 export const metadata = {
   title: 'Gabriel Duete',
@@ -30,7 +30,9 @@ const LocaleLayout = async ({ children, params }: Props) => {
       <body>
         <NextIntlClientProvider>
           <Header />
-          <main>{children}</main>
+          <main className='w-full max-w-content m-auto px-4 lg:px-0'>
+            {children}
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>

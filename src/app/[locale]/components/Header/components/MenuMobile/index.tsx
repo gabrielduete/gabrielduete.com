@@ -13,9 +13,7 @@ const MenuMobile = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav
-      className={`lg:hidden flex justify-end-safe ${!isOpen && 'm-xxlarge'}`}
-    >
+    <nav className={`lg:hidden flex justify-end-safe ${!isOpen && 'm-small'}`}>
       <CgMenuRound
         size={38}
         className={`
@@ -29,7 +27,7 @@ const MenuMobile = () => {
         className={`
           ${
             isOpen
-              ? 'w-full h-full bg-bg-primary absolute flex-col place-items-center'
+              ? 'w-full h-full bg-bg-primary fixed top-0 left-0 z-[9999] flex-col place-items-center'
               : 'hidden'
           }`}
       >
