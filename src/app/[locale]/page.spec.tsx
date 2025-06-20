@@ -9,7 +9,7 @@ jest.mock('next-intl/server', () => ({
   getTranslations: jest.fn(),
 }))
 
-jest.mock('next/image', () => (props: any) => <img {...props} />)
+jest.mock('next/image', () => props => <img {...props} />)
 
 jest.mock('@/constants/SocialMediaItems', () => ({
   SocialMediaItems: [
@@ -80,7 +80,7 @@ describe('<Home />', () => {
 
     const links = screen.getAllByRole('link')
 
-    links.forEach((link: any) => {
+    links.forEach(link => {
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     })
