@@ -1,11 +1,27 @@
-import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 
-const Career = async () => {
-  const t = await getTranslations('IndexPage')
+const Career = () => {
+  const t = useTranslations('CarrerPage')
+
+  const contributionKeys = [
+    'contrib1',
+    'contrib2',
+    'contrib3',
+    'contrib4',
+    'contrib5',
+    'contrib6',
+  ] as const
+
+  console.debug(t('CarrerPage'))
 
   return (
     <div>
-      <h1>{t('title')}</h1>
+      <h1>{t('JSM.title')}</h1>
+      <ul>
+        {contributionKeys.map(key => (
+          <li key={key}>{t(`JSM.contributions.${key}`)}</li>
+        ))}
+      </ul>
     </div>
   )
 }

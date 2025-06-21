@@ -1,5 +1,40 @@
 {
   "IndexPage": {
     "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Juntos Somos Mais."
+  },
+  "CarrerPage": {
+    "JSM": {
+      "title": "Juntos Somos Mais",
+      "contributions": {
+        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
+        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
+        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
+        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+      }
+    },
+    "Nimbus Black": {
+      "title": "Nimbus Black",
+      "contributions": {
+        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
+        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
+        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
+        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+      }
+    },
+    "Volunteer Work": {
+      "title": "Volunteer Work",
+      "contributions": {
+        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
+        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
+        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
+        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+      }
+    }
   }
 }
