@@ -1,6 +1,6 @@
 {
   "IndexPage": {
-    "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Juntos Somos Mais."
+    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Juntos Somos Mais."
   },
   "CarrerPage": {
     "Experiences": {
@@ -15,7 +15,8 @@
           "4": "Reformulei o processo de documentação do time de engenharia de front.",
           "5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
           "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
-        }
+        },
+        "link": "https://g.co/kgs/eVwdD6s"
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
@@ -39,7 +40,8 @@
           "2": "Melhorias do projeto, como gerenciamento de arquitetura e organização.",
           "3": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas.",
           "4": "Link do repositório: https://github.com/he4rt/react4noobs"
-        }
+        },
+        "link": "https://github.com/he4rt/react4noobs"
       },
       "He4rt Team": {
         "title": "He4rt Team",

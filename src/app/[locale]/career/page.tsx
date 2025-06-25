@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 
+import { Locales } from '@/enums/Locales'
 import clsx from 'clsx'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
+import Link from 'next/link'
 
 import { experiences } from './data'
 import { IExperiences } from './types'
@@ -11,6 +13,10 @@ import { IExperiences } from './types'
 const Career = () => {
   const [selectedExperience, setSelectedExperience] =
     useState<IExperiences>('Juntos Somos Mais')
+
+  const locale = useLocale()
+
+  const isEn = locale === Locales.EN
 
   const t = useTranslations('CarrerPage')
 
@@ -21,6 +27,8 @@ const Career = () => {
   const contributionKeys = Array.from({ length: totalContributions }, (_, i) =>
     (i + 1).toString(),
   )
+
+  const hasLink = t(`${experience}.link`).match(/https?:\/\//)
 
   return (
     <section className='flex gap-giant'>
@@ -58,6 +66,18 @@ const Career = () => {
             </li>
           ))}
         </ul>
+        {hasLink && (
+          <div className='mt-small'>
+            <Link
+              className='text-gray-400 hover:text-secondary'
+              target='_blank'
+              rel='noopener noreferrer'
+              href={t(`${experience}.link`)}
+            >
+              👉 {isEn ? 'Learn more' : 'Saiba Mais'}
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )

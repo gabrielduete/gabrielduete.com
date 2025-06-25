@@ -15,7 +15,8 @@
           "4": "Redesigned the front-end engineering team's documentation process.",
           "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
           "6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
-        }
+        },
+        "link": "https://g.co/kgs/eVwdD6s"
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
@@ -28,18 +29,19 @@
           "4": "Redesigned the front-end engineering team's documentation process.",
           "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
           "6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
-        }
+        },
+        "link": ""
       },
       "React4Noobs": {
         "title": "React4Noobs",
         "time": "2023 - Present",
-        "totalContributions": "4",
+        "totalContributions": "3",
         "contributions": {
           "1": "Created articles on React Design Patterns concepts such as Compound Components, Error Boundaries, etc.",
           "2": "Improved the project through architecture management and organization.",
-          "3": "Reviewed and merged pull requests, provided suggestions, and answered questions.",
-          "4": "Repository link: https://github.com/he4rt/react4noobs"
-        }
+          "3": "Reviewed and merged pull requests, provided suggestions, and answered questions."
+        },
+        "link": "https://github.com/he4rt/react4noobs"
       },
       "He4rt Team": {
         "title": "He4rt Team",
@@ -51,7 +53,8 @@
           "3": "Attended meetings to improve communication and help steer project development with the team.",
           "4": "Opportunity to work with a dedicated and welcoming team, where I had space to learn new technologies from scratch.",
           "5": "Main technologies used: JavaScript ES6+, Next.js, React.js, Chakra UI, Git, and GitHub."
-        }
+        },
+        "link": ""
       }
     }
   }
