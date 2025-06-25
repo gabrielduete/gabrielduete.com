@@ -7,46 +7,50 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
+        "totalContributions": "6",
         "contributions": {
-          "contrib1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
-          "contrib2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
-          "contrib3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
-          "contrib4": "Redesigned the front-end engineering team's documentation process.",
-          "contrib5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
-          "contrib6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+          "1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
+          "2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
+          "3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
+          "4": "Redesigned the front-end engineering team's documentation process.",
+          "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
+          "6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
         }
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
         "time": "2024 - Present",
+        "totalContributions": "6",
         "contributions": {
-          "contrib1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
-          "contrib2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
-          "contrib3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
-          "contrib4": "Redesigned the front-end engineering team's documentation process.",
-          "contrib5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
-          "contrib6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+          "1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
+          "2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
+          "3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
+          "4": "Redesigned the front-end engineering team's documentation process.",
+          "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
+          "6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
         }
       },
       "React4Noobs": {
         "title": "React4Noobs",
         "time": "2023 - Present",
+        "totalContributions": "4",
         "contributions": {
-          "contrib1": "Created articles on React Design Patterns concepts such as Compound Components, Error Boundaries, etc.",
-          "contrib2": "Improved the project through architecture management and organization.",
-          "contrib3": "Reviewed and merged pull requests, provided suggestions, and answered questions.",
-          "contrib4": "Repository link: https://github.com/he4rt/react4noobs"
+          "1": "Created articles on React Design Patterns concepts such as Compound Components, Error Boundaries, etc.",
+          "2": "Improved the project through architecture management and organization.",
+          "3": "Reviewed and merged pull requests, provided suggestions, and answered questions.",
+          "4": "Repository link: https://github.com/he4rt/react4noobs"
         }
       },
       "He4rt Team": {
         "title": "He4rt Team",
         "time": "Jun 2022 - Jan 2023",
+        "totalContributions": "5",
         "contributions": {
-          "contrib1": "Front-end development contributions to a website project that was paused.",
-          "contrib2": "Participation and contributions to project improvements.",
-          "contrib3": "Attended meetings to improve communication and help steer project development with the team.",
-          "contrib4": "Opportunity to work with a dedicated and welcoming team, where I had space to learn new technologies from scratch.",
-          "contrib5": "Main technologies used: JavaScript ES6+, Next.js, React.js, Chakra UI, Git, and GitHub."
+          "1": "Front-end development contributions to a website project that was paused.",
+          "2": "Participation and contributions to project improvements.",
+          "3": "Attended meetings to improve communication and help steer project development with the team.",
+          "4": "Opportunity to work with a dedicated and welcoming team, where I had space to learn new technologies from scratch.",
+          "5": "Main technologies used: JavaScript ES6+, Next.js, React.js, Chakra UI, Git, and GitHub."
         }
       }
     }
