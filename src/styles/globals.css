@@ -1,9 +1,8 @@
 @import 'tailwindcss';
-/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
-  --transition-slow: 0.2s;
+  --transition-slow: 0.3s;
 }
 
 * {
@@ -51,6 +50,7 @@ body {
   --color-green-strong: #193038;
   --color-green-weak: #46ce7a40;
   --color-green-neutral: #46ce7a;
+  --color-black: #0f1525;
 
   /* Backgrounds */
   --bg-theme: #ffffff;

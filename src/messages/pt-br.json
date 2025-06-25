@@ -1,5 +1,60 @@
 {
   "IndexPage": {
-    "about": "Atuo como desenvolvedor desde 2021 e atualmente sou Desenvolvedor Front-End na Juntos Somos Mais."
+    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Juntos Somos Mais."
+  },
+  "CarrerPage": {
+    "Experiences": {
+      "Juntos Somos Mais": {
+        "title": "Juntos Somos Mais",
+        "time": "2021 - Present",
+        "totalContributions": "6",
+        "contributions": {
+          "1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
+          "2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
+          "3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+          "4": "Reformulei o processo de documentação do time de engenharia de front.",
+          "5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+          "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+        },
+        "link": "https://g.co/kgs/eVwdD6s"
+      },
+      "Nimbus Black": {
+        "title": "Nimbus Black",
+        "time": "2024 - Present",
+        "totalContributions": "6",
+        "contributions": {
+          "1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
+          "2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
+          "3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+          "4": "Reformulei o processo de documentação do time de engenharia de front.",
+          "5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+          "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+        }
+      },
+      "React4Noobs": {
+        "title": "React4Noobs",
+        "time": "2023 - Present",
+        "totalContributions": "4",
+        "contributions": {
+          "1": "Criação de artigos sobre conceitos de Design Patterns em React, como Compound Components, Error Boundaries, etc...",
+          "2": "Melhorias do projeto, como gerenciamento de arquitetura e organização.",
+          "3": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas.",
+          "4": "Link do repositório: https://github.com/he4rt/react4noobs"
+        },
+        "link": "https://github.com/he4rt/react4noobs"
+      },
+      "He4rt Team": {
+        "title": "He4rt Team",
+        "time": "Jun 2022 - Jan 2023",
+        "totalContributions": "5",
+        "contributions": {
+          "1": "Contribuição no desenvolvimento front-end para o site que estava em andamento, mas acabou que o projeto teve que ser pausado.",
+          "2": "Participação e contribuição nas melhorias do projeto.",
+          "3": "Participação de reuniões com o objetivo de melhorar a comunicação e poder tomar direção para o desenvolvimento do projeto junto com o time.",
+          "4": "Oportunidade de trabalhar com um time dedicado e acolhedor, onde tive espaço até mesmo para aprender tecnologias do zero.",
+          "5": "Tecnologias mais utilizadas: Javascript ES6+, Next.js, ReactJs, Chakra UI, git e github."
+        }
+      }
+    }
   }
 }
