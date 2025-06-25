@@ -3,37 +3,51 @@
     "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Juntos Somos Mais."
   },
   "CarrerPage": {
-    "JSM": {
-      "title": "Juntos Somos Mais",
-      "contributions": {
-        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
-        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
-        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
-        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
-        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
-      }
-    },
-    "Nimbus Black": {
-      "title": "Nimbus Black",
-      "contributions": {
-        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
-        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
-        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
-        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
-        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
-      }
-    },
-    "Volunteer Work": {
-      "title": "Volunteer Work",
-      "contributions": {
-        "contrib1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
-        "contrib2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
-        "contrib3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
-        "contrib4": "Reformulei o processo de documentação do time de engenharia de front.",
-        "contrib5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-        "contrib6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+    "Experiences": {
+      "Juntos Somos Mais": {
+        "title": "Juntos Somos Mais",
+        "time": "2021 - Present",
+        "contributions": {
+          "contrib1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
+          "contrib2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
+          "contrib3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
+          "contrib4": "Redesigned the front-end engineering team's documentation process.",
+          "contrib5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
+          "contrib6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+        }
+      },
+      "Nimbus Black": {
+        "title": "Nimbus Black",
+        "time": "2024 - Present",
+        "contributions": {
+          "contrib1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
+          "contrib2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
+          "contrib3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
+          "contrib4": "Redesigned the front-end engineering team's documentation process.",
+          "contrib5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
+          "contrib6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+        }
+      },
+      "React4Noobs": {
+        "title": "React4Noobs",
+        "time": "2023 - Present",
+        "contributions": {
+          "contrib1": "Created articles on React Design Patterns concepts such as Compound Components, Error Boundaries, etc.",
+          "contrib2": "Improved the project through architecture management and organization.",
+          "contrib3": "Reviewed and merged pull requests, provided suggestions, and answered questions.",
+          "contrib4": "Repository link: https://github.com/he4rt/react4noobs"
+        }
+      },
+      "He4rt Team": {
+        "title": "He4rt Team",
+        "time": "Jun 2022 - Jan 2023",
+        "contributions": {
+          "contrib1": "Front-end development contributions to a website project that was paused.",
+          "contrib2": "Participation and contributions to project improvements.",
+          "contrib3": "Attended meetings to improve communication and help steer project development with the team.",
+          "contrib4": "Opportunity to work with a dedicated and welcoming team, where I had space to learn new technologies from scratch.",
+          "contrib5": "Main technologies used: JavaScript ES6+, Next.js, React.js, Chakra UI, Git, and GitHub."
+        }
       }
     }
   }
