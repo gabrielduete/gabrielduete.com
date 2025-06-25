@@ -18,7 +18,7 @@ const Home = async () => {
   ]
 
   return (
-    <section className='w-full bg-bg-cards rounded-sm text-white p-xxxlarge mt-giant flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg'>
+    <section className='w-full bg-bg-cards rounded-sm text-white p-xxxlarge flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg'>
       <Image
         src={ProfilePic}
         alt='Profile Pic'
