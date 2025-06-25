@@ -31,11 +31,11 @@ const Career = () => {
   const hasLink = t(`${experience}.link`).match(/https?:\/\//)
 
   return (
-    <section className='flex gap-giant'>
+    <section className='flex flex-col gap-giant items-center lg:flex-row'>
       <div
         className='
-            w-[312px] p-xxlarge bg-bg-primary rounded-sm text-white flex-shrink-0 self-start
-            border-[1px] border-green-weak-border flex flex-col gap-small
+            w-[312px] p-xxlarge bg-bg-primary rounded-sm text-white flex-shrink-0 
+            border-[1px] border-green-weak-border flex flex-col gap-small self-center lg:self-start
         '
       >
         {experiences.map(experience => (
