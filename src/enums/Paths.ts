@@ -1,6 +1,6 @@
 export enum Paths {
   ROOT = '/',
-  BLOG = '/blog',
+  BLOG = '/blog?filter=Front-end',
   LAB = '/lab',
   CAREER = '/career',
   CONTACT = '/contact',
