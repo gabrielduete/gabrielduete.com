@@ -1,1 +1,3 @@
-export type IFilters = 'Front-end' | 'Back-end' | 'Engineering'
+import { filters } from './index.data'
+
+export type IFilters = (typeof filters)[number]
