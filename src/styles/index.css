@@ -1,8 +1,23 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
   --transition-slow: 0.3s;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('./fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: italic;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('./fonts/Nunito-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
 * {
@@ -12,12 +27,9 @@
     border-color var(--transition-slow) ease;
 }
 
-html {
-  font-family: 'Nunito', sans-serif;
-}
-
 body {
   background-color: var(--bg-theme);
+  font-family: 'Nunito', sans-serif;
 }
 
 :root,
