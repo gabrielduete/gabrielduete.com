@@ -1,11 +1,17 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
 
-const Blog = async () => {
-  const t = await getTranslations('IndexPage')
+import Filter from '@/components/Filter'
+import { useFilter } from '@/hooks/useFilter'
+
+import Cards from './components/Cards'
+
+const Blog = () => {
+  const { selectedFilter, setFilter } = useFilter()
 
   return (
-    <div>
-      <h1>{t('title')}</h1>
+    <div className='flex flex-col gap-xxlarge'>
+      <Filter selectedFilter={selectedFilter} onFilterChange={setFilter} />
+      <Cards />
     </div>
   )
 }

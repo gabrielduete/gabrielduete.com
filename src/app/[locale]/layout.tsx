@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import { routing } from '@/i18n/routing'
-import '@/styles/globals.css'
+import '@/styles/index.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 
