@@ -17,16 +17,18 @@ export const useFilter = () => {
   useEffect(() => {
     if (!searchParams.has('filter')) {
       const params = new URLSearchParams(searchParams.toString())
+
       params.set('filter', DEFAULT_FILTER)
       router.replace(`?${params.toString()}`)
     }
   }, [searchParams, router])
 
-  const setFilter = (filter: IFilters) => {
+  const setSelectedFilter = (filter: IFilters) => {
     const params = new URLSearchParams(searchParams.toString())
+
     params.set('filter', filter)
     router.push(`?${params.toString()}`)
   }
 
-  return { selectedFilter, setFilter }
+  return { selectedFilter, setSelectedFilter }
 }

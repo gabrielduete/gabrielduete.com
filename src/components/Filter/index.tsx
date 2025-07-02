@@ -1,14 +1,13 @@
+'use client'
+
+import { useFilter } from '@/hooks/useFilter'
 import clsx from 'clsx'
 
 import { filters } from './index.data'
-import { IFilters } from './types'
 
-type FilterProps = {
-  selectedFilter: IFilters
-  onFilterChange: (filter: IFilters) => void
-}
+const Filter = () => {
+  const { selectedFilter, setSelectedFilter } = useFilter()
 
-const Filter = ({ selectedFilter, onFilterChange }: FilterProps) => {
   return (
     <div>
       <ul className='flex gap-xxxxlarge'>
@@ -16,7 +15,7 @@ const Filter = ({ selectedFilter, onFilterChange }: FilterProps) => {
           return (
             <li key={filter}>
               <button
-                onClick={() => onFilterChange(filter)}
+                onClick={() => setSelectedFilter(filter)}
                 className={clsx(
                   'cursor-pointer text-large text-primary hover:text-secondary',
                   selectedFilter === filter && 'text-secondary',
