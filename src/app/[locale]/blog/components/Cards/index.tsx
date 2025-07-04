@@ -6,17 +6,12 @@ import Card from './components/Card'
 const Cards = () => {
   const locale = useLocale()
 
-  const articles = getAllArticles(locale)
+  const articles = getAllArticles(locale as Langs)
 
   return (
     <div className='flex gap-xxlarge flex-wrap'>
-      {articles.map(article => (
-        <Card
-          key={article.slug}
-          title={article.title}
-          description={article.description}
-          date={article.date}
-        />
+      {articles.map((article: IArticle) => (
+        <Card key={article.title} {...article} />
       ))}
     </div>
   )

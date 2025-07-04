@@ -7,35 +7,27 @@ const root = process.cwd()
 export const getAllArticles = (locale: Langs): IArticle[] => {
   const dirPath = path.join(root, 'src/content/blog', locale)
 
-  const categories = fs.readdirSync(dirPath)
+  const files = fs.readdirSync(dirPath)
 
-  const articles = categories.flatMap(category => {
-    const categoryDir = path.join(dirPath, category)
-    const files = fs.readdirSync(categoryDir)
+  const articles = files
+    .filter(file => file.endsWith('.mdx'))
+    .map(filename => {
+      const filePath = path.join(dirPath, filename)
+      const source = fs.readFileSync(filePath, 'utf8')
 
-    return files
-      .filter(file => file.endsWith('.mdx'))
-      .map(filename => {
-        const filePath = path.join(categoryDir, filename)
-        const source = fs.readFileSync(filePath, 'utf8')
+      const { data } = matter(source)
 
-        console.debug(source)
+      return {
+        title: data.title ?? '',
+        description: data.description ?? '',
+        date: data.date ?? '',
+        tags: data.tags ?? [],
+        slug: filename.replace(/\.mdx?$/, ''),
+        locale,
+      }
+    })
 
-        const { data } = matter(source)
-
-        return {
-          title: data.title ?? '',
-          description: data.description ?? '',
-          date: data.date ?? '',
-          category: data.category ?? category,
-          tags: data.tags ?? [],
-          slug: filename.replace(/\.mdx?$/, ''),
-          locale,
-        }
-      })
-  })
-
-  return articles
+  return articles as IArticle[]
 }
 
 export default getAllArticles
