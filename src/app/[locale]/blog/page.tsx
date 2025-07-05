@@ -1,12 +1,13 @@
-import { getTranslations } from 'next-intl/server'
+import Filter from '@/components/Filter'
 
-const Blog = async () => {
-  const t = await getTranslations('IndexPage')
+import Cards from './components/Cards'
 
+const Blog = () => {
   return (
-    <div>
-      <h1>{t('title')}</h1>
-    </div>
+    <section className='flex flex-col gap-xxlarge'>
+      <Filter />
+      <Cards />
+    </section>
   )
 }
 
