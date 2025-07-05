@@ -1,3 +1,4 @@
+import { GiscusComments } from '@/components/Giscus'
 import { Locales } from '@/enums/Locales'
 import { Paths } from '@/enums/Paths'
 import fs from 'fs'
@@ -83,6 +84,7 @@ const BlogPost = async ({ params: { locale, slug } }: Props) => {
           }}
         />
       </div>
+      <GiscusComments locale={locale} term={data.title} />
     </section>
   )
 }
