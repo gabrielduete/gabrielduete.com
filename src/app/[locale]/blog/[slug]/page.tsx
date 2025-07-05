@@ -38,7 +38,10 @@ const BlogPost = async ({ params: { locale, slug } }: Props) => {
           source={content}
           components={{
             h1: props => (
-              <h1 className='text-title-giant font-bold mb-small' {...props} />
+              <h1
+                className='text-title-giant font-bold mb-small mt-small'
+                {...props}
+              />
             ),
             h2: props => (
               <h2
