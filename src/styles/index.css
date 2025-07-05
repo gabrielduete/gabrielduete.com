@@ -115,6 +115,7 @@ body {
   --text-xsmall: 14px;
   --text-small: 12px;
   /* Titles */
+  --text-title-xgiant: 42px;
   --text-title-giant: 32px;
   --text-title-headline: 24px;
   --text-subtitle: 20px;

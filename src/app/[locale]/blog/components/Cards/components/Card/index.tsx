@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 const Card = (article: IArticle) => {
-  const { title, date, description, slug, category } = article
+  const { title, date, description, slug } = article
 
   return (
     <Link href={`blog/${slug}`}>
