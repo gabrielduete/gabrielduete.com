@@ -25,7 +25,6 @@ export const GiscusComments = ({
         inputPosition='bottom'
         theme='dark_dimmed'
         lang={locale === Locales.EN ? 'en' : 'pt'}
-        loading='lazy'
       />
     </div>
   )
