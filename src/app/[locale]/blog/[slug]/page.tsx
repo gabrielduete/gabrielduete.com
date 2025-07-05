@@ -56,7 +56,7 @@ const BlogPost = async ({ params: { locale, slug } }: Props) => {
             ),
             img: props => (
               <img
-                className='rounded-lg mx-auto my-large max-w-full'
+                className='rounded-lg mx-auto my-large max-w-full max-h-[860px]'
                 {...props}
               />
             ),
