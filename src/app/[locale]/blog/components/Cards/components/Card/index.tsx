@@ -9,18 +9,18 @@ const Card = (article: IArticle) => {
     <Link href={`blog/${slug}`}>
       <article
         className='
-          max-w-[528px] w-full p-xxlarge bg-bg-cards text-primary
+          max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-primary
           cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
           flex flex-col justify-between gap-large
         '
       >
-        <header className='flex justify-between items-center'>
+        <header className='flex justify-between'>
           <h1 className='text-subtitle font-bold max-w-[330px] w-full'>
             {title}
           </h1>
-          <p className='text-xsmall text-gray-400'>{date}</p>
+          <p className='text-small text-gray-400 mt-xxsmall'>{date}</p>
         </header>
-        <p className='text-medium'>{description}</p>
+        <p className='text-medium  text-ellipsis line-clamp-3'>{description}</p>
       </article>
     </Link>
   )

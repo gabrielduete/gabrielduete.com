@@ -9,7 +9,7 @@ const Cards = () => {
   const articles = getAllArticles(locale as Langs)
 
   return (
-    <div className='flex gap-xxlarge flex-wrap'>
+    <div className='flex gap-xxlarge flex-wrap justify-center lg:justify-start'>
       {articles.map((article: IArticle) => (
         <Card key={article.title} {...article} />
       ))}
