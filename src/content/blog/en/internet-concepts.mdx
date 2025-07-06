@@ -1,0 +1,215 @@
+---
+title: 'Internet Concepts - HTTP/HTTPS, DNS, DOMAIN, and SERVER'
+description:
+  'Understand the fundamentals of the internet: HTTP, HTTPS, DNS, domain, and
+  server. An essential guide for anyone starting in web development.'
+date: '2023-06-14'
+category: 'engineering'
+tags: ['engineering', 'web']
+---
+
+## Introduction
+
+Understanding internet concepts is crucial in a programmer’s daily
+routine—believe me! Grasping these terms can save you countless hours when
+solving problems at work or dealing with production issues. It helps you
+identify issues faster and troubleshoot with confidence.
+
+Let’s explore the most basic and essential concepts of the internet.
+
+# How HTTP Works
+
+HTTP (Hypertext Transfer Protocol) is the communication protocol used on the
+World Wide Web, i.e., it’s what allows communication between client and server.
+
+Here's a simple diagram of an HTTP communication:
+
+![HTTP communication diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gdcoe95zpp0l9wcl5wr.png)
+
+Notice that the user sends a request for certain data to the server — this is
+called an `HTTP REQUEST`. The server receives the request and returns a response
+— called an `HTTP RESPONSE`.
+
+## HTTP Methods
+
+### GET
+
+The `GET` method requests a resource from the server, and the expected outcome
+is the return of the requested data.
+
+![diagram highlighting the GET method](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4bgcqr0qs3v3lmsxt7we.png)
+
+We can describe the `HTTP REQUEST` here as a `GET` method asking the server for
+some data.
+
+### HEAD
+
+The `HEAD` method is similar to `GET`, except the response has no body — just
+the headers.
+
+## POST
+
+The `POST` method sends data to the server, which then receives and stores the
+data.
+
+## PUT
+
+The `PUT` method updates or replaces data on the server. You must send all the
+necessary data to update the resource. If the resource (e.g., a user with
+ID 1234) doesn't exist, `PUT` will create it; if it exists, it will update it.
+
+## DELETE
+
+The `DELETE` method is used to remove a specific resource.
+
+## CONNECT
+
+`CONNECT` is rarely used and is mainly for establishing a tunnel to a server
+through a proxy — typically used in secure, proxy-based environments.
+
+## OPTIONS
+
+The `OPTIONS` method returns information about the server's communication
+options. It's commonly used in application deployment platforms to retrieve
+configuration details.
+
+## PATCH
+
+The `PATCH` method is similar to `PUT`, but it allows partial updates to a
+resource (e.g., updating just the user's name). Unlike `PUT`, `PATCH` cannot
+create a new resource.
+
+## TRACE
+
+The `TRACE` method is like a debug tool — it echoes the received request to test
+what’s received on the server and verify the request path.
+
+## Real Example
+
+Let’s use a real-world example to understand `GET`.
+
+When you open YouTube and search for a video, the site suggests results in real
+time. If you inspect the browser’s **Network** tab, you can watch these HTTP
+requests happen.
+
+Check out the screenshots:
+
+![searching for "Test GET"](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/us8pxjrfbf043zald05n.png)
+
+![request preview](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tdlv73ho0obgef4y0zw4.png)
+
+![request result](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mjnug7n42unayl5hybsa.png)
+
+By clicking on the request in the Network tab and viewing the **Preview**,
+you’ll see the server’s response — in this case, the video suggestions. The
+response returned with a status code `200`, meaning success.
+
+## HTTPS
+
+HTTPS stands for **Hypertext Transfer Protocol Secure**. It’s similar to HTTP,
+but with an added “S” for **Security**.
+
+HTTPS adds an encryption layer using TLS/SSL, making all data transfers secure.
+Any data on a site using HTTPS is encrypted and unreadable to third parties
+unless they have the correct key. Most browsers show a “secure” indicator for
+sites with HTTPS.
+
+To use HTTPS on your site, you need an **SSL certificate**. Most hosting
+platforms offer plans that include SSL — how you obtain it is up to you.
+
+# How DNS Works
+
+DNS stands for **Domain Name System**, and it’s like the internet’s phonebook.
+It stores website addresses and translates IP addresses into human-readable
+names.
+
+When you host something on the web, it’s assigned an IP address (e.g.,
+`192.46.254.15`). Memorizing these numbers is impractical, so DNS maps that IP
+to a readable name like `www.example.com`.
+
+Here’s how it works:
+
+![DNS server diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6164gdo33m7ajexxkmlp.png)
+
+When the browser requests `www.gabriel.com`, the DNS returns the corresponding
+IP so the browser can fetch the requested page’s files from the web server.
+
+The organization that maintains IP address records is **ICANN (Internet
+Corporation for Assigned Names and Numbers)**, a nonprofit backed by global
+committees.
+
+# How Domains Work
+
+As mentioned, every website is hosted at an IP address. DNS helps us convert
+that into a domain name.
+
+For example, in `http://www.mycoolsite.com`, everything after `www.` is the
+**domain name**: `mycoolsite.com`.
+
+The domain is your site’s unique address — what users type to access it, without
+needing to know the IP.
+
+To host a site, you must **register the domain** with a provider who coordinates
+with ICANN (for international domains) or with RegistroBR (for Brazil). Domains
+must be unique worldwide.
+
+## National vs. International Domains
+
+When registering a domain, you can choose between national or international
+options.
+
+### National Domains
+
+In Brazil, domains are handled by **RegistroBR**. Common domains include
+`.com.br`, but there are also specific ones like `.gov.br` or `.blog.br`.  
+[See more domain categories](https://registro.br/dominio/categorias/)
+
+### International Domains
+
+These include `.com`, `.org`, `.net`, and others. They’re managed by ICANN and
+can be used by anyone worldwide, including Brazilian sites.
+
+# How Servers Work
+
+### What Is a Server?
+
+A server is essentially a powerful computer — often more powerful than typical
+desktops — equipped with advanced CPUs, memory, cooling systems, and other
+hardware.
+
+Servers offer **centralized services**, meaning you only need to set up software
+once on the server, and all connected devices can access it.
+
+Examples of server services:
+
+- Web hosting
+- Databases
+- Email services
+- File storage
+- VoIP systems
+- Payment systems
+
+### How Does It Work?
+
+Each server type works differently, but let’s focus on **web servers**.
+
+When you search for a website in your browser:
+
+1. The **DNS** translates the domain into an IP.
+2. The **HTTP/HTTPS** protocol sends a request to the web server.
+3. The server responds with the site’s content.
+
+If successful, you’ll see the webpage. The way servers store and deliver files
+can vary widely.
+
+# Conclusion
+
+By the end of this article, you should have a solid understanding of how **HTTP,
+HTTPS, DNS, domains, and servers** work. Play around in your browser’s **Network
+tab** to explore these processes in action.
+
+If you want to go deeper, check out topics like **status codes**, **server
+types**, **server hardware**, and practice with **HTTP methods**.
+
+If you have any questions or suggestions, feel free to reach out. Thanks, and
+God bless!
