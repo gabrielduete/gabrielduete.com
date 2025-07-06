@@ -1,0 +1,45 @@
+---
+title: 'Accessing/Mirroring Your Phone Screen on Your PC'
+description:
+  'Learn how to mirror your Android phone screen on your PC using scrcpy via
+  USB. Step-by-step guide for enabling developer mode and USB debugging.'
+date: '03-16-2022'
+category: 'Utils'
+tags: ['utils', 'tools']
+---
+
+# About
+
+To avoid losing important data or access to communication apps like WhatsApp on
+your phone, I recommend using the **scrcpy** app. It allows you to mirror your
+phone screen on your PC via USB.
+
+scrcpy is especially useful if you're having trouble using your phone — in my
+case, I needed to wait around 20 minutes for the screen to turn on after
+pressing the power button.
+
+# How to Use
+
+Steps to install and use:
+
+- [Go to the scrcpy GitHub repository](https://github.com/Genymobile/scrcpy)
+- [Download the app according to your operating system (Windows, in my case)](https://github.com/Genymobile/scrcpy):  
+  ![Download example](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3jbeqyi12co8wtku6tkt.png)
+- Extract the ZIP file.
+- Now enable Developer Mode and USB Debugging on your phone.
+- Each phone has a different path, but here’s a general guide:
+- Go to Settings → System → About Phone → Software Information → Tap 7 times on
+  **Build Number**
+- You should see a message like “You are now a developer!”
+- Go back and find **Developer Options**, then enable **USB Debugging**
+- Connect your phone to your PC via USB.
+- Open the folder where you extracted the ZIP file and run the `scrcpy.exe`  
+  ![Running scrcpy](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gvuu9c59mxgxhb1abydw.png)
+
+# Done!
+
+You're now able to use your phone through your PC. If you prefer, you can also
+connect your phone via Wi-Fi — I might add this feature to the article later.
+
+Happy mirroring!  
+![Phone mirrored to PC](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mspapq6wdastgq9e6c42.png)
