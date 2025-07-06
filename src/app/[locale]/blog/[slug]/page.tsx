@@ -1,4 +1,5 @@
 import { GiscusComments } from '@/components/Giscus'
+import ScrollTopButton from '@/components/ScrollTopButton'
 import { Locales } from '@/enums/Locales'
 import { Paths } from '@/enums/Paths'
 import fs from 'fs'
@@ -6,6 +7,7 @@ import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import path from 'path'
+import { FaArrowUp } from 'react-icons/fa'
 
 type Props = {
   params: { slug: string; locale: string }
@@ -88,6 +90,7 @@ const BlogPost = async ({ params: { locale, slug } }: Props) => {
         />
       </div>
       <GiscusComments locale={locale} term={data.title} />
+      <ScrollTopButton />
     </section>
   )
 }
