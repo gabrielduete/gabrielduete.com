@@ -23,6 +23,7 @@ export const getAllArticles = (locale: Langs): IArticle[] => {
         date: data.date ?? '',
         tags: data.tags ?? [],
         slug: filename.replace(/\.mdx?$/, ''),
+        category: data.category ?? '',
         locale,
       }
     })

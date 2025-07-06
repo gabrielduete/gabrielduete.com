@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import Pagination from '@/components/Pagination'
 import { Locales } from '@/enums/Locales'
+import { useFilter } from '@/hooks/useFilter'
 import { parseDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
 
@@ -15,10 +16,18 @@ type CardsProps = {
 
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
-
+  const { selectedFilter } = useFilter()
   const [currentPage, setCurrentPage] = useState(1)
 
-  const orderArticles = [...articles].sort((a, b) => {
+  const articlesPerPage = 4
+
+  const filteredArticles = articles.filter(article => {
+    const isAll = selectedFilter === 'Todos' || selectedFilter === 'All'
+
+    return isAll || article.category === selectedFilter
+  })
+
+  const orderArticles = [...filteredArticles].sort((a, b) => {
     const isEN = locale === Locales.EN
 
     if (!isEN) {
@@ -34,8 +43,6 @@ const Cards = ({ articles }: CardsProps) => {
     return dateB - dateA
   })
 
-  const articlesPerPage = 4
-
   const startIndex = (currentPage - 1) * articlesPerPage
   const endIndex = startIndex + articlesPerPage
   const currentArticles = orderArticles.slice(startIndex, endIndex)
@@ -49,11 +56,13 @@ const Cards = ({ articles }: CardsProps) => {
           <Card key={article.title} {...article} />
         ))}
       </div>
-      <Pagination
-        totalPages={totalPages}
-        currentPages={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPages={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </>
   )
 }
