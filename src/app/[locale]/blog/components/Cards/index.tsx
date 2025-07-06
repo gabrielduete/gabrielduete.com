@@ -3,6 +3,9 @@
 import { useState } from 'react'
 
 import Pagination from '@/components/Pagination'
+import { Locales } from '@/enums/Locales'
+import { parseDate } from '@/utils/formatterDate'
+import { useLocale } from 'next-intl'
 
 import Card from './components/Card'
 
@@ -11,14 +14,33 @@ type CardsProps = {
 }
 
 const Cards = ({ articles }: CardsProps) => {
+  const locale = useLocale()
+
   const [currentPage, setCurrentPage] = useState(1)
+
+  const orderArticles = [...articles].sort((a, b) => {
+    const isEN = locale === Locales.EN
+
+    if (!isEN) {
+      const dateA = parseDate(a.date)
+      const dateB = parseDate(b.date)
+
+      return dateB.getTime() - dateA.getTime()
+    }
+
+    const dateA = new Date(a.date).getTime()
+    const dateB = new Date(b.date).getTime()
+
+    return dateB - dateA
+  })
+
   const articlesPerPage = 4
 
   const startIndex = (currentPage - 1) * articlesPerPage
   const endIndex = startIndex + articlesPerPage
-  const currentArticles = articles.slice(startIndex, endIndex)
+  const currentArticles = orderArticles.slice(startIndex, endIndex)
 
-  const totalPages = Math.ceil(articles.length / articlesPerPage)
+  const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
 
   return (
     <>
