@@ -10,7 +10,7 @@ import Header from './components/Header'
 
 export const metadata = {
   title: 'Gabriel Duete',
-  description: 'My blog xd',
+  description: 'Gabriel Duete | Blog',
 }
 
 type Props = {
