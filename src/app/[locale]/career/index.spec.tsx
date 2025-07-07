@@ -30,6 +30,7 @@ jest.mock('next-intl', () => ({
 
     return translations[key] ?? key
   },
+  useLocale: () => 'en',
 }))
 
 describe('<Career />', () => {

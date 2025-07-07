@@ -69,12 +69,6 @@ describe('<Cards />', () => {
     },
   ]
 
-  jest.mock('@/hooks/useFilter', () => ({
-    useFilter: () => ({
-      selectedFilter: 'Tech',
-    }),
-  }))
-
   it('should paginate articles and render the correct number of articles per page', () => {
     render(<Cards articles={mockAllTechArticles} />)
 
