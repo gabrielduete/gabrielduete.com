@@ -7,7 +7,6 @@ import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import path from 'path'
-import { FaArrowUp } from 'react-icons/fa'
 
 type Props = {
   params: { slug: string; locale: string }

@@ -26,7 +26,7 @@ const ScrollTopButton = () => {
   if (!isVisible) return null
 
   return (
-    <div
+    <button
       className='
         fixed hidden right-10 bottom-22 cursor-pointer 
         text-primary hover:text-secondary 
@@ -40,7 +40,7 @@ const ScrollTopButton = () => {
       }}
     >
       <FaArrowUp size={20} />
-    </div>
+    </button>
   )
 }
 
