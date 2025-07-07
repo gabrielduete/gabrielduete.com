@@ -1,12 +1,18 @@
-import { getTranslations } from 'next-intl/server'
+import Filter from '@/components/Filter'
+import { getAllArticles } from '@/utils/getArticles'
+import { useLocale } from 'next-intl'
 
-const Blog = async () => {
-  const t = await getTranslations('IndexPage')
+import Cards from './components/Cards'
+
+const Blog = () => {
+  const locale = useLocale()
+  const articles = getAllArticles(locale as Langs)
 
   return (
-    <div>
-      <h1>{t('title')}</h1>
-    </div>
+    <section className='flex flex-col gap-xxlarge'>
+      <Filter />
+      <Cards articles={articles} />
+    </section>
   )
 }
 

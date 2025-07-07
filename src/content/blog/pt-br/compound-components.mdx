@@ -1,0 +1,138 @@
+---
+title:
+  'Dominando Compound Components: Construindo Componentes Reutilizáveis e
+  Flexíveis em React'
+description:
+  'Aprenda como usar o padrão de Compound Components no React para construir
+  componentes flexíveis, escaláveis e reutilizáveis. Entenda como compartilhar
+  lógica entre componentes relacionados com exemplos práticos como modais,
+  acordeões e menus.'
+date: '09-11-2024'
+category: 'Front-end'
+tags: ['next.js', 'react', 'patterns']
+---
+
+# Introdução
+
+Um dos conceitos mais úteis e amplamente utilizados no mundo do React são os
+**design patterns**, pois ajudam a manter o código escalável e dão mais
+significado aos componentes que criamos.
+
+Existem vários padrões, e neste artigo vamos falar sobre **Compound
+Components**, um padrão avançado que é especialmente útil para criar interfaces
+flexíveis e compostas.
+
+# O que são Compound Components?
+
+**Compound Components** é um padrão avançado no React. Seu objetivo é criar um
+design mais flexível, permitindo o compartilhamento de estado e lógica entre um
+grupo de componentes. Assim, é possível realizar a comunicação entre o
+componente pai e os componentes filhos de maneira mais fluida.
+
+Esses componentes trabalham juntos para atingir certos comportamentos sem criar
+árvores de props complexas ou lógicas difíceis de entender e refatorar no
+futuro.
+
+Esse padrão ajuda a eliminar o **prop drilling**, que é quando passamos muitas
+props através de vários níveis de componentes. O prop drilling pode causar
+problemas, como renderizações desnecessárias toda vez que o estado for
+atualizado, já que cada alteração de estado impacta todos os componentes filhos.
+
+Um exemplo claro de Compound Components pode ser observado na estrutura HTML de
+`select` e `option`:
+
+![Exemplo de tags select e option no HTML](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1yjykolwr98hxb2xwmf2.png)
+
+O elemento `select` funciona como o gerenciador de estado da interface, enquanto
+os elementos `option` configuram o funcionamento do `select`.
+
+# Exemplo Usando Compound Components
+
+Neste exemplo, vamos criar um `Modal`, que será dividido em dois componentes
+compostos: `Toggle` e `Content`. Eles irão compartilhar o estado de abrir/fechar
+do modal.
+
+Vamos ver como criar esse componente passo a passo:
+
+Primeiro, criamos o contexto que vai gerenciar o estado de abrir/fechar do
+modal:
+
+![Contexto do componente modal](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/98nmutvnysllb2gtlvkk.png)
+
+Depois, criamos a base do componente Modal:
+
+![Base do componente modal](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rwgum0ljtz6amax6bv9u.png)
+
+Note que estamos usando `children` para capturar os componentes que serão
+colocados dentro do Modal. Queremos usá-lo desta forma:
+
+![Exemplo de como o componente será utilizado](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3pywyv641pt9eqkxk6vd.png)
+
+Agora precisamos criar o componente `Toggle`, que será responsável por abrir o
+Modal:
+
+![Componente Toggle](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hihluw65x96i2ej5rewd.png)
+
+Também precisamos de um componente `Content`, responsável por exibir o conteúdo
+do Modal:
+
+![Componente Content](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zh70d75ovuabmk6wgzxl.png)
+
+Por fim, podemos adicionar os dois componentes ao nosso componente Modal, e ele
+está pronto! 😊
+
+![Usando os outros componentes dentro do componente Modal](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pu4ll3u2len5asysjper.png)
+
+Uso:
+
+![Exemplo de uso do componente modal](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yxulwjh7h22g723a11ru.png)
+
+Resultado:
+
+![Resultado visual do funcionamento do componente](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9j8d40ids8i8iifbdp5t.gif)
+
+Dessa forma, tornamos a criação e o uso de modais extremamente flexível e
+reutilizável. `Modal.Toggle` é responsável por acionar a exibição do modal,
+enquanto `Modal.Content` exibe o conteúdo.
+
+Essa estrutura permite que os desenvolvedores personalizem facilmente o
+comportamento e conteúdo dos modais conforme as necessidades específicas de suas
+aplicações, tornando o código mais limpo e organizado.
+
+## Outros Exemplos
+
+Também podemos usar Compound Components em outros contextos, como:
+
+Componentes de Acordeão:
+
+![Exemplo de componente acordeão com compound components](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lxnk77ej4kj1d8ha3k4d.png)
+
+Componentes de Menu:
+
+![Exemplo de componente menu com compound components](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g47w6mcvosew2alrhk5k.png)
+
+Todos esses exemplos são flexíveis e adaptáveis, facilitando o desenvolvimento,
+a escalabilidade e o uso dos componentes.
+
+## Exercício
+
+Percebemos que o botão de fechar estava dentro do componente `Content`, mas
+seria interessante termos um componente dedicado para gerenciar o fechamento do
+modal. Você poderia criar algo como `<Modal.Close>Fechar</Modal.Close>`. Tente
+experimentar e adicionar esse componente também!
+
+# Conclusão
+
+Vimos como escrever componentes utilizando o padrão de **Compound Components**
+pode ser útil em nossas aplicações. Exploramos como implementá-lo e vimos
+exemplos de onde esse padrão pode se encaixar.
+
+Sinta-se à vontade para explorar e experimentar criar componentes com Compound
+Components. Use com sabedoria e avalie se faz sentido aplicar no seu contexto,
+pois se não for bem implementado, pode acabar sendo mais um obstáculo do que uma
+ajuda.
+
+_Note: Eu postei esse mesmo conteúdo no
+[react4noobs](https://github.com/he4rt/react4noobs), um repositório brasileiro
+que reúne artigos criados por desenvolvedores da comunidade React. Vale a pena
+conferir!_

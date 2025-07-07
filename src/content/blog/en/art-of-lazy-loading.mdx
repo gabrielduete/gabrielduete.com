@@ -1,0 +1,197 @@
+---
+title:
+  'The Art of Layz Loading: How to improve your frontend app performance.
+  (Next.js/React)'
+description:
+  "Learn how to apply Lazy Loading in React and Next.js projects to improve your
+  web application's performance. Explore practical examples using dynamic
+  import, React.lazy, and react-lazyload to reduce load time and optimize user
+  experience."
+date: '02-17-2025'
+category: 'Front-end'
+tags: ['Next.js', 'React', 'Performance']
+---
+
+# Introduction
+
+You noted that your application is freezing at certain times or showing poor
+performance? Maybe using lazy loading can resolve your performance problems.
+
+Lazy Loading is a performance optimization strategy. With this strategy, we
+ensure that some resources are loaded only when they are really needed, when
+they are about to enter the page's viewport (visible area).
+
+## Overview
+
+By default we can use Lazy Loading in Javascript, CSS, Fonts, Images and
+iframes.
+
+We can instantiate the loading attribute on an `img` or `iframe` element:
+
+![example-attribute_loading.html](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/71u1kqx5sncswurvi1uo.png)
+
+With this, we are able to instruct the browser that we need the loading of this
+element to be delayed until it arrives in the browser's viewport.
+
+# Lazy Loading in Nextjs
+
+Using nextjs, things work differently, we have two main native strategies that
+we can use to create components with lazy loading, but I want to add one more to
+make our lives easier:
+
+- [Dynamic Imports](https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#nextdynamic)
+- [Lazy - React](https://react.dev/reference/react/lazy)
+- [react-lazyload](https://www.npmjs.com/package/react-lazy-load)
+
+# Dynamic Imports
+
+With the Dynamic Imports of Nextjs, we can do dynamic imports, very useful for
+when a React component is not required in the initial page loading.
+
+A good example of use is in feedback components such as modes or alerts, are
+usually displayed after some particular user action, so why load it in the
+initial load?
+
+We can only import it when it is really necessary!
+
+Let's see an example where I have a button component and a Snackbar component of
+the material ui. After clicking the snackbar button should be opened with a
+warning:
+
+![code](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mny2gzxqeek3itovxdr4.png)
+
+Result:
+
+![Code Result on Web Application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vgf51ji9vr6fj00w6qyc.gif)
+
+We can see that the Snackbar and Alert component is initially charged on the
+page, but is it only used if the user clicks the button, so why load it
+initially? What if the user doesn't click the button?Snackbar and Alert loading
+becomes useless.
+
+Let's look at Build's time, pay attention to the first point of Size and First
+Load JS:
+
+![Image showing the build of a Nextjs application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/uwhnnhg46rn2thj1xnqj.png)
+
+OK. Now let's make the same page, but using dynamic imports on Snackbar and
+Alert, after all they should only be charged if the click the button is done.
+
+![Example code using dynamic imports from next.js](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/q73g9cu49o3ujejs22xp.png)
+
+Same result:
+
+![Code Result on Web Application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3jee9bnacpc9idqfm01l.gif)
+
+Build:
+
+![Image showing the build of a Nextjs application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6kn8w0dslvp44uq6hayl.png)
+
+We can see that the size of the size of First Load JS fell sponsoly!
+
+From `43 KB` to `35.6 KB` And from `148 KB` to `141 KB`
+
+You may be claiming, "But wasn't that little?" We are talking about just one
+page with a simple functionality and it was already a gain, now imagine the
+total gains that your site would have if it was more pages?
+
+Let's calculate the total size for 10 pages before and after optimization:
+
+1. **Before optimization:**
+   - Size per page: **43 KB**
+   - Total for 10 pages: **43 KB × 10 = 430 KB**
+2. **After optimization:**
+   - Size per page: **35.6 KB**
+   - Total for 10 pages: **35.6 KB × 10 = 356 KB**
+
+### **Total Savings**
+
+- **Total reduction:** 430 KB - 356 KB = **74 KB**
+- **Percentage reduction:** (74 KB ÷ 430 KB) × 100 ≈ **17.2%**
+
+This shows that in a website with multiple pages, small optimizations can make a
+significant difference in overall resource consumption and loading speed.
+
+We have seen how dynamic imports can impact page load times, it's a great and
+easy resource to use and raise the performance of your projects.
+
+# Lazy React
+
+We can also use Lazy native react functionality that allows us to make dynamic
+imports, very similar to the Next.js Dynamic Imports, but has a difference.
+
+In Lazy, we need to use suspense as the component's father we want to render,
+and pass a component that in Fallback, which will be shown in a loading while
+the component is being imported. But this will only happen the first time the
+component will be imported, the next no longer will be loading, because the
+component has been loaded, unless the page is recharged, so will have the
+loading in the first load.
+
+Let's see in practice:
+
+![Example code next.js using lazy react](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dyi8m0yt6lje5cev6dv7.png)
+
+Result:
+
+![Code Result on Web Application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/udehn5nfq9kxtq055yf4.gif)
+
+Note that in the first click of the button, it was displaying an element with
+"loading ...", that's what we went through in the component's fallback. But it
+will be displayed only the first time the component is clicked, and will only be
+displayed if the page is recharged.
+
+Ok, but let's see now with data, the impact Lazy had on page loading:
+
+![Image showing the build of a Nextjs application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vmrqapbfiaibdpk23t6e.png)
+
+Note that it had a higher reduction to the Dynamic Imports of Next.js! But on
+the other hand, it will now have an extra loading component, which can interfere
+with UX (user experience).
+
+So this type of practice should be aligned with the design and product team, to
+understand what type of loading would be used, but it is not recommended, as it
+can negatively impact user experience, so it is recommended to use only in
+specific cases, such as For example the page is really slow.
+
+# React Lazyload
+
+`React-Lazyload` works slightly different from previous ones, and does not
+directly impact the initial loading on the page. `React-Lazyload` monitors the
+position of the elements in relation to the page. When a Lazyload Son element is
+close to Viewport, it is rendered.
+
+So we can put elements that are heavy to render as the user Scrolla the page.
+
+Let's see in practice:
+
+![Example code next.js using react-lazyload](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sbeoxao9npd352j2anyz.png)
+
+The code basically generates 15 images and displays on the screen, imagine how
+heavy it would be for the user to download it all at once? With Lazyload, it can
+download by steps, as you browse the page.
+
+Result:
+
+![Code Result on Web Application](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xmex10qd2o3008sh9lw0.gif)
+
+We can see in the Network tab, that the generated images are downloaded while
+scrolling the page, this brings us a large increase in performance, and ensuring
+that the user's internet can download everything without bottlenecks.
+
+Imagine the performance gains we would have in our applications using Lazyload
+and dynamic imports at the same time? 🤯
+
+It will surely positiously impact the user's experience, and he will be grateful
+for using a service without crashes or bottlenecks.
+
+If you want, you can view the code
+[here](https://codesandbox.io/p/sandbox/q44yzd).
+
+# Conclusion
+
+We have seen some valuable practices on how to improve the performance of your
+applications using Lazy Loading in Next JS, how advantageous it can be for the
+user's exhibition, load something only when really needed.
+
+I hope it was clear in the explanations. Any questions can call me to talk, stay
+with God and good studies! =)

@@ -1,0 +1,300 @@
+---
+title: 'O que é gitflow? - Entendendo gitflow'
+description:
+  'Descubra o que é Gitflow e como utilizá-lo para organizar o fluxo de
+  desenvolvimento em projetos com Git e GitHub. Aprenda sobre branches como
+  develop, feature, release e hotfix, veja fluxogramas explicativos e entenda
+  como aplicar o Gitflow em diferentes cenários reais de trabalho'
+date: '28-02-2023'
+category: 'Front-end'
+tags: ['git', 'gitflow', 'github']
+---
+
+# Introdução
+
+Nós desenvolvedores, trabalhamos com git quase todo dia, afinal, o versionamento
+nos permite acompanhar as mudanças aplicadas nos nossos projetos. Imagina o caos
+que era antes do Linus ter essa brilhante ideia!
+
+E com o surgir do git, também sugiram alguns modelos de fluxo de trabalho, que
+nos auxiliam a trabalhar com o versionamento. Os mais populares e recomendados
+hoje em dia é o fluxo de desenvolvimento baseado em tronco e o Gitflow.
+Pessoalmente, eu costumo sempre trabalhar com o Gitflow em qualquer projeto.
+Então nesse artigo será apresentado os principais conceitos do Gitflow.
+
+É interessante que você tenha algum conhecimento básico em git e desenvolvimento
+de software, para melhor assimilação do conteúdo, já que usarei alguns termos
+dessas áreas.
+
+# O que é gitflow?
+
+O Gitflow foi publicado e divulgado pelo engenheiro de software Vincent
+Driessen. Esse modelo pode ser usado na maioria dos projetos, sendo privados ou
+públicos, mas é altamente recomendando para projetos com ciclos de lançamentos
+agendados e/ou entregas contínuas. Também é importante entender que você pode
+fazer alterações no modelo conforme as suas necessidades.
+
+Um dos benefícios de utilizar o gitflow, é não permitir que os desenvolvedores
+façam commits diretamente na branch de produção, já que isso pode trazer
+diversos problemas, como por exemplo: enviar alterações indesejadas, causando
+uma dor de cabeça gigante para resolver o problema, não só para o desenvolvedor,
+mas também pros negócios do projeto. O gitflow trambém traz outros benefícios
+importantes como revisões de pull request, POCS(experimentos isolados) e até
+torna a colaboração do time bem mais eficiente. Vamos entender mais como o
+gitflow funciona.
+
+# Entendendo o Gitflow
+
+O gitfow modulariza duas branchs principais, sendo elas a branch Main/Master
+onde é feita o deploy do projeto, e a branch Develop, onde deve ser trabalhado
+as integrações dos recursos que estão sendo desenvolvidos. A branch develop deve
+conter todo os históricos de commits do projeto, e também vai ser a branch onde
+os desenvolvedores que desejam contribuir devem bifurcar. Já a master deve
+conter a versão final e alterações abreviadas que a branch de develop lançou.
+
+A melhor maneira de configurar a branch Develop, é com apenas um desenvolvedor,
+de preferência alguém de senioridade avançada na equipe, criando uma ramificação
+develop no local e fazendo o push. Já a branch master já vem pre-configurada ao
+criarmos o repositório no github, mas fique a vontade para fazer quaisquer
+alterações.
+
+Então temos a branch main e develop, precisamos agora de uma terceira
+ramificação, que chamaremos de Feature, a feature é uma branch gerada localmente
+por qualquer desenvolvedor que irá acrescentar, corrigir, ou refatorar algo no
+projeto. Então, para subir essa feature para a branch develop, deve-se abrir uma
+PULL REQUEST criado a partir da ramificação de develop mais recente, e ser
+aprovado por outros desenvolvedores responsáveis pelo projeto, além de aplicar
+correções e sugestões dos mesmos.
+
+Após ter aplicado as alterações e ter recebido os aproves dos demais devs, a
+branch é mergeada para a branch de develop. Então a branch de develop já
+atualizada com suas devidas features, pode-se ser megeada para a branch master
+onde é realizado o deploy para a produção!
+
+Vejamos a seguir um fluxograma que demonstra como funciona o gitflow com as
+ramificações que apresentamos até agora:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ix1q2mppqw3nl774kh82.png)
+
+Percebemos que são geradas novas versões da branch master toda vez que a branch
+de develop é mesclada, note também que cada bolinha laranja é uma feature(Pull
+request) que após passar por suas etapas de aprovação, é mesclado para a branch
+develop, que após receber X número de features, que provavelmente foram
+planejadas, é mesclado para a branch master, dando fim ao fluxo.
+
+# Release
+
+Podemos progredir mais, e entender o processo de Release. Release é uma
+ramificação que serve como ponte para o merge da branch develop para a master,
+também é nela onde são realizados os testes estabelecidos no projeto/empresa.
+Essa ramificação é responsável pelo próximo lançamento, então depois de criada,
+nenhuma nova feature deve ser adicionada nessa ramificação, somente em caso de
+alterações, onde deve-se realizar as alterações em uma branch de feature,
+mesclar com a develop e realizar novamente a mesclagem da develop na release.
+
+Vamos analisar o fluxograma a seguir:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/f0und0zmupw0c6t7v8b7.png)
+
+Mantemos a branch Master, Develop e Features, mas perceba que para que haja o
+merge das alterações de develop para master, é realizado o processo de Release,
+é preciso subir as alterações da branch de develop para a branch de Release,
+onde será realizados todos os testes, e finalmente após ser aprovado, podemos
+subir para a master! É importante saber que caso haja alguma alteração
+solicitada pelo QA/Tester, a alteração deve ser feita seguindo o começo do fluxo
+normalmente, abrindo uma PR, subindo pra developer e novamente mesclando e
+testando na branch de Release.
+
+Note também que após realizarmos o merge da release, precisamos manter a branch
+develop atualizada com a última release, para que possa seguir o fluxo de
+desenvolvimento com a versão correta do projeto.
+
+# Hotfix
+
+Vamos falar agora sobre Hotfix, que é uma ramificação usada para corrigir bugs e
+ajustes com rapidez, sem que precise percorrer todo o fluxo desde do início. É
+extremamente eficaz para erros inesperados ou de grande impacto. Imagine que
+algum desenvolvedor subiu um bug para produção que impede que os usuários
+realizem login, agora imagine você como usuário ter que aturar esse erro por 1
+ou 2 dias? O ideal é que seja resolvido de imediato, não é mesmo? Então é nesses
+tipos de situações que utilizamos o Hotfix, nesse caso, para trazer uma solução
+rápida. Geralmente esses erros gerados, passam despercebidos na hora dos testes,
+onde não foi possível detectar o problema e corrigi-lo antes de subir para
+produção.
+
+As ramificações de hotfix são baseadas na ramificação master ao invés da
+ramificação develop, já que é onde precisamos corrigir o problema com rapidez.
+Após a correção, as alterações devem ser mergeadas tanto na branch master como
+na develop ou na branch de release (caso esteja aberta).
+
+Vejamos a seguir o mesmo fluxo anterior, mas com a adição de um hotfix:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/l10zap4ejatvgaij03zq.png)
+
+Perceba que a branch do hotfix simplesmente ignorou o fluxo e atualizou as
+branchs de master e develop com a correção do bug. E assim, não afeta
+diretamente as branchs de Features, além de corrigir o problema.
+
+# Ambiente Homologado/QA
+
+É importante entender que seguir arduamente o gitflow é opcional! Cada
+empresa/projeto pode ter um gitflow específico para suprir suas necessidades.
+Vamos mostrar aqui um modelo onde os testes das features não são realizados
+apenas na branch de release, mas são testados individualmente toda vez que a
+feature é mergeada para a branch de QA e develop.
+
+Observe o fluxo a seguir:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kzzmh353jt676lwqaoy2.png)
+
+Perceba que após uma feature ser finalizada em sua branch individual, ela é
+mergeada para as branchs de QA e develop e lá deve ser testada pelo QA. Após a
+alteração ser aprovada, ela é mergeada diretamente na master, e após isso, todas
+as branchs de features locais devem ser atualizadas com as alterações da master.
+O mais interessante é que as outras features podem ser testadas individualmente
+enquanto é realizada o merge de outras.
+
+# Fluxo de desenvolvimento
+
+É interessante entender o fluxo de desenvolvimento quando estamos estudando
+gitflow, para saber que ações tomar em cada tipo de branch. Também é importante
+frisar que esse fluxo pode variar de empresa pra empresa e de gitflow para
+gitflow, apenas irei trazer exemplos mais comuns e recomendados.
+
+Lembra do nosso fluxograma de um gitflow completinho, com release e hotfix?
+Observe como poderia ser o fluxo de desenvolvimento dele:
+
+- Fluxograma do Gitflow
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fn11s0v2fpg1evyf6q8c.png)
+
+- Fluxo de desenvolvimento
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kmyppd4olx5l3rs0fc3r.png)
+
+Podemos tratar individualmente cada ponto:
+
+- Local: Aqui é onde você vai abrir a branch para feature solicitada, baseado na
+  develop.
+  1. Deve codificar a solução da sua tarefa.
+  2. Dependendo do projeto, você precisa criar testes unitários, e rodar os
+     testes do projeto para garantir que sua solução não quebrou nenhuma outra
+     funcionalidade.
+  3. Caso necessário, é preciso de validações externas, como validar um layout,
+     ou uma regra de negocio que não foi muito bem entendida.
+- Pull Request: Nessa etapa é onde você abre sua PR para validação dos demais
+  desenvolvedores.
+
+  1. Caso haja sugestões de alterações, você deve avaliar se faz ou não sentido
+     e aplicar em sua solução. Também pode haver questionamentos, ou requisições
+     de mudança no caso de encontrarem algum erro severo.
+  2. Grande parte dos projetos requerem aprovação do time, ou de pelo menos um
+     ou dois desenvolvedores para que possa seguir o fluxo.
+  3. Depois de aprovado, basta subir suas alterações para a branch de
+     desenvolvimento.
+
+- Develop:
+
+  1. Deve-se verificar se ocorreu tudo certo com o merge, envolvendo pipelines,
+     testes unitários, builds, etc…
+  2. É interessante também conferir se todas as alterações foram realizadas com
+     sucesso, pode ter gerado algum erro envolvendo variáveis de ambiente,
+     build, etc…
+  3. Agora é só abrir a branch de Release e mesclar as alterações!
+
+- Release:
+
+  1. Nessa etapa também é interessante verificar se ocorreu tudo certo com o
+     merge.
+  2. É aqui onde ocorrem os testes nos ambientes homologados/qa.
+  3. Caso haja a necessidade de alguma alteração, pode-se fazer o ajuste em uma
+     branch de feature, mesclar para develop e novamente mesclar a develop na
+     release. Ou seguir algum outro fluxo estabelecido nos padrões do projeto.
+     Após finalizar, basta finalmente fazer o merge na master!
+
+- Produção:
+  1. E novamente… deve-se verificar as pipelines, para que possa garantir a
+     qualidade do merge.
+  2. Agora com tudo certinho, pode-se verificar as alterações no ambiente de
+     produção! (Só pra ter certeza, né? :he-he:)
+
+Essa foi uma demonstração de como funcionaria um fluxo de desenvolvimento em
+cima do gitflow. Obviamente podem haver etapas diferentes em cada parte do
+desenvolvimento, variando de projeto para projeto, empresa para empresa.
+
+Vejamos esse outro exemplo, usando o gitflow que criamos com o ambiente
+homologado/QA.
+
+Veja só como ficaria:
+
+- Fluxograma do gitflow com QA
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/98gwx2wok1zfeguy2ybj.png)
+
+- Fluxo de desenvolvimento
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ot064bla4o2ajtp5rp6c.png)
+
+As etapas são bastante similares, com algumas mudanças simples:
+
+- Deve sempre criar branchs de features baseados na master
+- Ao concluir as PR’s, deve mesclar as alterações para as branchs de DEV e QA,
+  ao invés de apenas para DEV.
+- A branch de DEV agora servirá mais como um ambiente de testes para
+  desenvolvedores, onde também deve-se tomar cuidados especiais, como pipelines,
+  builds, etc…
+
+Na Branch de QA é onde acontece a magia. As etapas 1 e 2 são exatamente as mesma
+do fluxo anterior, o que muda é a maneira como trabalhamos na etapa 3(Aplicar
+possíveis alterações). Veja como ficaria nesse novo fluxo:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vhwlzdahi9pq0zbrdbtp.png)
+
+Nesse fluxo, seria preciso retrabalhar em cima da branch, onde seria resolvido a
+alteração solicitada pelo(a) QA, também seria necessário ter a PR revisada
+novamente, e por fim, mesclado novamente para as branchs de QA e DEV, onde
+seriam realizados os testes da nova versão da PR. Caso deva ser feita alguma
+nova alteração, é preciso refazer o fluxo.
+
+Por fim, após ter validado as alterações, já podemos mesclar a PR diretamente na
+master e verificar as alterações no ambiente de produção. O fluxo completo
+ficaria assim:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8ctq7syl3w7mihmz6yfo.png)
+
+# Conclusão
+
+Chegamos ao final do artigo, e espero que tenha conseguido entender como que
+funciona o gitflow e suas principais características. É importante ressaltar que
+cada gitflow e fluxo de trabalho podem ter alterações de acordo com o projeto.
+Existe também uma maneira interessante de usar o gitflow, que é instalando a CLI
+do gitflow, e executando no seu projeto.
+
+O ideal é que você coloque em prática tudo que foi aprendido aqui, criar um
+projeto open-source e trabalhar nele junto com seus amigos, colegas,
+comunidades, etc… É interessante criar um arquivo readme onde você irá montar o
+seu gitflow e exigir que os desenvolvedores trabalhem seguindo ele, também é
+interessante montar um fluxo de desenvolvimento para que ninguém se sinta
+perdido enquanto trabalha usando o seu gitflow.
+
+Bons estudos! E se precisar de mim para esclarecer alguma dúvida, pode me chamar
+nas minhas redes sociais, na maioria das vezes é só pesquisar por @gabrielduete
+que você me achará!
+
+## Referências
+
+FLUXO DE TRABALHO DE GITFLOW. **Atlassian solutions,** [s.d.]. Disponível em:
+
+< [https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow) >.
+Acesso em: 26 de fev. de 2023.
+
+PEDROSO, Murillo Godoi. Git Flow: entenda o que é, como e quando utilizar.
+**Alura,** 2023. Disponível em:
+
+< [https://www.alura.com.br/artigos/git-flow-o-que-e-como-quando-utilizar#:~:text=Vamos nessa%3F-,O que é Git Flow%3F,organização do versionamento de códigos](https://www.alura.com.br/artigos/git-flow-o-que-e-como-quando-utilizar#:~:text=Vamos%20nessa%3F-,O%20que%20%C3%A9%20Git%20Flow%3F,organiza%C3%A7%C3%A3o%20do%20versionamento%20de%20c%C3%B3digos) >.
+Acesso em: 27 de fev. de 2023.
+
+MIKAEL, Hadler. Utilizando o fluxo Git Flow. **Medium,** 2023. Disponível em:
+
+< [https://medium.com/trainingcenter/utilizando-o-fluxo-git-flow-e63d5e0d5e04](https://medium.com/trainingcenter/utilizando-o-fluxo-git-flow-e63d5e0d5e04) >.
+Acesso em: 27 de fev. de 2023.

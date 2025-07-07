@@ -1,0 +1,250 @@
+---
+title: 'Conceitos de internet - HTTP/HTTPS, DNS, DOMÍNIO E SERVIDOR'
+description:
+  'Entenda os fundamentos da internet: HTTP, HTTPS, DNS, domínio e servidor.
+  Guia essencial para quem está começando no desenvolvimento web.'
+date: '14-06-2023'
+category: 'Engenharia'
+tags: ['engineering', 'web']
+---
+
+## Introdução
+
+Entender alguns conceitos da internet é crucial no dia a dia de um programador,
+acredite! Compreender esses termos pode salvar você inúmeras vezes ao resolver
+problemas em suas tarefas ou ao lidar com situações em produção. Isso o ajudará
+a identificar rapidamente os problemas e economizar várias horas de trabalho
+extra.
+
+Vamos agora explorar os principais e mais básicos conceitos da internet.
+
+# Funcionamento HTTP
+
+Hipertext Transfer Protocol (Protocolo de transferência de hipertexto) é o
+protocolo de comunicação utilizado no WWW, ou seja, utilizado na comunicação
+entre cliente e servidor.
+
+Vejamos no diagrama a seguir um exemplo simples de uma comunicação HTTP:
+
+![diagrama de uma comunicação HTTP](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gdcoe95zpp0l9wcl5wr.png)
+
+Perceba que o usuário envia uma requisição de determinados dados pro servidor,
+essa requisição é denominada de `HTTP REQUEST`. Por outro lado, o servidor
+recebe a requisição feita pelo usuário e retorna uma resposta de acordo, a
+resposta é denominada de `HTTP RESPONSE`.
+
+## Métodos HTTP
+
+### GET
+
+O método `GET` solicita um recurso do serviço/servidor, onde deve ser retornado
+os dados da requisição.
+
+Veja a imagem a seguir:
+
+![mesmo diagrama anterior, mas apontando pro método HTTP REQUEST](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4bgcqr0qs3v3lmsxt7we.png)
+
+Podemos definir o `HTTP REQUEST` como um método `GET`, que iria solicitar algum
+dado do servidor ou serviço.
+
+### HEAD
+
+O método `HEAD` é semelhante do `GET`, a diferença é que não tem contém o corpo
+da resposta no response.
+
+## POST
+
+O `POST` é responsável por enviar dados para o serviço, o serviço por sua vez,
+recebe os dados e armazena.
+
+## PUT
+
+O método `PUT` tem a responsabilidade de atualizar/substituir o dado do serviço.
+Seria preciso enviar os dados que seriam necessários para atualizar essa
+entidade. Também é importante saber que é possível criar um recurso em uma
+entidade usando o `PUT`, por exemplo, se tentarmos fazer uma modificação em um
+usuário com o `id 1234`, ele seria criado com todos os dados, e caso existisse,
+seria modificado.
+
+## DELETE
+
+O método `DELETE` é usado para remover um dado específico.
+
+## CONNECT
+
+O `connect` é o menos utilizado, serve para fazer a conexão entre aplicações que
+possuem configurações de proxy. Basicamente é utilizado em aplicações com
+seguranças específicas, onde seria preciso se conectar a um servidor proxy pra
+seguir com a conexão.
+
+## OPTIONS
+
+O `OPTIONS` é usado para retornar informações do serviço/servidor. É o principal
+método utilizado em plataformas que realizam `deploys` de aplicações, porque é o
+método responsável por pegar as configurações necessárias para o `deploy`.
+
+## PATCH
+
+O método `PATCH` é semelhante ao `PUT`, nele você consegue alterar alguns dados
+de um recurso, como por exemplo mudar apenas o nome de um usuário, sem a
+necessidade de passar todos os dados. Além disso, não é possível criar um
+recurso como no `PUT`.
+
+## TRACE
+
+O método `TRACE` funciona como uma espécie de debug do serviço, é responsável
+por realizar um teste de `loopback` enviando a última `request` para o servidor,
+e percorre a conexão para verificar se ocorreu tudo corretamente.
+
+## Exemplo real
+
+Podemos usar um exemplo real para pegar o método `GET`.
+
+Se entrarmos na página inicial do Youtube, podemos ir no buscador e fazer a
+busca por algum vídeo.
+
+Comecei buscando por ‘’Teste GET’’ e em seguida ele já mostrou algumas sugestões
+de pesquisa. Se entrarmos na inspecionar elemento e buscar pela aba de Network,
+conseguimos enxergar as conexões sendo feitas.
+
+Confira as imagens:
+
+![pesquisando Teste GET no buscador do youtube](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/us8pxjrfbf043zald05n.png)
+
+![exibindo o preview da request anterior](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tdlv73ho0obgef4y0zw4.png)
+
+![exibindo resultado da request anterior](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mjnug7n42unayl5hybsa.png)
+
+Indo em Network, depois clicando na requisição e indo em preview, podemos ver a
+resposta do servidor ao nosso método GET, que foi responsável por puxar do
+servidor as informações de sugestão para nossa pesquisa ‘’Teste GET’’. Além do
+`status code` da requisição que retornou 200.
+
+## HTTPS
+
+A sigla HTTPS vem de "Hypertext Transfer Protocol Secure" ou "Protocolo de
+Transferência de Hipertexto Seguro". Percebe-se que é bastante semelhante a
+sigla HTTP, com a diferença do "s" atribuído para segurança.
+
+O HTTPS oferece uma camada extra de segurança para proteger suas informações
+utilizando a tecnologia de criptografia TLS/SSL, onde as transferências de dados
+são criptografadas. Todo e qualquer dado contendo em um site utilizando o HTTPS
+será codificado em uma mensagem hiper complexa, dessa maneira irá proteger seus
+dados de serem capturados e decodificados, a não ser que possua a chave de
+criptografia. Note que na maioria dos sites que utilizam o protocolo HTTPS
+possuem a flag de ''site seguro'' nos navegadores.
+
+Para utilizar do protocolo HTTPS em um site é necessário utilizar o certificado
+SSL nele. Existem algumas maneira de conseguir o certificado, a maioria das
+plataformas oferecem planos que já contem o certificado SSL, vai da sua
+preferência a forma de adquiri-lo.
+
+# Funcionamento DNS
+
+DNS ou Domain Name System(Sistema de nome de Domínio) é um banco de dados
+responsável por armazenar endereços de sites e traduzi-los para nomes simples.
+
+Quando hospedamos algo na web, por padrão, o endereço do site é registrado em um
+IP, como por exemplo: 192.46.254.15. Imagina sempre que ter que fazer uma busca,
+buscar por esse tipo de nome? Seria péssimo em vários aspectos. Porém com o DNS
+configurado, ele consegue fazer a conversão desse IP para uma nome que você
+preferir, contanto que esteja no padrão estabelecido.
+
+Observe a imagem a seguir:
+
+![diagrama do funcionamento de um servidor DNS](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6164gdo33m7ajexxkmlp.png)
+
+Vimos que o navegador faz a requisição da página ‘’www.gabriel.com’’, então o
+DNS retorna o IP do site, para que o navegador solicite no servidor web uma
+cópia dos arquivos da página solicitada.
+
+A entidade responsável por armazenar os endereço de IP é a **Internet
+Corporation for Assigned Names and Numbers (ICANN),** em português “Corporação
+da Internet para Atribuição de Nomes e Números”. A ICANN não possui fins
+lucrativos e é mantida por vários comitês ao redor do mundo.
+
+# Funcionamento de um Domínio
+
+Como vimos antes, cada site tem um endereço especifico baseado em IP’s, em que o
+DNS converte em um nome específico. Podemos dizer que nesse endereço:
+`http://www.meusitehehe.com.br`, tudo que vem depois do `www.` seria o domínio
+do site, ficando `meusitehehe.com.br`.
+
+O domínio é como se fosse o endereço físico do seu site. É através dele que os
+usuários conseguem identifica-lo, sem precisar saber de cabeça o endereço IP
+dele.
+
+Para realizar uma hospedagem de um site, precisamos registrar o domínio em uma
+plataforma, que fica responsável por entrar em contato com ICANN ou RegistroBR e
+liberar o domínio. Porém existe algumas regras, como por exemplo, o site deve
+ter um domínio único nunca escolhido antes na web.
+
+## Domínios nacionais e internacionais
+
+Quando vamos escolher uma plataforma para fazer a hospedagem do nosso site,
+devemos escolher entre domínios nacionais e Internacionais.
+
+### Domínios nacional
+
+O domínio brasileiro é coordenado pelo RegistroBR, que é responsável pelo
+registro e manutenção dos domínios no Brasil, o domínio mais comum tem a
+terminação `.com.br`, também pode se deparar com outros domínios governamentais,
+como `.gov.br`, ou de pessoas físicas como `.blog.br`, e
+[por ai vai](https://registro.br/dominio/categorias/).
+
+### Domínios internacionais
+
+Nos domínios internacionais temos alguns mais conhecidos, como \***\*`.com`,
+`.org`, `.net`,** etc… Lembrando que são mantidos pela ICANN e qualquer site
+brasileiro pode usar os domínios internacionais.
+
+# Funcionamento de um Servidor
+
+### O que é?
+
+Basicamente um servidor é uma espécie de computador, só que bem mais potentes do
+que um comum, com processadores bem mais avançados, além de outros componentes,
+como banco de memórias, placa mãe, fonte de alimentação, refrigeração, etc…
+
+Os servidores são úteis para fornecer serviços de maneira centralizada, assim
+não é necessário realizar os mesmos procedimentos de um serviço em todas as
+maquinas que usam do mesmo serviço, só é preciso realizar os procedimentos(como
+instalação do serviço) no lado do servidor e todas as máquinas irão obter o
+mesmo resultado.
+
+Um servidor tem diversos tipos e serviços para oferecer, segue uma lista com
+alguns exemplos de serviços:
+
+- Hospedagem
+- Banco de dados
+- Serviços de e-mail
+- Armazenamento de arquivos
+- Aplicações de telefonia
+- Sistemas de pagamentos
+
+### Como funciona?
+
+A maneira como um servidor funciona depende do tipo dele, como vimos
+anteriormente, existem vários tipos e serviços diferentes. Entre todos podemos
+entender como funciona um servidor web, já que tratamos assuntos semelhantes
+anteriormente e usaremos os mesmos conceitos.
+
+Quando buscamos algum endereço na aba de pesquisa do navegador passamos pelo
+processo do DNS, onde será feito o processo de tradução e identificação do
+endereço. Após isso passamos pelo processo do protocolo do HTTP, onde o
+navegador irá solicitar ao servidor os arquivos referentes ao endereço
+pesquisado e retornar uma cópia desses arquivos para o usuário, que no caso de
+sucesso, irá visualizar a página. Lembrando que o armazenamento desses arquivos
+pode variar de servidor pra servidor.
+
+# Conclusão
+
+Ao final desse artigo espero que você tenha entendido noções sobre como funciona
+o HTTP, HTTPS, DNS, domínio e servidor. Brinque um pouco no seu navegador usando
+a aba de network do devtools para acompanhar de perto os processos.
+
+Se quiser ir mais afundo nos assuntos recomendo ver sobre status code, tipos de
+servidor, hardware de um servidor e praticar os métodos HTTP.
+
+Qualquer dúvida ou sugestão estarei aqui para interagir. Fiquem com Deus.
+Valeuu!

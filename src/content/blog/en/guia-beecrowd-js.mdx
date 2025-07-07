@@ -1,0 +1,156 @@
+---
+title: 'BEECROWD - Guide on How to Submit Solutions Using JavaScript'
+description:
+  'Learn how to solve and submit Beecrowd problems using JavaScript. Understand
+  how to handle input and avoid common runtime errors.'
+date: '04-26-2022'
+category: 'Engineering'
+tags: ['engineering', 'front-end', 'back-end', 'utils']
+---
+
+# 🤠Info
+
+- A guide on how to solve problems on
+  [Beecrowd](https://www.beecrowd.com.br/judge/p) using JavaScript.
+
+- This article is also available in this
+  [GitHub repository](https://github.com/gabrielduete/BEECROWD-JS-GUIA) along
+  with some solutions I’ve already submitted.
+
+# 💻Technologies used
+
+- [JavaScript](https://www.javascript.com/)
+
+# 🤔Having trouble submitting solutions with JS?
+
+Many developers struggle with solving Beecrowd problems using JavaScript due to
+how the input is handled. Don’t worry — I’ll walk you through it:
+
+First, create a file named `stdin` in your folder. We’ll use this file to
+simulate the input from the problem!
+
+![stdin example](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/h9sub1t9k4d340lhozih.png)
+
+Let’s solve problem
+[1001](https://www.beecrowd.com.br/judge/pt/problems/view/1001) from Beecrowd.
+Start by declaring the input:
+
+```js
+var input = require('fs').readFileSync('stdin', 'utf8')
+```
+
+We’re using the Node.js built-in fs module (file system) to read from the stdin
+file. This allows us to simulate input just like Beecrowd expects.
+
+We're only using the readFileSync method to read the content synchronously as
+UTF-8.
+
+Let’s test it! Type 10 and 9, one per line, inside the stdin file, and then log
+the input:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yg9hjeson20fpebc5imi.png)
+
+`console.log(input)` As expected, it prints 10 and 9. The input is correctly
+being read from the file.
+
+Now, split the input:
+
+```
+var valoresRecebidos = input.split('\n')
+```
+
+This creates an array of values by splitting the string at each newline
+character (\n), which matches how Beecrowd formats its input.
+
+Now let's extract the numbers into variables A and B:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/08uqqbyzcnr86ts9ov6f.png)
+
+Notice that a list of values was returned according to how we separated them! In
+this case, using a line break as the problem requires.
+
+Now it’s easy! We just need to store the values 10 and 9 in their respective
+variables, A and B.
+
+```
+
+var A = parseInt(valoresRecebidos.shift())
+var B = parseInt(valoresRecebidos.shift())
+
+```
+
+The shift() method removes the first item from the array and returns it. We use
+parseInt() to ensure we’re working with integers.
+
+Now calculate and print the result:
+
+```
+var X = A + B
+```
+
+Your full code should look like this:
+
+```
+
+var input = require('fs').readFileSync('stdin', 'utf8')
+
+var valoresRecebidos = input.split('\n')
+
+var A = parseInt(valoresRecebidos.shift()) var B =
+parseInt(valoresRecebidos.shift())
+
+var X = A + B
+
+console.log('X = ' + X)
+
+```
+
+Let's test it to see if it's working as Beecrowd expects!
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3dccw3sq58qtv0pdaivm.png)
+
+Test the code — it works! 🎉 But there’s one last detail…
+
+The problem? On Beecrowd, the input is read from a different path. If you try
+submitting this solution as-is, you’ll get a Runtime error.
+
+To fix it, just change the file path to /dev/stdin:
+
+```
+
+var input = require('fs').readFileSync('/dev/stdin', 'utf8')
+
+```
+
+Final solution:
+
+```
+
+var input = require('fs').readFileSync('/dev/stdin', 'utf8')
+
+var valoresRecebidos = input.split('\n')
+
+var A = parseInt(valoresRecebidos.shift()) var B =
+parseInt(valoresRecebidos.shift())
+
+var X = A + B
+
+console.log('X = ' + X)
+
+```
+
+Congratulations! You’ve successfully solved Beecrowd problem 1001 using
+JavaScript — the most beautiful language on the web (maybe 😅).
+
+If this helped you, please consider starring the repository. It means a lot to
+know I helped someone in our dev community.
+
+Feel free to connect with me on Beecrowd:
+[GabrielDuete-beecrowd](https://judge.beecrowd.com/pt/profile/412152).
+
+Thanks for reading, and keep studying — you're awesome 💜 Never give up!
+
+You can check more of my JavaScript solutions in this
+[repository](https://github.com/gabrielduete/BEECROWD-JS-GUIA).
+
+> "WITH HARD WORK, A FAILURE CAN EVEN SURPASS A GENIUS." — Rock Lee

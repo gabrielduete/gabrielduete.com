@@ -1,12 +1,8 @@
-import { getTranslations } from 'next-intl/server'
-
 const Contact = async () => {
-  const t = await getTranslations('IndexPage')
-
   return (
-    <div>
-      <h1>{t('title')}</h1>
-    </div>
+    <section>
+      <h1 className='text-title-xgiant text-white'>[IN PROGRESS]</h1>
+    </section>
   )
 }
 

@@ -10,3 +10,29 @@ jest.mock('next/image', () => {
 
   return MockImage
 })
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+  }),
+  useSearchParams: () => {
+    const searchParams = new URLSearchParams()
+    return {
+      get: key => searchParams.get(key),
+      has: key => searchParams.has(key),
+      toString: () => searchParams.toString(),
+    }
+  },
+}))
+
+jest.mock('next-intl', () => ({
+  useLocale: () => 'en',
+}))
+
+jest.mock('@/hooks/useFilter', () => ({
+  useFilter: () => ({
+    selectedFilter: 'Tech',
+    setSelectedFilter: jest.fn(),
+  }),
+}))

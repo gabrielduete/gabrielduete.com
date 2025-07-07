@@ -1,0 +1,192 @@
+---
+title: 'What is Gitflow? - Understanding Gitflow'
+description:
+  'Learn what Gitflow is and how to use it to organize your development workflow
+  in Git and GitHub projects. Understand branches like develop, feature,
+  release, and hotfix, check explanatory diagrams, and see how to apply Gitflow
+  in real-world scenarios.'
+date: '02-28-2023'
+category: 'Front-end'
+tags: ['git', 'gitflow', 'github']
+---
+
+# Introduction
+
+As developers, we work with Git almost every day. After all, version control
+allows us to track changes made to our projects. Imagine the chaos before Linus
+had that brilliant idea!
+
+With Git came several workflow models that help us manage versioning. The most
+popular and recommended today are trunk-based development and Gitflow.
+Personally, I always use Gitflow in any project. So in this article, I’ll
+introduce the main concepts of Gitflow.
+
+It's helpful to have some basic knowledge of Git and software development to
+better absorb the content, as I’ll be using some terms from these areas.
+
+# What is Gitflow?
+
+Gitflow was published and popularized by software engineer Vincent Driessen.
+This model can be used in most projects—private or public—but it's especially
+recommended for projects with scheduled releases and/or continuous delivery.
+Keep in mind that you can always adapt the model to suit your team’s needs.
+
+One of the main benefits of using Gitflow is that it avoids direct commits to
+the production branch, which could lead to serious issues such as accidentally
+deploying untested changes. Gitflow also provides other advantages like
+structured pull request reviews, isolated experiments (POCs), and overall
+improved team collaboration. Let’s dive deeper into how Gitflow works.
+
+# Understanding Gitflow
+
+Gitflow is based on two main branches:
+
+- **Main/Master**: This is the production branch.
+- **Develop**: This is the integration branch where all features are merged.
+
+The `develop` branch contains the full commit history and serves as the base for
+all feature branches. The `master` branch only receives finalized,
+production-ready code from `develop`.
+
+To configure `develop`, it’s ideal to have a senior developer create the branch
+locally and push it to the remote repository. The `master` branch is already set
+by default when creating a repository on GitHub.
+
+With `main` and `develop` in place, we introduce a third branch: `feature`. A
+feature branch is created locally by any developer working on a specific task
+(feature, fix, or refactor). Once completed, a **pull request (PR)** should be
+opened targeting the latest version of `develop`. After peer review and
+approval, the feature is merged into `develop`.
+
+Once `develop` has accumulated enough features, it can then be merged into
+`master` for deployment.
+
+Here's a diagram to illustrate this process:
+
+![Gitflow basic branches](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ix1q2mppqw3nl774kh82.png)
+
+Every orange dot represents a feature (PR). After approval, it’s merged into
+`develop`, and once ready, all features are merged into `master` for a release.
+
+# Release
+
+The **release** branch acts as a bridge between `develop` and `master`, and is
+where all pre-release testing happens. Once a release branch is created, **no
+new features should be added**, only critical fixes.
+
+If changes are needed, they should be made in a new `feature` branch, merged
+into `develop`, and then merged again into the release branch.
+
+Let’s look at this process visually:
+
+![Gitflow with release](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/f0und0zmupw0c6t7v8b7.png)
+
+As you can see, a release branch is created from `develop`, tested, and then
+merged into `master`. After the release, `develop` must also be updated with the
+latest production code to keep everything in sync.
+
+# Hotfix
+
+**Hotfix** branches are used to quickly patch production bugs without going
+through the entire development workflow. They are extremely useful for critical
+or unexpected bugs.
+
+For example, if a login-breaking bug is deployed, it needs to be fixed ASAP.
+Hotfixes are based directly on `master`, not `develop`. After the fix is
+applied, the branch is merged into both `master` and `develop` (or `release`, if
+it exists).
+
+Here’s the updated flow including hotfixes:
+
+![Gitflow with hotfix](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/l10zap4ejatvgaij03zq.png)
+
+Notice how hotfixes bypass the standard flow and update both `master` and
+`develop` directly to solve the problem quickly.
+
+# QA / Staging Environment
+
+Gitflow can be tailored for specific project needs. Some teams use a **QA
+branch** to test features individually before merging into `master`.
+
+Here’s an example of such a workflow:
+
+![Gitflow with QA branch](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kzzmh353jt676lwqaoy2.png)
+
+In this case, after a feature is developed, it's merged into both `develop` and
+`QA`. QA tests it, and if approved, it can go straight to `master`.
+
+# Development Flow
+
+Understanding the full **development flow** helps developers know what actions
+to take at each branch stage.
+
+Here’s the complete Gitflow diagram including `release` and `hotfix`:
+
+![Full Gitflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fn11s0v2fpg1evyf6q8c.png)
+
+Now the step-by-step:
+
+- **Local**:
+  1. Create your feature branch from `develop`.
+  2. Code the solution.
+  3. Run unit tests and validate UI/business rules if needed.
+- **Pull Request**:
+  1. Submit the PR.
+  2. Apply feedback or request changes.
+  3. Once approved, merge into `develop`.
+- **Develop**:
+  1. Validate pipelines, tests, and builds.
+  2. Prepare for release.
+- **Release**:
+  1. Test in staging/QA.
+  2. Fix anything required through `develop`.
+  3. Merge into `master`.
+- **Production**:
+  1. Final check on pipelines.
+  2. Verify deployment.
+
+Now let’s consider a Gitflow with QA for individual testing:
+
+- Gitflow with QA:
+
+![Gitflow with QA flow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/98gwx2wok1zfeguy2ybj.png)
+
+- Development steps:
+
+![QA testing flow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ot064bla4o2ajtp5rp6c.png)
+
+In this flow:
+
+- Feature branches are based on `master`.
+- PRs are merged into both `QA` and `DEV`.
+- QA is where testing happens.
+- Feedback loops can repeat PR creation and testing until everything is approved
+  and merged into `master`.
+
+Final flow:
+
+![Final full Gitflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8ctq7syl3w7mihmz6yfo.png)
+
+# Conclusion
+
+I hope this article helped you understand what Gitflow is and how it works. Each
+team or company can customize the workflow to fit their processes.
+
+To truly grasp Gitflow, try using it in a real project. Set up a README with
+your Gitflow guidelines, and invite collaborators to follow the structure. It’s
+a great way to maintain consistency and onboard contributors efficiently.
+
+Happy coding! And if you need help, feel free to reach out on social media—just
+search for @gabrielduete!
+
+## References
+
+- **Atlassian**.
+  [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
+  Accessed on Feb 26, 2023.
+- **Alura**.
+  [Git Flow: what it is, how and when to use it](https://www.alura.com.br/artigos/git-flow-o-que-e-como-quando-utilizar).
+  Accessed on Feb 27, 2023.
+- **Hadler Mikael**.
+  [Using Git Flow](https://medium.com/trainingcenter/utilizando-o-fluxo-git-flow-e63d5e0d5e04).
+  Medium, 2023. Accessed on Feb 27, 2023.
