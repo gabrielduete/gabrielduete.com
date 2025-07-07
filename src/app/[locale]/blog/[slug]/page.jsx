@@ -8,11 +8,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import path from 'path'
 
-type Props = {
-  params: { slug: string; locale: string }
-}
+const BlogPost = async ({ params }) => {
+  const { slug, locale } = await params
 
-const BlogPost = async ({ params: { locale, slug } }: Props) => {
   const isEn = locale === Locales.EN
 
   const filePath = path.join(
