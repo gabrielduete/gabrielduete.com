@@ -1,17 +1,15 @@
+import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
-import { Locales } from '@/enums/Locales'
 import { Paths } from '@/enums/Paths'
 import fs from 'fs'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import path from 'path'
 
 const BlogPost = async ({ params }) => {
   const { slug, locale } = await params
-
-  const isEn = locale === Locales.EN
 
   const filePath = path.join(
     process.cwd(),
@@ -23,13 +21,13 @@ const BlogPost = async ({ params }) => {
   const fileContent = fs.readFileSync(filePath, 'utf-8')
   const { content, data } = matter(fileContent)
 
+  if (params === undefined) {
+    notFound()
+  }
+
   return (
     <section className='text-primary'>
-      <Link href={Paths.BLOG}>
-        <button className='cursor-pointer text-secondary hover:text-primary mb-small text-medium'>
-          ⬅ {isEn ? 'Back' : 'Voltar'}
-        </button>
-      </Link>
+      <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
       <p className='text-xsmall text-gray-400 mb-large'>{data.date}</p>
       <div>
