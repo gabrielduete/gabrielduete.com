@@ -34,7 +34,7 @@ const ScrollTopButton = () => {
         transition-opacity duration-1000 ease-in-out
         lg:block
       '
-      aria-hidden
+      aria-label='Scroll to top'
       onClick={() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }}
