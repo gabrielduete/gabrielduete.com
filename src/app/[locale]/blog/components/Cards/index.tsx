@@ -16,8 +16,8 @@ type CardsProps = {
 
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
-  const { selectedFilter } = useFilter()
   const [currentPage, setCurrentPage] = useState(1)
+  const { selectedFilter } = useFilter()
 
   const articlesPerPage = 4
 
@@ -45,9 +45,11 @@ const Cards = ({ articles }: CardsProps) => {
 
   const startIndex = (currentPage - 1) * articlesPerPage
   const endIndex = startIndex + articlesPerPage
-  const currentArticles = orderArticles.slice(startIndex, endIndex)
+  const currentPageArticles = orderArticles.slice(startIndex, endIndex)
 
   const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
+
+  const currentArticles = totalPages === 1 ? orderArticles : currentPageArticles
 
   return (
     <>
@@ -59,7 +61,7 @@ const Cards = ({ articles }: CardsProps) => {
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
-          currentPages={currentPage}
+          currentPage={currentPage}
           onPageChange={setCurrentPage}
         />
       )}

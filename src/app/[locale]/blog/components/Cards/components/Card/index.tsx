@@ -20,7 +20,7 @@ const Card = (article: IArticle) => {
           </h1>
           <p className='text-small text-gray-400 mt-xxsmall'>{date}</p>
         </header>
-        <p className='text-medium  text-ellipsis line-clamp-3'>{description}</p>
+        <p className='text-medium text-ellipsis line-clamp-3'>{description}</p>
       </article>
     </Link>
   )

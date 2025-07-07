@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 
-import { IFilters } from '@/components/Filter/types'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const DEFAULT_FILTER: IFilters = 'Front-end'

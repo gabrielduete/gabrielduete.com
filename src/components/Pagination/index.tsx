@@ -2,13 +2,13 @@ import clsx from 'clsx'
 
 type PaginationProps = {
   totalPages: number
-  currentPages: number
+  currentPage: number
   onPageChange: (page: number) => void
 }
 
 const Pagination = ({
   totalPages,
-  currentPages,
+  currentPage,
   onPageChange,
 }: PaginationProps) => {
   return (
@@ -20,7 +20,7 @@ const Pagination = ({
             onClick={() => onPageChange(index + 1)}
             className={clsx(
               'bg-bg-primary rounded-md cursor-pointer p-xsmall pb-xxsmall',
-              currentPages === index + 1
+              currentPage === index + 1
                 ? 'text-secondary'
                 : 'text-primary hover:text-secondary',
             )}
