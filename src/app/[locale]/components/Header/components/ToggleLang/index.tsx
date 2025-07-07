@@ -3,6 +3,7 @@
 import { filterTranslations } from '@/enums/Filters'
 import { Locales } from '@/enums/Locales'
 import { usePathname, useRouter } from '@/i18n/navigation'
+import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 
@@ -44,9 +45,10 @@ const ToggleLang = () => {
       </button>
       <p className='text-primary'>/</p>
       <button
-        className={`uppercase cursor-pointer ${
-          isSelect(Locales.EN) ? 'text-secondary' : 'text-primary'
-        }`}
+        className={clsx(
+          'uppercase cursor-pointer',
+          isSelect(Locales.EN) ? 'text-secondary' : 'text-primary',
+        )}
         onClick={() => switchLanguage(Locales.EN)}
       >
         en
