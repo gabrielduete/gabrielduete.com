@@ -2,13 +2,17 @@
 
 import { useEffect } from 'react'
 
+import { useLocale } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-const DEFAULT_FILTER: IFilters = 'Front-end'
 
 export const useFilter = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const locale = useLocale()
+
+  const isEN = locale === 'en'
+
+  const DEFAULT_FILTER: IFilters = isEN ? 'All' : 'Todos'
 
   const selectedFilter =
     (searchParams.get('filter') as IFilters) || DEFAULT_FILTER
