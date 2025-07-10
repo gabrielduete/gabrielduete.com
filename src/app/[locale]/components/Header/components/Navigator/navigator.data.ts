@@ -7,12 +7,12 @@ const items = [
     href: Paths.ROOT,
   },
   {
-    name: 'Lab',
-    href: Paths.LAB,
-  },
-  {
     name: 'Blog',
     href: Paths.BLOG,
+  },
+  {
+    name: 'Lab',
+    href: Paths.LAB,
   },
   {
     name: 'Carreira',
