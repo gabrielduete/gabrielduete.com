@@ -1,11 +1,12 @@
 import bee from '@/public/assets/images/lab/bee.jpeg'
 import nuxt from '@/public/assets/images/lab/nuxt.png'
+import sandevistan from '@/public/assets/images/lab/sandevistan.png'
 
 export const contributions = [
   {
     title: {
-      pt: 'Issue: Melhoria no middleware do Nuxt',
-      en: 'Issue: Improvement in Nuxt Middleware',
+      pt: 'Melhoria no middleware do Nuxt',
+      en: 'Improvement in Nuxt Middleware',
     },
     description: {
       pt: 'Sugeri uma melhoria no defineNuxtRouteMiddleware para funcionar em um SPA.',
@@ -14,6 +15,19 @@ export const contributions = [
     image: nuxt,
     link: 'https://github.com/nuxt/nuxt/issues/32494',
     age: '2025',
+  },
+  {
+    title: {
+      pt: 'Sandevistan',
+      en: 'Sandevistan',
+    },
+    description: {
+      pt: 'Minha biblioteca virtual de estudos em Engenharia de Software.',
+      en: 'My Virtual Library of Software Engineering Studies.',
+    },
+    image: sandevistan,
+    link: 'https://sandevistan.vercel.app/',
+    age: '2024',
   },
   {
     title: {
