@@ -5,13 +5,6 @@ import { CONTRIBUTIONS, FILTERS } from './index.data'
 import Lab from './page'
 
 describe('<Lab />', () => {
-  jest.mock('@/contexts/FilterContext', () => ({
-    useFilter: jest.fn(() => ({
-      setFilters: jest.fn(),
-      selectedFilter: 'Open Source',
-    })),
-  }))
-
   it('should render the Filter component', () => {
     render(
       <FilterProvider>
