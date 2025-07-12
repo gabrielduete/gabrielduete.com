@@ -21,7 +21,7 @@ interface FilterContextProps {
 const FilterContext = createContext<FilterContextProps | null>(null)
 
 export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
-  const [filters, setFilters] = useState('')
+  const [filters, setFilters] = useState()
 
   const locale = useLocale()
   const isEN = locale === 'en'
@@ -38,7 +38,6 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     if (!searchParams.has('filter')) {
       const params = new URLSearchParams(searchParams.toString())
 
-      params.set('filter', DEFAULT_FILTER)
       router.replace(`?${params.toString()}`)
     }
   }, [searchParams, router, DEFAULT_FILTER])

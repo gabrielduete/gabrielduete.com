@@ -18,7 +18,13 @@ const ToggleLang = () => {
     const params = new URLSearchParams(searchParams.toString())
     const currentFilter = params.get('filter')
 
-    const currentIndex = filters[locale].findIndex(
+    if (filters === undefined) {
+      return router.replace(pathname, { locale: lang })
+    }
+
+    console.debug(currentFilter)
+
+    const currentIndex = filters?.[locale]?.findIndex(
       (index: string) => index === currentFilter,
     )
 
