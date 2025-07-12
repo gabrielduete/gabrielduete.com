@@ -29,10 +29,3 @@ jest.mock('next/navigation', () => ({
 jest.mock('next-intl', () => ({
   useLocale: () => 'en',
 }))
-
-jest.mock('@/hooks/useFilter', () => ({
-  useFilter: () => ({
-    selectedFilter: 'Tech',
-    setSelectedFilter: jest.fn(),
-  }),
-}))

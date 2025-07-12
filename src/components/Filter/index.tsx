@@ -11,7 +11,7 @@ const Filter = () => {
   const localizedFilters = filters?.[locale]
 
   return (
-    <div>
+    <div data-testid='component-filter'>
       <ul className='flex gap-xxxxlarge'>
         {localizedFilters?.map((filter: string) => (
           <li key={filter}>
