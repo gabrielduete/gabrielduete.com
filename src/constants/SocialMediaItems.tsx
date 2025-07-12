@@ -1,5 +1,6 @@
 import { FaStackOverflow } from 'react-icons/fa'
-import { FaSquareXTwitter } from 'react-icons/fa6'
+import { FaDev } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
 import { PiLinkedinLogo } from 'react-icons/pi'
 import { TbBrandGithubFilled } from 'react-icons/tb'
 
@@ -20,8 +21,13 @@ export const SocialMediaItems = [
     link: 'https://stackoverflow.com/users/16782642/gabriel-duete',
   },
   {
-    Icon: FaSquareXTwitter,
-    name: 'X/Twitter',
-    link: 'https://x.com/gabrielduetedev',
+    Icon: FaDev,
+    name: 'DEV',
+    link: 'https://dev.to/gabrielduete',
+  },
+  {
+    Icon: MdEmail,
+    name: 'Email',
+    link: '"mailto:gabrielmonteiroduete@gmail.com',
   },
 ]

@@ -3,5 +3,4 @@ export enum Paths {
   BLOG = '/blog',
   LAB = '/lab',
   CAREER = '/career',
-  CONTACT = '/contact',
 }

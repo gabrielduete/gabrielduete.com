@@ -11,7 +11,7 @@ const Home = async () => {
   const MediasLink = [
     {
       Icon: FaBuilding,
-      name: 'Juntos Somos Mais',
+      name: 'JSM',
       link: 'https://g.co/kgs/eVwdD6s',
     },
     ...SocialMediaItems,
