@@ -10,10 +10,8 @@ export type GithubRepo = {
   language: string
 }
 
-export const getGithubRepos = async (
-  username: string,
-): Promise<GithubRepo[]> => {
-  const res = await fetch(`${BASE_URL}/${username}/repos`)
+export const getGithubRepos = async (): Promise<GithubRepo[]> => {
+  const res = await fetch(`${BASE_URL}/gabrielduete/gists`)
 
   if (!res.ok) {
     throw new Error(`Failed to fetch repos: ${res.status}`)

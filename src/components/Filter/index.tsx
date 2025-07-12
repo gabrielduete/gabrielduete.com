@@ -1,23 +1,22 @@
 'use client'
 
-import { filters } from '@/enums/Filters'
-import { useFilter } from '@/hooks/useFilter'
+import { useFilter } from '@/contexts/FilterContext'
 import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 
 const Filter = () => {
   const locale = useLocale() as Langs
-  const { selectedFilter, setSelectedFilter } = useFilter()
+  const { filters, selectedFilter, setSelectedFilter } = useFilter()
 
-  const localizedFilters = filters[locale]
+  const localizedFilters = filters?.[locale]
 
   return (
     <div>
       <ul className='flex gap-xxxxlarge'>
-        {localizedFilters.map(filter => (
+        {localizedFilters?.map((filter: string) => (
           <li key={filter}>
             <button
-              onClick={() => setSelectedFilter(filter)}
+              onClick={() => setSelectedFilter(filter as IFilters)}
               className={clsx(
                 'cursor-pointer text-large text-primary hover:text-secondary',
                 selectedFilter === filter && 'text-secondary',

@@ -20,10 +20,10 @@ const ToggleTheme = () => {
     document.body.dataset.theme = initialTheme
   }, [])
 
-  const setTheme = (newTheme: Themes) => {
-    document.body.dataset.theme = newTheme
-    localStorage.setItem(Storages.THEME, newTheme)
-    setThemeState(newTheme)
+  const setTheme = (theme: Themes) => {
+    document.body.dataset.theme = theme
+    localStorage.setItem(Storages.THEME, theme)
+    setThemeState(theme)
   }
 
   const isDark = theme === 'dark'

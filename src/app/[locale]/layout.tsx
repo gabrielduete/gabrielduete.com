@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { FilterProvider } from '@/contexts/FilterContext'
 import { routing } from '@/i18n/routing'
 import '@/styles/index.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
@@ -29,11 +30,13 @@ const LocaleLayout = async ({ children, params }: Props) => {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider>
-          <Header />
-          <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
-            {children}
-          </main>
-          <Footer />
+          <FilterProvider>
+            <Header />
+            <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
+              {children}
+            </main>
+            <Footer />
+          </FilterProvider>
         </NextIntlClientProvider>
       </body>
     </html>
