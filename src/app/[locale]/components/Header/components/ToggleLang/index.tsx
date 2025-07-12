@@ -22,8 +22,6 @@ const ToggleLang = () => {
       return router.replace(pathname, { locale: lang })
     }
 
-    console.debug(currentFilter)
-
     const currentIndex = filters?.[locale]?.findIndex(
       (index: string) => index === currentFilter,
     )
