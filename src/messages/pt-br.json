@@ -29,7 +29,8 @@
           "4": "Reformulei o processo de documentação do time de engenharia de front.",
           "5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
           "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
-        }
+        },
+        "link": ""
       },
       "React4Noobs": {
         "title": "React4Noobs",
@@ -53,7 +54,8 @@
           "3": "Participação de reuniões com o objetivo de melhorar a comunicação e poder tomar direção para o desenvolvimento do projeto junto com o time.",
           "4": "Oportunidade de trabalhar com um time dedicado e acolhedor, onde tive espaço até mesmo para aprender tecnologias do zero.",
           "5": "Tecnologias mais utilizadas: Javascript ES6+, Next.js, ReactJs, Chakra UI, git e github."
-        }
+        },
+        "link": ""
       }
     }
   }

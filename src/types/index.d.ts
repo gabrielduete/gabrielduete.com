@@ -1,5 +1,3 @@
-import { filters } from '@/enums/Filters'
-
 export {}
 
 declare global {
@@ -17,13 +15,9 @@ declare global {
     locale: Langs
   }
 
-  type LocaleFilters = typeof filters
+  type LocaleFilters = Array<{
+    [lang in Langs]: string[]
+  }>
 
   type IFilters = LocaleFilters[keyof LocaleFilters][number]
-
-  type IFilterTranslations = {
-    [key in Langs]: {
-      [filter in IFilters]?: string
-    }
-  }
 }

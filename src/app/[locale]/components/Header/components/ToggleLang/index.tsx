@@ -1,6 +1,6 @@
 'use client'
 
-import { filterTranslations } from '@/enums/Filters'
+import { useFilter } from '@/contexts/FilterContext'
 import { Locales } from '@/enums/Locales'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import clsx from 'clsx'
@@ -12,23 +12,29 @@ const ToggleLang = () => {
   const pathname = usePathname()
   const locale = useLocale()
   const searchParams = useSearchParams()
+  const { filters } = useFilter()
 
-  const switchLanguage = (targetLang: Langs) => {
+  const switchLanguage = (lang: Langs) => {
     const params = new URLSearchParams(searchParams.toString())
+    const currentFilter = params.get('filter')
 
-    const currentFilter = params.get('filter') as IFilters
+    if (filters === undefined) {
+      return router.replace(pathname, { locale: lang })
+    }
+
+    const currentIndex = filters?.[locale]?.findIndex(
+      (index: string) => index === currentFilter,
+    )
 
     const translatedFilter =
-      currentFilter && filterTranslations[targetLang][currentFilter]
-        ? filterTranslations[targetLang][currentFilter]
-        : currentFilter
+      currentIndex !== -1 ? filters[lang][currentIndex] : currentFilter
 
     if (translatedFilter) {
       params.set('filter', translatedFilter)
     }
 
     const newPath = `${pathname}?${params.toString()}`
-    router.replace(newPath, { locale: targetLang })
+    router.replace(newPath, { locale: lang })
   }
 
   const isSelect = (lang: Langs) => locale === lang
