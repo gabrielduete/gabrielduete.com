@@ -1,7 +1,7 @@
 import { FilterProvider } from '@/contexts/FilterContext'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import { FILTERS } from './components/Cards/index.data'
+import { FILTERS } from '../../../components/Cards/index.data'
 import Blog from './page'
 
 describe('<Blog />', () => {

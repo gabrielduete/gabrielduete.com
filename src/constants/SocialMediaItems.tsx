@@ -28,6 +28,6 @@ export const SocialMediaItems = [
   {
     Icon: MdEmail,
     name: 'Email',
-    link: '"mailto:gabrielmonteiroduete@gmail.com',
+    link: 'mailto:gabrielmonteiroduete@gmail.com',
   },
 ]
