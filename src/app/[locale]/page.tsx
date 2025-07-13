@@ -2,7 +2,7 @@ import Cards from '@/components/Cards'
 import { SocialMediaItems } from '@/constants/SocialMediaItems'
 import ProfilePic from '@/public/assets/images/profile-pic.png'
 import { getPinnedArticles } from '@/utils/getArticles'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaBuilding } from 'react-icons/fa6'
@@ -14,10 +14,9 @@ export const metadata = {
 
 const Home = async () => {
   const t = await getTranslations('IndexPage')
+  const locale = await getLocale()
 
-  const a = getPinnedArticles('pt-br')
-
-  console.debug(a)
+  const pinnedArticles = getPinnedArticles(locale as Langs)
 
   const MediasLink = [
     {
@@ -32,9 +31,9 @@ const Home = async () => {
     <section>
       <div
         className='
-          w-full bg-bg-cards rounded-sm text-white p-xxxlarge
-         flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg
-        '
+        w-full bg-bg-cards rounded-sm text-white p-xxxlarge
+        flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg
+      '
       >
         <Image
           src={ProfilePic}
@@ -69,7 +68,7 @@ const Home = async () => {
         </div>
       </div>
       <div className='mt-xgiant'>
-        <Cards articles={a} />
+        <Cards articles={pinnedArticles} />
       </div>
     </section>
   )
