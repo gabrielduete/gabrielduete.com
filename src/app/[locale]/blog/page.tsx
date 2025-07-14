@@ -1,8 +1,7 @@
+import Cards from '@/components/Cards'
 import Filter from '@/components/Filter'
 import { getAllArticles } from '@/utils/getArticles'
 import { useLocale } from 'next-intl'
-
-import Cards from './components/Cards'
 
 const Blog = () => {
   const locale = useLocale()

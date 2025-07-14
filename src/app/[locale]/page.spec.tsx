@@ -42,7 +42,7 @@ describe('<Home />', () => {
   it('should render the "Juntos Somos Mais" link correctly', async () => {
     render(await Home())
 
-    const juntosLink = screen.getByText('Juntos Somos Mais')
+    const juntosLink = screen.getByText('JSM')
 
     expect(juntosLink).toBeInTheDocument()
     expect(juntosLink.closest('a')).toHaveAttribute(

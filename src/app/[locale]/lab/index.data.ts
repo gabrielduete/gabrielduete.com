@@ -4,8 +4,8 @@ import sandevistan from '@/public/assets/images/lab/sandevistan.png'
 import logo from '@/public/assets/images/logo.png'
 
 export const FILTERS = {
-  'pt-br': ['Todos', 'Open Source', 'Engenharia'],
-  en: ['All', 'Open Source', 'Engineering'],
+  'pt-br': ['Todos', 'Open Source', 'Engenharia', 'Úteis'],
+  en: ['All', 'Open Source', 'Engineering', 'Utils'],
 } as const
 
 export const CONTRIBUTIONS = [

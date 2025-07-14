@@ -13,6 +13,7 @@ declare global {
     tags: string[]
     slug: string
     locale: Langs
+    pinned?: boolean
   }
 
   type LocaleFilters = Array<{

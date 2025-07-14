@@ -25,10 +25,19 @@ export const getAllArticles = (locale: Langs): IArticle[] => {
         slug: filename.replace(/\.mdx?$/, ''),
         category: data.category ?? '',
         locale,
+        pinned: data.pinned ?? false,
       }
     })
 
   return articles as IArticle[]
+}
+
+export const getPinnedArticles = (locale: Langs): IArticle[] => {
+  const articles = getAllArticles(locale)
+
+  const pinnedArticles = articles.filter(article => article?.pinned)
+
+  return pinnedArticles
 }
 
 export default getAllArticles
