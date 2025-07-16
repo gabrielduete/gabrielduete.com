@@ -1,7 +1,7 @@
-import bee from '@/public/assets/images/lab/bee.jpeg'
-import nuxt from '@/public/assets/images/lab/nuxt.png'
-import sandevistan from '@/public/assets/images/lab/sandevistan.png'
-import logo from '@/public/assets/images/logo.png'
+import bee from '@/../public/assets/images/lab/bee.jpeg'
+import nuxt from '@/../public/assets/images/lab/nuxt.png'
+import sandevistan from '@/../public/assets/images/lab/sandevistan.png'
+import logo from '@/../public/assets/images/logo.png'
 
 export const FILTERS = {
   'pt-br': ['Todos', 'Open Source', 'Engenharia', 'Úteis'],
