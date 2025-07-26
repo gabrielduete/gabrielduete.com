@@ -11,6 +11,10 @@ import Header from './components/Header'
 
 export const metadata = {
   title: 'Gabriel Duete',
+  icons: {
+    icon: '/assets/images/logo.png',
+    shortcut: '/assets/images/logo.png',
+  },
   description: 'Gabriel Duete | Blog',
 }
 
