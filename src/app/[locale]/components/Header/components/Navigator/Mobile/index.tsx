@@ -23,7 +23,7 @@ const NavigatorMobile = ({ closeMenu }: NavigatorMobileProps) => {
       {items.map(({ name, name_en, href }) => {
         return (
           <li key={name} className='text-subtitle text-primary'>
-            <Link href={`${locale + href}`} passHref onClick={closeMenu}>
+            <Link href={href} passHref onClick={closeMenu}>
               <p
                 className={`
                   cursor-pointer transition-colors text-primary hover:text-secondary mb-base
