@@ -22,7 +22,7 @@ const NavigatorDesktop = () => {
       {items.map(({ name, name_en, href }) => {
         return (
           <li key={name} className='text-subtitle-small text-primary'>
-            <Link href={href} passHref>
+            <Link href={href}>
               <p
                 className={`
                   cursor-pointer transition-colors text-primary hover:text-secondary
