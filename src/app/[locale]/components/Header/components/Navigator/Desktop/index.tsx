@@ -2,7 +2,6 @@
 
 import { Locales } from '@/enums/Locales'
 import { useLocale } from 'next-intl'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { isSelect } from '../helpers/isSelect'
