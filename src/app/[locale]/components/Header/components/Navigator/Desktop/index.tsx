@@ -2,7 +2,6 @@
 
 import { Locales } from '@/enums/Locales'
 import { useLocale } from 'next-intl'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { isSelect } from '../helpers/isSelect'
@@ -22,7 +21,7 @@ const NavigatorDesktop = () => {
       {items.map(({ name, name_en, href }) => {
         return (
           <li key={name} className='text-subtitle-small text-primary'>
-            <Link href={href} locale={locale} passHref>
+            <a href={`/${locale}${href}`}>
               <p
                 className={`
                   cursor-pointer transition-colors text-primary hover:text-secondary
@@ -30,7 +29,7 @@ const NavigatorDesktop = () => {
               >
                 {isEn ? (name_en ?? name) : name}
               </p>
-            </Link>
+            </a>
           </li>
         )
       })}
