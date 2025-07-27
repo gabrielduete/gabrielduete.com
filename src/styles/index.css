@@ -73,7 +73,7 @@ body {
 
 [data-theme='light'] {
   /* texts */
-  --primary: #46ce7a;
+  --primary: #20272f;
   --color-green-black: #20272f;
   --color-green-white: #3c5768;
   --color-green-border: #132227;
@@ -84,8 +84,8 @@ body {
   --color-black: #0f1525;
 
   /* Backgrounds */
-  --bg-theme: #ffffff;
-  --bg-primary: #ffffff;
+  --bg-theme: #e8e8e8;
+  --bg-primary: #e8e8e8;
   --bg-secondary: #132227;
 }
 

@@ -1,6 +1,6 @@
+import ProfilePic from '@/../public/assets/images/profile-pic.png'
 import Cards from '@/components/Cards'
 import { SocialMediaItems } from '@/constants/SocialMediaItems'
-import ProfilePic from '@/public/assets/images/profile-pic.png'
 import { getPinnedArticles } from '@/utils/getArticles'
 import { getLocale, getTranslations } from 'next-intl/server'
 import Image from 'next/image'

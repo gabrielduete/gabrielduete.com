@@ -29,7 +29,8 @@ const BlogPost = async ({ params }) => {
     <section className='text-primary'>
       <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
-      <p className='text-xsmall text-gray-400 mb-large'>{data.date}</p>
+      <p className='text-subtitle-small text-gray-400'>{data.description}</p>
+      <p className='text-xsmall text-gray-600 mb-large'>{data.date}</p>
       <div>
         <MDXRemote
           source={content}
