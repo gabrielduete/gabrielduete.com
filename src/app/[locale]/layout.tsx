@@ -1,8 +1,10 @@
 import { ReactNode } from 'react'
 
 import { FilterProvider } from '@/contexts/FilterContext'
+import { routing } from '@/i18n/routing'
 import '@/styles/index.css'
-import { NextIntlClientProvider } from 'next-intl'
+import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { notFound } from 'next/navigation'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -23,6 +25,10 @@ type Props = {
 
 const LocaleLayout = async ({ children, params }: Props) => {
   const { locale } = await params
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
 
   return (
     <html lang={locale}>
