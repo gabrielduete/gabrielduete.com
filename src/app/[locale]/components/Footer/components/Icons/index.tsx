@@ -9,8 +9,9 @@ const Icons = () => {
           <Icon
             size={32}
             className='
-          text-primary hover:text-icons-primary  
-          cursor-pointer transition-colors duration-200'
+              text-primary hover:text-icons-primary  
+              cursor-pointer transition-colors duration-200
+            '
             aria-label={name}
             title={name}
           />
