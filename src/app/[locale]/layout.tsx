@@ -1,10 +1,8 @@
 import { ReactNode } from 'react'
 
 import { FilterProvider } from '@/contexts/FilterContext'
-import { routing } from '@/i18n/routing'
 import '@/styles/index.css'
-import { NextIntlClientProvider, hasLocale } from 'next-intl'
-import { notFound } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
