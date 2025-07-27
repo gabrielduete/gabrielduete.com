@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { FaBuilding } from 'react-icons/fa6'
 
 export const metadata = {
-  title: 'Gabriel Duete | Home',
+  title: 'Gabriel Duete',
   description: 'Home page of Gabriel Duete, a software developer.',
 }
 
@@ -31,9 +31,9 @@ const Home = async () => {
     <section>
       <div
         className='
-        w-full bg-bg-cards rounded-sm text-white p-xxxlarge
-        flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg
-      '
+          w-full bg-bg-cards rounded-sm text-white p-xxxlarge
+          flex flex-col items-center lg:flex-row lg:items-start gap-xxlarge drop-shadow-lg
+        '
       >
         <Image
           src={ProfilePic}
