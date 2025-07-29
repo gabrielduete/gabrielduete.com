@@ -7,7 +7,7 @@ const Card = (article: IArticle) => {
     <Link href={`blog/${slug}`}>
       <article
         className='
-          max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-primary
+          max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-cards
           cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
           flex flex-col justify-between gap-large
         '
