@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer
       className='
-      w-full h-[75px] fixed border-1
+      w-full h-[50px] fixed border-1
     border-green-weak-border 
       bg-bg-primary bottom-0 left-0 flex justify-center'
     >
