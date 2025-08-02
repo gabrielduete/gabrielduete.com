@@ -82,8 +82,8 @@ body {
   /* Text  */
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  --color-cards: #ffffff;
   --color-blog: var(--text-blog);
+  --color-white: #ffffff;
   --color-green-black: #20272f;
   --color-green-white: #3c5768;
   --color-green-border: #132227;

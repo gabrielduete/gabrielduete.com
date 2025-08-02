@@ -57,12 +57,12 @@ const LabView = () => {
                     aria-hidden
                     className='rounded-sm w-full h-[200px] '
                   />
-                  <h1 className='text-title-headline mt-medium text-cards'>
+                  <h1 className='text-title-headline mt-medium text-white'>
                     {titleText}
                   </h1>
                   <p className='text-small text-gray-400 mt-0.5'>{age}</p>
                 </div>
-                <p className='text-medium text-ellipsis line-clamp-3 mt-auto text-cards'>
+                <p className='text-medium text-ellipsis line-clamp-3 mt-auto text-white'>
                   {descriptionText}
                 </p>
               </Link>
