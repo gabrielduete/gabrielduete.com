@@ -41,8 +41,8 @@ const LabView = () => {
             <article
               key={titleText}
               className='
-              max-w-[312px] w-full p-xxlarge bg-bg-cards text-primary
-              cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
+                max-w-[312px] w-full p-xxlarge bg-bg-cards cursor-pointer 
+                rounded-sm border border-bg-cards hover:border-secondary
               '
             >
               <Link
@@ -55,12 +55,14 @@ const LabView = () => {
                     src={image}
                     alt={titleText}
                     aria-hidden
-                    className='rounded-sm w-full h-[200px]'
+                    className='rounded-sm w-full h-[200px] '
                   />
-                  <h1 className='text-title-headline mt-medium'>{titleText}</h1>
+                  <h1 className='text-title-headline mt-medium text-cards'>
+                    {titleText}
+                  </h1>
                   <p className='text-small text-gray-400 mt-0.5'>{age}</p>
                 </div>
-                <p className='text-medium text-ellipsis line-clamp-3 mt-auto'>
+                <p className='text-medium text-ellipsis line-clamp-3 mt-auto text-cards'>
                   {descriptionText}
                 </p>
               </Link>

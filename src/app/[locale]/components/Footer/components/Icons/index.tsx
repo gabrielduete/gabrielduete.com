@@ -7,9 +7,9 @@ const Icons = () => {
       {SocialMediaItems.map(({ Icon, name, link }) => (
         <Link href={link} key={name} target='_blank'>
           <Icon
-            size={32}
+            size={26}
             className='
-              text-primary hover:text-icons-primary  
+              text-white hover:text-secondary
               cursor-pointer transition-colors duration-200
             '
             aria-label={name}

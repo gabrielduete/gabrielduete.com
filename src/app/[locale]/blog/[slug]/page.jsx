@@ -26,7 +26,7 @@ const BlogPost = async ({ params }) => {
   }
 
   return (
-    <section className='text-primary'>
+    <section className='text-blog'>
       <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
       <p className='text-subtitle-small text-gray-400'>{data.description}</p>

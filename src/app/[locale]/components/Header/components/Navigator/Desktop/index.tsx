@@ -1,6 +1,7 @@
 'use client'
 
 import { Locales } from '@/enums/Locales'
+import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -21,12 +22,12 @@ const NavigatorDesktop = () => {
     >
       {items.map(({ name, name_en, href }) => {
         return (
-          <li key={name} className='text-subtitle-small text-primary'>
+          <li key={name}>
             <Link href={`/${locale}${href}`}>
               <p
                 className={`
-                  cursor-pointer transition-colors text-primary hover:text-secondary
-                  ${isSelect(pathname, name_en ?? name) && 'text-secondary'}`}
+                  text-subtitle-small cursor-pointer transition-colors hover:text-secondary
+                  ${isSelect(pathname, name_en ?? name) ? 'text-secondary' : 'text-white'}`}
               >
                 {isEn ? (name_en ?? name) : name}
               </p>

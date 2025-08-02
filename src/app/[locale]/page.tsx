@@ -52,14 +52,14 @@ const Home = async () => {
                 href={link}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex items-center gap-xsmall hover:text-icons-primary transition-colors group'
+                className='flex items-center gap-xsmall hover:text-secondary transition-colors group'
               >
                 <Icon
-                  className='text-green-white group-hover:text-icons-primary transition-colors'
+                  className='text-green-white group-hover:text-secondary transition-colors'
                   data-testid={`home-page__icon-${name}`}
                   size={20}
                 />
-                <p className='text-xsmall text-white group-hover:text-icons-primary transition-colors'>
+                <p className='text-xsmall text-white group-hover:text-secondary transition-colors'>
                   {name}
                 </p>
               </Link>
