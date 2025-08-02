@@ -1,10 +1,13 @@
+import { useLocale } from 'next-intl'
 import Link from 'next/link'
 
 const Card = (article: IArticle) => {
   const { title, date, description, slug } = article
 
+  const locale = useLocale()
+
   return (
-    <Link href={`blog/${slug}`}>
+    <Link href={`/${locale}/blog/${slug}`}>
       <article
         className='
           max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
