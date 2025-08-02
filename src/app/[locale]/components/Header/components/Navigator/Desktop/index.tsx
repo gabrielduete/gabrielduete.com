@@ -1,7 +1,6 @@
 'use client'
 
 import { Locales } from '@/enums/Locales'
-import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
