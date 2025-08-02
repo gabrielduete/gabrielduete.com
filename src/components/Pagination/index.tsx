@@ -21,7 +21,7 @@ const Pagination = ({
             'bg-bg-primary rounded-md cursor-pointer p-xsmall pb-xxsmall',
             currentPage === index + 1
               ? 'text-secondary'
-              : 'text-primary hover:text-secondary',
+              : 'text-white hover:text-secondary',
           )}
         >
           {index + 1}
