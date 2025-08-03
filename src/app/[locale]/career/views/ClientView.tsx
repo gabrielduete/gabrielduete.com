@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { Locales } from '@/enums/Locales'
 import clsx from 'clsx'
 import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
 
+import ExternalLink from '../components/ExternalLink'
 import { experiences } from '../data'
 import { IExperiences } from '../types'
 
@@ -26,17 +27,6 @@ const CarrerView = () => {
   )
 
   const hasLink = t(`${experience}.link`).match(/https?:\/\//)
-
-  const ExternalLink = (href: string) => (chunks: React.ReactNode) => (
-    <Link
-      href={href}
-      target='_blank'
-      rel='noopener noreferrer'
-      className='underline text-secondary'
-    >
-      {chunks}
-    </Link>
-  )
 
   return (
     <section className='flex flex-col gap-giant items-center lg:flex-row'>
@@ -72,8 +62,10 @@ const CarrerView = () => {
             const path = `${experience}.contributions.${contribution}`
 
             const content = t.rich(path, {
-              atomium: ExternalLink(
-                'https://github.com/juntossomosmais/atomium',
+              atomium: (chunks: ReactNode) => (
+                <ExternalLink href='https://github.com/juntossomosmais/atomium'>
+                  {chunks}
+                </ExternalLink>
               ),
             })
 
