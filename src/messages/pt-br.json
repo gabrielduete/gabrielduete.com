@@ -7,14 +7,18 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
-        "totalContributions": "6",
+        "totalContributions": "10",
         "contributions": {
           "1": "Contribuições contínuas para a plataforma de e-commerce e o programa de fidelidade, agregando valor ao usuário final.",
           "2": "Liderança no front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto e UI/UX.",
-          "3": "Atuação no Design System open source Atomium, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+          "3": "Atuação nos Design Systems open source <atomium>Atomium</atomium> e <venice>Venice</venice>, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
           "4": "Reformulei o processo de documentação do time de engenharia de front.",
           "5": "Redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-          "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+          "6": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system.",
+          "7": "Desenvolvi soluções para regras de segurança, além de escrever documentações sobre a causa, análise e solução.",
+          "8": "Contribuição com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
+          "9": "Participação em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal.",
+          "10": "Participação em um épico com o time para migração do site de SPA para SSR, melhorando desempenho, SEO e experiência do usuário."
         },
         "link": "https://g.co/kgs/eVwdD6s"
       },

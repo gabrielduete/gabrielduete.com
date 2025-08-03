@@ -7,14 +7,18 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
-        "totalContributions": "6",
+        "totalContributions": "10",
         "contributions": {
           "1": "Continuous contributions to the e-commerce platform and loyalty program, adding value to the end user.",
           "2": "Front-end lead for Obra Premiada 2024, ensuring UI implementation and integrations, while also aligning front-end with product and UI/UX.",
-          "3": "Work on the open-source Atomium Design System, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
+          "3": "Worked on the open-source design systems <atomium>Atomium</atomium> and <venice>Venice</venice>, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
           "4": "Redesigned the front-end engineering team's documentation process.",
-          "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
-          "6": "Collaboration with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+          "5": "Reduced technical debt through refactoring, optimizations, security fixes, and performance improvements such as handling chunk errors.",
+          "6": "Collaborated with product, UI/UX, and engineering teams to align technical solutions with business goals and the design system.",
+          "7": "Developed solutions for security rules and documented their causes, analyses, and resolutions.",
+          "8": "Contributed to improving the squad’s workflow both individually and collectively.",
+          "9": "Participated in front-end related meetings and broader tech events, engaging with professionals who enriched my technical and interpersonal development.",
+          "10": "Participated in an epic alongside the team to migrate the site from SPA to SSR, enhancing performance, SEO, and user experience."
         },
         "link": "https://g.co/kgs/eVwdD6s"
       },

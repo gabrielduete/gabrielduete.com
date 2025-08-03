@@ -15,27 +15,35 @@ const CarrerView = () => {
     useState<IExperiences>('Juntos Somos Mais')
 
   const locale = useLocale()
-
   const isEn = locale === Locales.EN
-
   const t = useTranslations('CarrerPage')
 
   const experience = `Experiences.${selectedExperience}`
 
   const totalContributions = Number(t(`${experience}.totalContributions`))
-
   const contributionKeys = Array.from({ length: totalContributions }, (_, i) =>
     (i + 1).toString(),
   )
 
   const hasLink = t(`${experience}.link`).match(/https?:\/\//)
 
+  const ExternalLink = (href: string) => (chunks: React.ReactNode) => (
+    <Link
+      href={href}
+      target='_blank'
+      rel='noopener noreferrer'
+      className='underline text-secondary'
+    >
+      {chunks}
+    </Link>
+  )
+
   return (
     <section className='flex flex-col gap-giant items-center lg:flex-row'>
       <div
         className='
-            w-[312px] p-xxlarge bg-bg-primary rounded-sm text-white flex-shrink-0 
-            border-[1px] border-green-weak-border flex flex-col gap-small self-center lg:self-start
+          w-[312px] p-xxlarge bg-bg-primary rounded-sm text-white flex-shrink-0 
+          border-[1px] border-green-weak-border flex flex-col gap-small self-center lg:self-start
         '
       >
         {experiences.map(experience => (
@@ -60,11 +68,22 @@ const CarrerView = () => {
           {t(`${experience}.time`)}
         </p>
         <ul className='flex flex-col gap-small'>
-          {contributionKeys.map(contribution => (
-            <li key={contribution} className='text-large text-primary'>
-              • {t(`${experience}.contributions.${contribution}`)}
-            </li>
-          ))}
+          {contributionKeys.map(contribution => {
+            const path = `${experience}.contributions.${contribution}`
+
+            const content = t.rich(path, {
+              atomium: ExternalLink(
+                'https://github.com/juntossomosmais/atomium',
+              ),
+              venice: ExternalLink('https://github.com/juntossomosmais/venice'),
+            })
+
+            return (
+              <li key={contribution} className='text-large text-primary'>
+                • {content}
+              </li>
+            )
+          })}
         </ul>
         {hasLink && (
           <div className='mt-small'>
