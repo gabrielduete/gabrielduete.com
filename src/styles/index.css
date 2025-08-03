@@ -55,7 +55,6 @@ body {
 [data-theme='dark'] {
   /* texts */
   --primary: #ffffff;
-  --secondary: #46ce7a;
   --text-blog: #ffffff;
 
   /* Backgrounds */
@@ -68,12 +67,11 @@ body {
 [data-theme='light'] {
   /* texts */
   --primary: #20272f;
-  --secondary: #46ce7a;
   --text-blog: #20272f;
 
   /* Backgrounds */
   --bg-theme: #f8f8f8;
-  --bg-primary: #223843;
+  --bg-primary: #193038;
   --bg-secondary: #132227;
   --bg-cards: #223843;
 }
@@ -81,7 +79,7 @@ body {
 @theme inline {
   /* Text  */
   --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
+  --color-secondary: #46ce7a;
   --color-blog: var(--text-blog);
   --color-white: #ffffff;
   --color-green-black: #20272f;
