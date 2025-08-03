@@ -75,7 +75,6 @@ const CarrerView = () => {
               atomium: ExternalLink(
                 'https://github.com/juntossomosmais/atomium',
               ),
-              venice: ExternalLink('https://github.com/juntossomosmais/venice'),
             })
 
             return (
