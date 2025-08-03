@@ -26,7 +26,7 @@ const BlogPost = async ({ params }) => {
   }
 
   return (
-    <section className='text-primary'>
+    <section className='text-blog'>
       <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
       <p className='text-subtitle-small text-gray-400'>{data.description}</p>
@@ -72,7 +72,7 @@ const BlogPost = async ({ params }) => {
             ),
             code: props => (
               <code
-                className='bg-green-black text-sm px-xxsmall py-0.5 rounded'
+                className='bg-green-black text-white text-sm px-xxsmall py-0.5 rounded'
                 {...props}
               />
             ),

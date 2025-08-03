@@ -1,13 +1,23 @@
+import { Storages } from '@/enums/Storages'
+import { useLocale } from 'next-intl'
 import Link from 'next/link'
 
 const Card = (article: IArticle) => {
   const { title, date, description, slug } = article
 
+  const locale = useLocale()
+
+  const setNavigation = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(Storages.CAME_FROM_NAVIGATION, 'true')
+    }
+  }
+
   return (
-    <Link href={`blog/${slug}`}>
+    <Link href={`/${locale}/blog/${slug}`} onClick={setNavigation}>
       <article
         className='
-          max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-primary
+          max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
           cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
           flex flex-col justify-between gap-large
         '

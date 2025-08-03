@@ -55,14 +55,7 @@ body {
 [data-theme='dark'] {
   /* texts */
   --primary: #ffffff;
-  --secondary: #46ce7a;
-  --color-green-black: #20272f;
-  --color-green-white: #3c5768;
-  --color-green-border: #132227;
-  --color-green-weak-border: #223843;
-  --color-green-strong: #193038;
-  --color-green-weak: #46ce7a40;
-  --color-green-neutral: #46ce7a;
+  --text-blog: #ffffff;
 
   /* Backgrounds */
   --bg-theme: #132227;
@@ -74,25 +67,21 @@ body {
 [data-theme='light'] {
   /* texts */
   --primary: #20272f;
-  --color-green-black: #20272f;
-  --color-green-white: #3c5768;
-  --color-green-border: #132227;
-  --color-green-weak-border: #223843;
-  --color-green-strong: #193038;
-  --color-green-weak: #46ce7a40;
-  --color-green-neutral: #46ce7a;
-  --color-black: #0f1525;
+  --text-blog: #20272f;
 
   /* Backgrounds */
-  --bg-theme: #e8e8e8;
-  --bg-primary: #e8e8e8;
+  --bg-theme: #f8f8f8;
+  --bg-primary: #193038;
   --bg-secondary: #132227;
+  --bg-cards: #223843;
 }
 
 @theme inline {
   /* Text  */
   --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
+  --color-secondary: #46ce7a;
+  --color-blog: var(--text-blog);
+  --color-white: #ffffff;
   --color-green-black: #20272f;
   --color-green-white: #3c5768;
   --color-green-border: #132227;
@@ -100,9 +89,6 @@ body {
   --color-green-strong: #193038;
   --color-green-weak: #46ce7a40;
   --color-green-neutral: #46ce7a;
-
-  /* Icons */
-  --color-icons-primary: var(--secondary);
 
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);
