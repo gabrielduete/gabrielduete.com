@@ -2,6 +2,7 @@ require('@testing-library/jest-dom')
 
 jest.mock('next-intl/server', () => ({
   getTranslations: jest.fn(),
+  getLocale: jest.fn(() => 'en'),
 }))
 
 jest.mock('next/image', () => {
