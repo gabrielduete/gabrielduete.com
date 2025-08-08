@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
@@ -9,7 +9,6 @@ import { parseDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
 
 import Card from './components/Card'
-import { FILTERS } from './index.data'
 
 type CardsProps = {
   articles: IArticle[]
@@ -18,7 +17,7 @@ type CardsProps = {
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
   const [currentPage, setCurrentPage] = useState(1)
-  const { setFilters, selectedFilter } = useFilter()
+  const { selectedFilter } = useFilter()
 
   const articlesPerPage = 4
 
@@ -51,10 +50,6 @@ const Cards = ({ articles }: CardsProps) => {
   const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
 
   const currentArticles = totalPages === 1 ? orderArticles : currentPageArticles
-
-  useEffect(() => {
-    setFilters(FILTERS)
-  }, [setFilters])
 
   return (
     <>
