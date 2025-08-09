@@ -30,3 +30,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: gabrielduete/gabrielduete.com
+
+      - name: Run Build
+        run: yarn build
