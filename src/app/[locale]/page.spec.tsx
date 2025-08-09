@@ -34,7 +34,7 @@ describe('<Home />', () => {
   it('should render all media links', async () => {
     render(await Home())
 
-    const mediaLinks = screen.getAllByRole('link')
+    const mediaLinks = screen.getAllByTestId('home-page__link')
 
     expect(mediaLinks).toHaveLength(SocialMediaItems.length + 1)
   })
@@ -65,7 +65,7 @@ describe('<Home />', () => {
   it('ensures links open in a new tab with proper attributes', async () => {
     render(await Home())
 
-    const links = screen.getAllByRole('link')
+    const links = screen.getAllByTestId('home-page__link')
 
     links.forEach(link => {
       expect(link).toHaveAttribute('target', '_blank')

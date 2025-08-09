@@ -41,7 +41,9 @@ describe('<Pagination />', () => {
     )
 
     const nonCurrentPageButton = screen.getByText('2')
-    expect(nonCurrentPageButton).toHaveClass('text-primary')
+    expect(nonCurrentPageButton).toHaveClass(
+      ' bg-bg-primary rounded-md cursor-pointer p-xsmall pb-xxsmall text-white hover:text-secondary',
+    )
     expect(nonCurrentPageButton).not.toHaveClass('text-secondary')
   })
 
