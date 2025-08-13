@@ -13,6 +13,13 @@ export const metadata = {
   description: 'Home page of Gabriel Duete, a software developer.',
 }
 
+class SentryExampleFrontendError extends Error {
+  constructor(message: string | undefined) {
+    super(message)
+    this.name = 'SentryExampleFrontendError'
+  }
+}
+
 const Home = async () => {
   const t = await getTranslations('IndexPage')
   const locale = await getLocale()
@@ -27,6 +34,10 @@ const Home = async () => {
     },
     ...SocialMediaItems,
   ]
+
+  // if (a > 0) {
+  //   throw new SentryExampleFrontendError('ITS A TEST!')
+  // }
 
   return (
     <FilterProvider>
