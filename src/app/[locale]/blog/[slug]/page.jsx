@@ -2,24 +2,21 @@ import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
 import { Paths } from '@/enums/Paths'
-import fs from 'fs'
-import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
-import path from 'path'
+import { getData } from '../helpers/getDataContentFile'
+
+export async function generateMetadata({ params }) {
+  const { data } = getData(params)
+
+  return {
+    title: data.title,
+    description: data.description,
+  }
+}
 
 const BlogPost = async ({ params }) => {
-  const { slug, locale } = await params
-
-  const filePath = path.join(
-    process.cwd(),
-    'src/content/blog',
-    locale,
-    `${slug}.mdx`,
-  )
-
-  const fileContent = fs.readFileSync(filePath, 'utf-8')
-  const { content, data } = matter(fileContent)
+  const { content, data } = getData(params)
 
   if (params === undefined) {
     notFound()
