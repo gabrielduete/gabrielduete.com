@@ -1,3 +1,5 @@
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
+
 import CarrerView from './views/ClientView'
 
 export const metadata = {
@@ -6,7 +8,12 @@ export const metadata = {
 }
 
 const Career = () => {
-  return <CarrerView />
+  return (
+    <>
+      <TabTitleWatcher originalTitle={metadata.title} />
+      <CarrerView />
+    </>
+  )
 }
 
 export default Career
