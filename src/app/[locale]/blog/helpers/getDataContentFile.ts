@@ -1,15 +1,9 @@
-import path from 'path'
+import { Locales } from '@/enums/Locales'
 import fs from 'fs'
 import matter from 'gray-matter'
+import path from 'path'
 
-type GetDataParams = {
-  slug: string;
-  locale: string;
-}
-
-export const getData = ({ params }: { params: GetDataParams }) => {
-  const { slug, locale } = params
-
+export function getBlogData(slug: string, locale: Locales) {
   const filePath = path.join(
     process.cwd(),
     'src/content/blog',

@@ -4,10 +4,12 @@ import ScrollTopButton from '@/components/ScrollTopButton'
 import { Paths } from '@/enums/Paths'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
-import { getData } from '../helpers/getDataContentFile'
+
+import { getBlogData } from '../helpers/getDataContentFile'
 
 export async function generateMetadata({ params }) {
-  const { data } = getData(params)
+  const { slug, locale } = params
+  const { data } = getBlogData(slug, locale)
 
   return {
     title: data.title,
@@ -16,11 +18,10 @@ export async function generateMetadata({ params }) {
 }
 
 const BlogPost = async ({ params }) => {
-  const { content, data } = getData(params)
+  if (!params) notFound()
 
-  if (params === undefined) {
-    notFound()
-  }
+  const { slug, locale } = params
+  const { content, data } = getBlogData(slug, locale)
 
   return (
     <section className='text-blog'>
