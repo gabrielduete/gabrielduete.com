@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
 import { FilterProvider } from '@/contexts/FilterContext'
-import { Locales } from '@/enums/Locales'
 import { routing } from '@/i18n/routing'
 import '@/styles/index.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
