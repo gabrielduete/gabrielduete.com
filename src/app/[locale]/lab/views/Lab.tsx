@@ -22,7 +22,7 @@ const LabView = () => {
 
     const category = isEN ? article.category.en : article.category.pt
 
-    return isAll || category === selectedFilter
+    return isAll || category.includes(selectedFilter)
   })
 
   useEffect(() => {

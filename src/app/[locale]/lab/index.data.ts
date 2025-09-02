@@ -1,4 +1,5 @@
 import bee from '@/../public/assets/images/lab/bee.jpeg'
+import duetetheme from '@/../public/assets/images/lab/duete-theme.png'
 import nuxt from '@/../public/assets/images/lab/nuxt.png'
 import sandevistan from '@/../public/assets/images/lab/sandevistan.png'
 import logo from '@/../public/assets/images/logo.png'
@@ -28,8 +29,25 @@ export const CONTRIBUTIONS = [
   },
   {
     title: {
-      pt: 'Meu portfólio | blog',
-      en: 'My portfolio | blog',
+      pt: 'Duete Theme',
+      en: 'Duete Theme',
+    },
+    description: {
+      pt: 'Um tema escuro minimalista com tons de verde e azul , criado para conforto visual e excelente contraste.',
+      en: 'A minimalist dark theme with green and bluish tones, crafted for visual comfort and excellent contrast.',
+    },
+    image: duetetheme,
+    link: 'https://marketplace.visualstudio.com/items?itemName=GabrielDuete.duete-theme',
+    age: '2025',
+    category: {
+      pt: ['Úteis', 'Open Source'],
+      en: ['Utils', 'Open Source'],
+    },
+  },
+  {
+    title: {
+      pt: 'Meu Blog | Portfólio',
+      en: 'My Blog | Portfolio',
     },
     description: {
       pt: 'Meu portfólio e blog pessoal, onde compartilho meus artigos e projetos.',
@@ -39,10 +57,11 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/gabrielduete/gabrielduete.com',
     age: '2025',
     category: {
-      pt: 'Engenharia',
-      en: 'Engineering',
+      pt: ['Engenharia', 'Open Source'],
+      en: ['Engineering', 'Open Source'],
     },
   },
+
   {
     title: {
       pt: 'Sandevistan',
@@ -56,8 +75,8 @@ export const CONTRIBUTIONS = [
     link: 'https://sandevistan.vercel.app/',
     age: '2024',
     category: {
-      pt: 'Úteis',
-      en: 'Utils',
+      pt: ['Úteis', 'Open Source'],
+      en: ['Utils', 'Open Source'],
     },
   },
   {
@@ -73,8 +92,8 @@ export const CONTRIBUTIONS = [
     link: 'https://www.linkedin.com/posts/gabrielduete_beecrowd-activity-6932682593100283905-Bnvw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC2UKmwB6Lx3Ty9cG5EOgFuy-2FfYvdmowY',
     age: '2022',
     category: {
-      pt: 'Úteis',
-      en: 'Utils',
+      pt: ['Úteis', 'Open Source'],
+      en: ['Utils', 'Open Source'],
     },
   },
 ]
