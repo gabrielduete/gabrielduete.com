@@ -13,6 +13,7 @@ const Card = (article: IArticle) => {
     }
   }
 
+
   return (
     <Link href={`/${locale}/blog/${slug}`} onClick={setNavigation}>
       <article

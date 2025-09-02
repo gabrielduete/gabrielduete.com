@@ -1,3 +1,4 @@
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { getAllArticles } from '@/utils/getArticles'
 import { useLocale } from 'next-intl'
 
@@ -13,7 +14,12 @@ const Blog = () => {
 
   const articles = getAllArticles(locale as Langs)
 
-  return <BlogView articles={articles} />
+  return (
+    <>
+      <TabTitleWatcher originalTitle={metadata.title} />
+      <BlogView articles={articles} />
+    </>
+  )
 }
 
 export default Blog

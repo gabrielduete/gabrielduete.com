@@ -1,32 +1,32 @@
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
-import fs from 'fs'
-import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
-import path from 'path'
+
+import { getBlogData } from '../helpers/getDataContentFile'
+
+export async function generateMetadata({ params }) {
+  const { slug, locale } = params
+  const { data } = getBlogData(slug, locale)
+
+  return {
+    title: data.title,
+    description: data.description,
+  }
+}
 
 const BlogPost = async ({ params }) => {
-  const { slug, locale } = await params
+  if (!params) notFound()
 
-  const filePath = path.join(
-    process.cwd(),
-    'src/content/blog',
-    locale,
-    `${slug}.mdx`,
-  )
-
-  const fileContent = fs.readFileSync(filePath, 'utf-8')
-  const { content, data } = matter(fileContent)
-
-  if (params === undefined) {
-    notFound()
-  }
+  const { slug, locale } = params
+  const { content, data } = getBlogData(slug, locale)
 
   return (
     <section className='text-blog'>
+      <TabTitleWatcher originalTitle={data.title} />
       <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
       <p className='text-subtitle-small text-gray-400'>{data.description}</p>

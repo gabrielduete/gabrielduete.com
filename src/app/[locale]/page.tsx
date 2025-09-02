@@ -1,5 +1,6 @@
 import ProfilePic from '@/../public/assets/images/profile-pic.png'
 import Cards from '@/components/Cards'
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { SocialMediaItems } from '@/constants/SocialMediaItems'
 import { FilterProvider } from '@/contexts/FilterContext'
 import { getPinnedArticles } from '@/utils/getArticles'
@@ -31,6 +32,7 @@ const Home = async () => {
   return (
     <FilterProvider>
       <section>
+        <TabTitleWatcher originalTitle={metadata.title} />
         <div
           className='
           w-full bg-bg-cards rounded-sm text-white p-xxxlarge

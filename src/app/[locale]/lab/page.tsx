@@ -1,3 +1,5 @@
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
+
 import LabView from './views/Lab'
 
 export const metadata = {
@@ -6,7 +8,12 @@ export const metadata = {
 }
 
 const Lab = () => {
-  return <LabView />
+  return (
+    <>
+      <TabTitleWatcher originalTitle={metadata.title} />
+      <LabView />
+    </>
+  )
 }
 
 export default Lab
