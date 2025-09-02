@@ -1,6 +1,7 @@
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
+import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
@@ -25,6 +26,7 @@ const BlogPost = async ({ params }) => {
 
   return (
     <section className='text-blog'>
+      <TabTitleWatcher originalTitle={data.title} />
       <BackButton path={Paths.BLOG} />
       <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
       <p className='text-subtitle-small text-gray-400'>{data.description}</p>
