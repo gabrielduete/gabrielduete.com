@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
+import { funnyText } from './data'
 
 export const metadata = {
   title: 'Gabriel Duete',
@@ -24,6 +25,9 @@ type Props = {
 }
 
 const LocaleLayout = async ({ children, params }: Props) => {
+  // Just a easter egg
+  console.log(`%c ${funnyText}`, 'font-family:monospace; color: #46ce7a;')
+
   const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
