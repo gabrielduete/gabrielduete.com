@@ -2,8 +2,6 @@
 
 import { useEffect } from 'react'
 
-import clsx from 'clsx'
-
 const KeyBoardEasterEgg = () => {
   const flashScreen = () => {
     const flash = document.createElement('div')
