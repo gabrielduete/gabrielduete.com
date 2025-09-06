@@ -31,7 +31,7 @@ const KeyBoardEasterEgg = () => {
       if (count > 20) {
         clearInterval(interval)
 
-        flash.remove()
+        document.body.removeChild(flash)
       }
     }, 100)
 
