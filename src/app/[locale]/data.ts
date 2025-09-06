@@ -60,4 +60,7 @@ Found a bug, security flaw, or anything else strange?
 Feel free to open an issue:
 
 → https://github.com/gabrielduete/gabrielduete.com/issues
+
+---> This Blog contain a secret easter egg, try to find it! <---
+---> In the first post pinned on the home page, the one where I talk about myself, there's a hint at the end! <---
 `.trim()
