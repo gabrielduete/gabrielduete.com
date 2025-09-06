@@ -37,10 +37,12 @@ describe('<KeyBoardEasterEgg />', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
     jest.clearAllMocks()
+    jest.useFakeTimers()
   })
 
   afterEach(() => {
     document.removeEventListener('keydown', jest.fn())
+    jest.useRealTimers()
   })
 
   it('should render the component with correct attributes', () => {
@@ -198,19 +200,19 @@ describe('<KeyBoardEasterEgg />', () => {
     ])
   })
 
-  it('should clean up flash element after animation', done => {
+  it('should clean up flash element after animation', () => {
     render(<KeyBoardEasterEgg />)
 
     secretKeys.forEach(key => {
       fireEvent.keyDown(document, { key })
     })
 
-    setTimeout(() => {
-      const flashElement = document.querySelector(
-        'div[style*="position: fixed"]',
-      )
-      expect(flashElement).not.toBeInTheDocument()
-      done()
-    }, 2500)
+    let flashElement = document.querySelector('div[style*="position: fixed"]')
+    expect(flashElement).toBeInTheDocument()
+
+    jest.advanceTimersByTime(2100)
+
+    flashElement = document.querySelector('div[style*="position: fixed"]')
+    expect(flashElement).not.toBeInTheDocument()
   })
 })
