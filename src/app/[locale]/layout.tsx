@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
+import KeyboardEasterEgg from './components/KeyboardEasterEgg'
+import { funnyText } from './data'
 
 export const metadata = {
   title: 'Gabriel Duete',
@@ -24,6 +26,12 @@ type Props = {
 }
 
 const LocaleLayout = async ({ children, params }: Props) => {
+  // Just a easter egg
+  console.log(
+    `%c ${funnyText}`,
+    'font-family:monospace; color: #46ce7a; font-size: 14px;',
+  )
+
   const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
@@ -50,6 +58,7 @@ const LocaleLayout = async ({ children, params }: Props) => {
           <FilterProvider>
             <Header />
             <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
+              <KeyboardEasterEgg />
               {children}
             </main>
             <Footer />

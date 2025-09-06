@@ -2,6 +2,7 @@ import bee from '@/../public/assets/images/lab/bee.jpeg'
 import duetetheme from '@/../public/assets/images/lab/duete-theme.png'
 import nuxt from '@/../public/assets/images/lab/nuxt.png'
 import sandevistan from '@/../public/assets/images/lab/sandevistan.png'
+import unleash from '@/../public/assets/images/lab/unleash.png'
 import logo from '@/../public/assets/images/logo.png'
 
 export const FILTERS = {
@@ -10,6 +11,23 @@ export const FILTERS = {
 } as const
 
 export const CONTRIBUTIONS = [
+  {
+    title: {
+      pt: 'Melhoria no Unleash SDK',
+      en: 'Improvement in Unleash SDK',
+    },
+    description: {
+      pt: 'Abri uma PR melhorando o comportamento do evento de erro. Isso deve ajudar a capturar melhor as falhas em aplicações críticas.',
+      en: 'Opened a PR improving error event handling. This should help capture failures better in critical applications.',
+    },
+    image: unleash,
+    link: 'https://github.com/Unleash/unleash-js-sdk/pull/264',
+    age: '2025',
+    category: {
+      pt: ['Open Source', 'Engenharia'],
+      en: ['Open Source', 'Engineering'],
+    },
+  },
   {
     title: {
       pt: 'Melhoria no middleware do Nuxt',
@@ -23,8 +41,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/nuxt/nuxt/issues/32494',
     age: '2025',
     category: {
-      pt: 'Open Source',
-      en: 'Open Source',
+      pt: ['Open Source', 'Engenharia'],
+      en: ['Open Source', 'Engineering'],
     },
   },
   {
@@ -40,8 +58,8 @@ export const CONTRIBUTIONS = [
     link: 'https://marketplace.visualstudio.com/items?itemName=GabrielDuete.duete-theme',
     age: '2025',
     category: {
-      pt: ['Úteis', 'Open Source'],
-      en: ['Utils', 'Open Source'],
+      pt: 'Úteis',
+      en: 'Utils',
     },
   },
   {
