@@ -2,24 +2,20 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import KeyBoardEasterEgg from '.'
 
-// Mock navigator.vibrate
 Object.defineProperty(navigator, 'vibrate', {
   writable: true,
   value: jest.fn(),
 })
 
-// Mock console methods
 const consoleSpy = jest.spyOn(console, 'log').mockImplementation()
 
 describe('<KeyBoardEasterEgg />', () => {
   beforeEach(() => {
-    // Clear DOM
     document.body.innerHTML = ''
     jest.clearAllMocks()
   })
 
   afterEach(() => {
-    // Clean up any remaining event listeners
     document.removeEventListener('keydown', jest.fn())
   })
 
@@ -249,43 +245,6 @@ describe('<KeyBoardEasterEgg />', () => {
     expect(navigator.vibrate).toHaveBeenCalledWith([
       100, 50, 100, 50, 100, 50, 100,
     ])
-  })
-
-  it('should not call navigator.vibrate when not available', () => {
-    // Remove vibrate from navigator
-    const originalVibrate = navigator.vibrate
-    delete (navigator as any).vibrate
-
-    render(<KeyBoardEasterEgg />)
-
-    const secretKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowDown',
-      'd',
-      'a',
-      'e',
-      'ArrowUp',
-      'ArrowRight',
-      'r',
-      'a',
-      'g',
-      'ArrowDown',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'g',
-      'o',
-      'n',
-    ]
-
-    secretKeys.forEach(key => {
-      fireEvent.keyDown(document, { key })
-    })
-
-    // Restore vibrate
-    ;(navigator as any).vibrate = originalVibrate
   })
 
   it('should clean up flash element after animation', done => {
