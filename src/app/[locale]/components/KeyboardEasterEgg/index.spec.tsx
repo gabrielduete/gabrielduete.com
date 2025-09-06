@@ -9,6 +9,30 @@ Object.defineProperty(navigator, 'vibrate', {
 
 const consoleSpy = jest.spyOn(console, 'log').mockImplementation()
 
+const consoleAcceptStyles = 'color: #46ce7a; font-size: 16px;'
+
+const secretKeys = [
+  'ArrowLeft',
+  'ArrowUp',
+  'ArrowDown',
+  'd',
+  'a',
+  'e',
+  'ArrowUp',
+  'ArrowRight',
+  'r',
+  'a',
+  'g',
+  'ArrowDown',
+  'ArrowUp',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'g',
+  'o',
+  'n',
+]
+
 describe('<KeyBoardEasterEgg />', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
@@ -66,19 +90,14 @@ describe('<KeyBoardEasterEgg />', () => {
   it('should progress through correct key sequence', () => {
     render(<KeyBoardEasterEgg />)
 
-    // First correct key
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cArrowLeft 🎉',
-      'color: #46ce7a; font-size: 16px;',
+      consoleAcceptStyles,
     )
 
-    // Second correct key
     fireEvent.keyDown(document, { key: 'ArrowUp' })
-    expect(consoleSpy).toHaveBeenCalledWith(
-      '%cArrowUp 🎉',
-      'color: #46ce7a; font-size: 16px;',
-    )
+    expect(consoleSpy).toHaveBeenCalledWith('%cArrowUp 🎉', consoleAcceptStyles)
   })
 
   it('should reset sequence on wrong key', () => {
@@ -88,7 +107,7 @@ describe('<KeyBoardEasterEgg />', () => {
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cArrowLeft 🎉',
-      'color: #46ce7a; font-size: 16px;',
+      consoleAcceptStyles,
     )
 
     // Wrong key
@@ -102,29 +121,26 @@ describe('<KeyBoardEasterEgg />', () => {
       'font-size: 16px;',
     )
 
-    // Should restart from beginning
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cArrowLeft 🎉',
-      'color: #46ce7a; font-size: 16px;',
+      consoleAcceptStyles,
     )
   })
 
   it('should handle first key correctly when sequence is reset', () => {
     render(<KeyBoardEasterEgg />)
 
-    // Start with wrong key
     fireEvent.keyDown(document, { key: 'x' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cx ❌',
       'color: #ff4d4d; font-size: 16px;',
     )
 
-    // Then press the first key of sequence
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cArrowLeft 🎉',
-      'color: #46ce7a; font-size: 16px;',
+      consoleAcceptStyles,
     )
   })
 
@@ -133,28 +149,6 @@ describe('<KeyBoardEasterEgg />', () => {
     const appendChildSpy = jest.spyOn(document.body, 'appendChild')
 
     render(<KeyBoardEasterEgg />)
-
-    const secretKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowDown',
-      'd',
-      'a',
-      'e',
-      'ArrowUp',
-      'ArrowRight',
-      'r',
-      'a',
-      'g',
-      'ArrowDown',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'g',
-      'o',
-      'n',
-    ]
 
     // Enter complete sequence
     secretKeys.forEach(key => {
@@ -172,33 +166,12 @@ describe('<KeyBoardEasterEgg />', () => {
   it('should create flash element with correct styles', () => {
     render(<KeyBoardEasterEgg />)
 
-    const secretKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowDown',
-      'd',
-      'a',
-      'e',
-      'ArrowUp',
-      'ArrowRight',
-      'r',
-      'a',
-      'g',
-      'ArrowDown',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'g',
-      'o',
-      'n',
-    ]
-
     secretKeys.forEach(key => {
       fireEvent.keyDown(document, { key })
     })
 
     const flashElement = document.querySelector('div[style*="position: fixed"]')
+
     expect(flashElement).toBeInTheDocument()
     expect(flashElement).toHaveStyle({
       position: 'fixed',
@@ -216,28 +189,6 @@ describe('<KeyBoardEasterEgg />', () => {
   it('should call navigator.vibrate when available', () => {
     render(<KeyBoardEasterEgg />)
 
-    const secretKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowDown',
-      'd',
-      'a',
-      'e',
-      'ArrowUp',
-      'ArrowRight',
-      'r',
-      'a',
-      'g',
-      'ArrowDown',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'g',
-      'o',
-      'n',
-    ]
-
     secretKeys.forEach(key => {
       fireEvent.keyDown(document, { key })
     })
@@ -250,39 +201,16 @@ describe('<KeyBoardEasterEgg />', () => {
   it('should clean up flash element after animation', done => {
     render(<KeyBoardEasterEgg />)
 
-    const secretKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowDown',
-      'd',
-      'a',
-      'e',
-      'ArrowUp',
-      'ArrowRight',
-      'r',
-      'a',
-      'g',
-      'ArrowDown',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowRight',
-      'g',
-      'o',
-      'n',
-    ]
-
     secretKeys.forEach(key => {
       fireEvent.keyDown(document, { key })
     })
 
-    // Check that element is removed after animation completes
     setTimeout(() => {
       const flashElement = document.querySelector(
         'div[style*="position: fixed"]',
       )
       expect(flashElement).not.toBeInTheDocument()
       done()
-    }, 2500) // Wait longer than the animation duration
+    }, 2500)
   })
 })
