@@ -2,7 +2,7 @@
   "NotFound": {
     "title": "Ops... nada por aqui! 😬",
     "description": "Mas não desanime, que tal dar uma olhada no meu <blog>blog</blog> ou ver meus <projects>projetos</projects>?",
-    "articles": "Veja só os posts fixados:"
+    "articles": "Posts fixados:"
   },
   "IndexPage": {
     "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Juntos Somos Mais."
