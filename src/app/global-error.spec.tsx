@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/nextjs'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
-import NextError from 'next/error'
 
 import GlobalError from './global-error'
 

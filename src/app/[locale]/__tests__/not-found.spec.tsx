@@ -10,7 +10,7 @@ jest.mock('@/utils/getArticles', () => ({
 }))
 
 jest.mock('@/components/Cards', () => {
-  return function MockCards({ articles }: { articles: any[] }) {
+  return function MockCards({ articles }: { articles: IArticle[] }) {
     return <div data-testid='cards'>Cards with {articles.length} articles</div>
   }
 })
@@ -33,18 +33,26 @@ describe('<NotFound />', () => {
 
     const mockT = jest.fn(
       (key: string) => mockTranslations[key as keyof typeof mockTranslations],
+    ) as jest.Mock & { rich?: jest.Mock }
+    mockT.rich = jest.fn(
+      (
+        key: string,
+        options: {
+          blog: (chunk: string) => React.ReactNode
+          projects: (chunk: string) => React.ReactNode
+        },
+      ) => {
+        if (key === 'description') {
+          return (
+            <>
+              The page you are looking for does not exist. Check out our{' '}
+              {options.blog('blog')} or {options.projects('projects')}.
+            </>
+          )
+        }
+        return mockTranslations[key as keyof typeof mockTranslations]
+      },
     )
-    mockT.rich = jest.fn((key: string, options: any) => {
-      if (key === 'description') {
-        return (
-          <>
-            The page you are looking for does not exist. Check out our{' '}
-            {options.blog('blog')} or {options.projects('projects')}.
-          </>
-        )
-      }
-      return mockTranslations[key as keyof typeof mockTranslations]
-    })
     ;(getTranslations as jest.Mock).mockResolvedValue(mockT)
     ;(getLocale as jest.Mock).mockResolvedValue('en')
     ;(getPinnedArticles as jest.Mock).mockReturnValue(mockPinnedArticles)

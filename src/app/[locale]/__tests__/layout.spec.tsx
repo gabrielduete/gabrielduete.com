@@ -47,6 +47,7 @@ jest.mock('@/i18n/routing', () => ({
 
 describe('<Layout />', () => {
   const mockChildren = <div data-testid='children'>Test Children</div>
+  const { hasLocale } = jest.requireMock('next-intl')
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -54,7 +55,6 @@ describe('<Layout />', () => {
 
   it('should render the layout with valid locale', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -73,7 +73,6 @@ describe('<Layout />', () => {
 
   it('should render with correct HTML structure', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -94,7 +93,6 @@ describe('<Layout />', () => {
 
   it('should render with correct CSS classes on main element', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -117,7 +115,6 @@ describe('<Layout />', () => {
 
   it('should include Clarity script in head', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -133,7 +130,6 @@ describe('<Layout />', () => {
 
   it('should call notFound when locale is invalid', async () => {
     const mockParams = Promise.resolve({ locale: 'invalid' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(false)
 
     await Layout({ children: mockChildren, params: mockParams })
@@ -143,7 +139,6 @@ describe('<Layout />', () => {
 
   it('should call hasLocale with correct parameters', async () => {
     const mockParams = Promise.resolve({ locale: 'pt-br' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     await Layout({ children: mockChildren, params: mockParams })
@@ -153,7 +148,6 @@ describe('<Layout />', () => {
 
   it('should render with different locale', async () => {
     const mockParams = Promise.resolve({ locale: 'pt-br' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -168,7 +162,6 @@ describe('<Layout />', () => {
 
   it('should render all required components in correct order', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -185,7 +178,6 @@ describe('<Layout />', () => {
 
   it('should render children inside main element', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -201,7 +193,6 @@ describe('<Layout />', () => {
 
   it('should include KeyboardEasterEgg component', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
@@ -215,7 +206,6 @@ describe('<Layout />', () => {
 
   it('should handle async params correctly', async () => {
     const mockParams = Promise.resolve({ locale: 'en' })
-    const { hasLocale } = require('next-intl')
     hasLocale.mockReturnValue(true)
 
     const component = await Layout({
