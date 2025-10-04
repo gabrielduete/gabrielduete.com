@@ -11,9 +11,8 @@ describe('instrumentation-client', () => {
     jest.clearAllMocks()
   })
 
-  it('should initialize Sentry with correct configuration', () => {
-    // Import and execute the module after mocks are set up
-    require('./instrumentation-client')
+  it('should initialize Sentry with correct configuration', async () => {
+    await import('./instrumentation-client')
 
     expect(Sentry.init).toHaveBeenCalledWith({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -26,8 +25,8 @@ describe('instrumentation-client', () => {
     })
   })
 
-  it('should export onRouterTransitionStart function', () => {
-    const { onRouterTransitionStart } = require('./instrumentation-client')
+  it('should export onRouterTransitionStart function', async () => {
+    const { onRouterTransitionStart } = await import('./instrumentation-client')
 
     expect(onRouterTransitionStart).toBe(Sentry.captureRouterTransitionStart)
   })
