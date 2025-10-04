@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { getTranslations } from 'next-intl/server'
 
-import Home from './page'
+import Home from '../page'
 
 describe('<Home />', () => {
   beforeEach(() => {
