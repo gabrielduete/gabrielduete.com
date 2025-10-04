@@ -1,9 +1,10 @@
+import { GiscusProps } from '@giscus/react'
 import { render, screen } from '@testing-library/react'
 
 import { GiscusComments } from './index'
 
 jest.mock('@giscus/react', () => {
-  return function MockGiscus(props: any) {
+  return function MockGiscus(props: GiscusProps) {
     return <div data-testid='giscus' {...props} />
   }
 })

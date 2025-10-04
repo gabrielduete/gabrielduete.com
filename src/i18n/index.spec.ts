@@ -1,3 +1,7 @@
+import * as navigation from './navigation'
+import * as requestConfig from './request'
+import { routing } from './routing'
+
 jest.mock('next-intl/routing', () => ({
   defineRouting: jest.fn(() => ({
     locales: ['en', 'pt-br'],
@@ -28,16 +32,12 @@ jest.mock('../messages/pt-br.json', () => ({ default: { hello: 'Olá' } }))
 
 describe('i18n configuration', () => {
   it('should have routing configuration', () => {
-    const { routing } = require('./routing')
-
     expect(routing).toBeDefined()
     expect(routing.locales).toEqual(['en', 'pt-br'])
     expect(routing.defaultLocale).toBe('en')
   })
 
   it('should export navigation functions', () => {
-    const navigation = require('./navigation')
-
     expect(navigation.Link).toBe('mock-link')
     expect(navigation.redirect).toBe('mock-redirect')
     expect(navigation.usePathname).toBe('mock-usePathname')
@@ -46,8 +46,6 @@ describe('i18n configuration', () => {
   })
 
   it('should export request configuration', () => {
-    const requestConfig = require('./request')
-
     expect(requestConfig.default).toBe('mock-request-config')
   })
 })

@@ -29,7 +29,7 @@ describe('TabTitleWatcher', () => {
 
     mockSetInterval = jest
       .spyOn(global, 'setInterval')
-      .mockImplementation(() => 123 as any)
+      .mockImplementation(() => 123 as unknown as NodeJS.Timeout)
     mockClearInterval = jest
       .spyOn(global, 'clearInterval')
       .mockImplementation(() => {})

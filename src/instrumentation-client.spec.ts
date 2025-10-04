@@ -12,6 +12,7 @@ describe('instrumentation-client', () => {
   })
 
   it('should initialize Sentry with correct configuration', () => {
+    // Import and execute the module after mocks are set up
     require('./instrumentation-client')
 
     expect(Sentry.init).toHaveBeenCalledWith({
