@@ -72,7 +72,7 @@ const Home = async () => {
             </div>
           </div>
         </div>
-        <div className='mt-xgiant'>
+        <div className='mt-xxxxlarge'>
           <Cards articles={pinnedArticles} />
         </div>
       </section>
