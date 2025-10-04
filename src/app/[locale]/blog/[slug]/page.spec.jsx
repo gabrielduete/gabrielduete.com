@@ -92,7 +92,9 @@ describe('BlogPost', () => {
   it('should call notFound when params is null', async () => {
     try {
       await BlogPost({ params: null })
-    } catch (error) {}
+    } catch (error) {
+      // Expected to throw due to destructuring
+    }
 
     expect(mockNotFound).toHaveBeenCalled()
   })
@@ -100,7 +102,9 @@ describe('BlogPost', () => {
   it('should call notFound when params is undefined', async () => {
     try {
       await BlogPost({ params: undefined })
-    } catch (error) {}
+    } catch (error) {
+      // Expected to throw due to destructuring
+    }
 
     expect(mockNotFound).toHaveBeenCalled()
   })

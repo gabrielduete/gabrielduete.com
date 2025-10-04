@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation'
 import { getBlogData } from '../helpers/getDataContentFile'
 
 export async function generateMetadata({ params }) {
-  const { slug, locale } = params
+  const { slug, locale } = await params
   const { data } = getBlogData(slug, locale)
 
   return {
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 const BlogPost = async ({ params }) => {
   if (!params) notFound()
 
-  const { slug, locale } = params
+  const { slug, locale } = await params
   const { content, data } = getBlogData(slug, locale)
 
   return (
