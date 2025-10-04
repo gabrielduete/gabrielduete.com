@@ -11,9 +11,9 @@ const NotFound = async () => {
   const pinnedArticles = getPinnedArticles(locale as Langs)
 
   return (
-    <div className='text-primary'>
+    <div className='flex flex-col items-center text-primary lg:items-start'>
       <h1 className='text-title-giant'>{t('title')}</h1>
-      <p className='text-large mt-xxsmall'>
+      <p className='text-medium'>
         {t.rich('description', {
           blog: chunks => (
             <Link href={Paths.BLOG}>
@@ -31,7 +31,7 @@ const NotFound = async () => {
           ),
         })}
       </p>
-      <p className='text-large mt-small mb-medium'>{t('articles')}</p>
+      <p className='text-large mt-medium mb-medium'>{t('articles')}</p>
       <Cards articles={pinnedArticles} />
     </div>
   )
