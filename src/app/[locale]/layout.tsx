@@ -24,7 +24,7 @@ type Props = {
   params: Promise<{ locale: string }>
 }
 
-const Loyaut = async ({ children, params }: Props) => {
+const Layout = async ({ children, params }: Props) => {
   const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
@@ -62,4 +62,4 @@ const Loyaut = async ({ children, params }: Props) => {
   )
 }
 
-export default Loyaut
+export default Layout
