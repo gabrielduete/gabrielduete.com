@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
 
   const baseUrl = 'https://gabrielduete.com'
   const url = `${baseUrl}/${locale}/blog/${slug}`
-  const imageUrl = `${baseUrl}/assets/images/og-default.svg`
+  const imageUrl = `${baseUrl}/assets/images/post.jpg`
 
   return {
     title: data.title,
