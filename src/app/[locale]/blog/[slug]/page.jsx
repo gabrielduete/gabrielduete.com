@@ -14,6 +14,7 @@ export async function generateMetadata({ params }) {
   const { data } = getBlogData(slug, locale)
 
   const baseUrl = 'https://gabrielduete.com'
+  const url = `${baseUrl}/${locale}/blog/${slug}`
 
   return {
     title: data.title,
@@ -36,6 +37,13 @@ export async function generateMetadata({ params }) {
       publishedTime: data.date,
       authors: ['Gabriel Duete'],
       tags: data.tags || [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: data.title,
+      description: data.description,
+      images: Banner,
+      creator: '@gabrielduetedev',
     },
     alternates: {
       canonical: url,
