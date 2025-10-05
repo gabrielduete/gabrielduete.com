@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#132227"/>
+  
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#20272f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#132227;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#gradient)"/>
+  
+  <!-- Card background -->
+  <rect x="50" y="100" width="500" height="200" rx="12" fill="#193038"/>
+  
+  <!-- Content -->
+  <text x="80" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#46ce7a">
+    Gabriel Duete
+  </text>
+  <text x="80" y="220" font-family="Arial, sans-serif" font-size="24" fill="#ffffff">
+    Software Developer
+  </text>
+  
+  <!-- Bottom accent -->
+  <rect x="0" y="580" width="1200" height="50" fill="#46ce7a" opacity="0.2"/>
+  <text x="100" y="610" font-family="Arial, sans-serif" font-size="18" fill="#46ce7a">
+    gabrielduete.com
+  </text>
+</svg>

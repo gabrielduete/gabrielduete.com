@@ -12,9 +12,42 @@ export async function generateMetadata({ params }) {
   const { slug, locale } = await params
   const { data } = getBlogData(slug, locale)
 
+  const baseUrl = 'https://gabrielduete.com'
+  const url = `${baseUrl}/${locale}/blog/${slug}`
+  const imageUrl = `${baseUrl}/assets/images/og-default.svg`
+
   return {
     title: data.title,
     description: data.description,
+    openGraph: {
+      title: data.title,
+      description: data.description,
+      url,
+      siteName: 'Gabriel Duete',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: data.title,
+        },
+      ],
+      locale: locale,
+      type: 'article',
+      publishedTime: data.date,
+      authors: ['Gabriel Duete'],
+      tags: data.tags || [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: data.title,
+      description: data.description,
+      images: [imageUrl],
+      creator: '@gabrielduetedev',
+    },
+    alternates: {
+      canonical: url,
+    },
   }
 }
 

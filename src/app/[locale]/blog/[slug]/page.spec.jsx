@@ -206,6 +206,35 @@ describe('generateMetadata', () => {
     expect(metadata).toEqual({
       title: 'Test Blog Post',
       description: 'Test description',
+      openGraph: {
+        title: 'Test Blog Post',
+        description: 'Test description',
+        url: 'https://gabrielduete.com/en/blog/test-post',
+        siteName: 'Gabriel Duete',
+        images: [
+          {
+            url: 'https://gabrielduete.com/assets/images/og-default.svg',
+            width: 1200,
+            height: 630,
+            alt: 'Test Blog Post',
+          },
+        ],
+        locale: 'en',
+        type: 'article',
+        publishedTime: undefined,
+        authors: ['Gabriel Duete'],
+        tags: [],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Test Blog Post',
+        description: 'Test description',
+        images: ['https://gabrielduete.com/assets/images/og-default.svg'],
+        creator: '@gabrielduetedev',
+      },
+      alternates: {
+        canonical: 'https://gabrielduete.com/en/blog/test-post',
+      },
     })
   })
 
@@ -226,6 +255,35 @@ describe('generateMetadata', () => {
     expect(metadata).toEqual({
       title: 'Post de Teste',
       description: 'Descrição de teste',
+      openGraph: {
+        title: 'Post de Teste',
+        description: 'Descrição de teste',
+        url: 'https://gabrielduete.com/pt-br/blog/post-teste',
+        siteName: 'Gabriel Duete',
+        images: [
+          {
+            url: 'https://gabrielduete.com/assets/images/og-default.svg',
+            width: 1200,
+            height: 630,
+            alt: 'Post de Teste',
+          },
+        ],
+        locale: 'pt-br',
+        type: 'article',
+        publishedTime: undefined,
+        authors: ['Gabriel Duete'],
+        tags: [],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Post de Teste',
+        description: 'Descrição de teste',
+        images: ['https://gabrielduete.com/assets/images/og-default.svg'],
+        creator: '@gabrielduetedev',
+      },
+      alternates: {
+        canonical: 'https://gabrielduete.com/pt-br/blog/post-teste',
+      },
     })
   })
 })

@@ -113,7 +113,6 @@ describe('<Icons />', () => {
   it('should render all social media links', () => {
     render(<Icons />)
 
-    // Check for actual social media links based on the rendered output
     const githubLink = screen.getByRole('link', { name: /github/i })
     const linkedinLink = screen.getByRole('link', { name: /linkedin/i })
     const stackOverflowLink = screen.getByRole('link', {
