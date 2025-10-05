@@ -1,3 +1,4 @@
+import Banner from '@/../public/assets/images/og-default.svg'
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
@@ -12,9 +13,33 @@ export async function generateMetadata({ params }) {
   const { slug, locale } = await params
   const { data } = getBlogData(slug, locale)
 
+  const baseUrl = 'https://gabrielduete.com'
+
   return {
     title: data.title,
     description: data.description,
+    openGraph: {
+      title: data.title,
+      description: data.description,
+      url: `${baseUrl}/${locale}/blog/${slug}`,
+      siteName: 'Gabriel Duete',
+      images: [
+        {
+          url: Banner,
+          width: 1200,
+          height: 630,
+          alt: data.title,
+        },
+      ],
+      locale: locale,
+      type: 'article',
+      publishedTime: data.date,
+      authors: ['Gabriel Duete'],
+      tags: data.tags || [],
+    },
+    alternates: {
+      canonical: url,
+    },
   }
 }
 
