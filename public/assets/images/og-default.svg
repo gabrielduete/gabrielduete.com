@@ -19,12 +19,8 @@
     Gabriel Duete
   </text>
   <text x="80" y="220" font-family="Arial, sans-serif" font-size="24" fill="#ffffff">
-    Software Developer &amp; Tech Writer
+    Software Developer
   </text>
-  
-  <!-- Blog icon/decoration -->
-  <circle cx="1000" cy="150" r="60" fill="#46ce7a" opacity="0.3"/>
-  <text x="1000" y="160" font-family="Arial, sans-serif" font-size="32" fill="#46ce7a" text-anchor="middle">📝</text>
   
   <!-- Bottom accent -->
   <rect x="0" y="580" width="1200" height="50" fill="#46ce7a" opacity="0.2"/>
