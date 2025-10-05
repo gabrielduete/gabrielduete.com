@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: data.title,
       description: data.description,
-      url: `${baseUrl}/${locale}/blog/${slug}`,
+      url,
       siteName: 'Gabriel Duete',
       images: [
         {
