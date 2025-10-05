@@ -213,7 +213,7 @@ describe('generateMetadata', () => {
         siteName: 'Gabriel Duete',
         images: [
           {
-            url: 'https://gabrielduete.com/assets/images/og-default.svg',
+            url: 'https://gabrielduete.com/assets/images/post.jpg',
             width: 1200,
             height: 630,
             alt: 'Test Blog Post',
@@ -229,7 +229,7 @@ describe('generateMetadata', () => {
         card: 'summary_large_image',
         title: 'Test Blog Post',
         description: 'Test description',
-        images: ['https://gabrielduete.com/assets/images/og-default.svg'],
+        images: ['https://gabrielduete.com/assets/images/post.jpg'],
         creator: '@gabrielduetedev',
       },
       alternates: {
@@ -262,7 +262,7 @@ describe('generateMetadata', () => {
         siteName: 'Gabriel Duete',
         images: [
           {
-            url: 'https://gabrielduete.com/assets/images/og-default.svg',
+            url: 'https://gabrielduete.com/assets/images/post.jpg',
             width: 1200,
             height: 630,
             alt: 'Post de Teste',
@@ -278,7 +278,7 @@ describe('generateMetadata', () => {
         card: 'summary_large_image',
         title: 'Post de Teste',
         description: 'Descrição de teste',
-        images: ['https://gabrielduete.com/assets/images/og-default.svg'],
+        images: ['https://gabrielduete.com/assets/images/post.jpg'],
         creator: '@gabrielduetedev',
       },
       alternates: {
