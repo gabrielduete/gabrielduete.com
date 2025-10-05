@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 
 import NavigatorDesktop from '.'
 
-// Mock next/navigation
 const mockUsePathname = jest.fn()
 const mockUseRouter = jest.fn()
 
@@ -11,7 +10,6 @@ jest.mock('next/navigation', () => ({
   useRouter: () => mockUseRouter(),
 }))
 
-// Mock next-intl
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
   useLocale: () => 'en',

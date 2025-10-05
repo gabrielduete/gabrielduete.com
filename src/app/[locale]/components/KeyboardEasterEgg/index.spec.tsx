@@ -105,14 +105,12 @@ describe('<KeyBoardEasterEgg />', () => {
   it('should reset sequence on wrong key', () => {
     render(<KeyBoardEasterEgg />)
 
-    // Start sequence
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cArrowLeft 🎉',
       consoleAcceptStyles,
     )
 
-    // Wrong key
     fireEvent.keyDown(document, { key: 'x' })
     expect(consoleSpy).toHaveBeenCalledWith(
       '%cx ❌',
@@ -152,7 +150,6 @@ describe('<KeyBoardEasterEgg />', () => {
 
     render(<KeyBoardEasterEgg />)
 
-    // Enter complete sequence
     secretKeys.forEach(key => {
       fireEvent.keyDown(document, { key })
     })
