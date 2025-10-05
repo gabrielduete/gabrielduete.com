@@ -1,4 +1,3 @@
-import Banner from '@/../public/assets/images/og-default.svg'
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
@@ -15,6 +14,7 @@ export async function generateMetadata({ params }) {
 
   const baseUrl = 'https://gabrielduete.com'
   const url = `${baseUrl}/${locale}/blog/${slug}`
+  const imageUrl = `${baseUrl}/assets/images/og-default.svg`
 
   return {
     title: data.title,
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
       siteName: 'Gabriel Duete',
       images: [
         {
-          url: Banner,
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: data.title,
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title: data.title,
       description: data.description,
-      images: Banner,
+      images: [imageUrl],
       creator: '@gabrielduetedev',
     },
     alternates: {
