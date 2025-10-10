@@ -185,13 +185,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - **LinkedIn**:
   [linkedin.com/in/gabrielduete](https://linkedin.com/in/gabrielduete)
 
-## Acknowledgments
-
-- Next.js team for the amazing framework
-- Vercel for the excellent hosting platform
-- TailwindCSS team for the utility-first CSS framework
-- All open source contributors who made this project possible
-
 ---
 
 Made with hardwork by [Gabriel Duete](https://gabrielduete.com)
