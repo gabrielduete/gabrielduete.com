@@ -1,0 +1,519 @@
+---
+title: 'My Website Architecture Decisions - ADRs'
+description:
+  'Documenting the architectural decisions behind gabrielduete.com using
+  Architecture Decision Records (ADRs).'
+date: '08-10-2025'
+category: 'Engineering'
+tags: ['architecture', 'adr', 'nextjs', 'react', 'typescript']
+---
+
+Hey everyone! How's it going?
+
+I created this post to document the main architectural decisions behind the
+development of my blog ([gabrielduete.com](gabrielduete.com)) using
+[Architecture Decision Records](https://github.com/joelparkerhenderson/architecture-decision-record)
+(ADRs). Each ADR follows the standard format with context, decision, and
+consequences.
+
+I wanted to keep the focus on hosting costs, so I prioritized free solutions
+that still meet the project's needs well (don't underestimate them, hehe).
+
+# ADR-001: Next.js as Main Framework
+
+## Context
+
+I needed to choose a framework to develop my personal website that would
+support:
+
+- Server-side rendering (SSR) for SEO
+- Static site generation (SSG) for performance
+- Dynamic page creation
+- File-based routing
+- Native TypeScript support
+- Good development experience
+- Simple deployment
+
+## Decision
+
+I chose **Next.js v15+** as the main framework, utilizing:
+
+- App Router (new routing architecture)
+- Server Components by default
+- Client Components when necessary
+- Native TypeScript
+- API Routes for server-side functionality
+- Dynamic Routing for generating dynamic pages
+
+## Alternative Considered
+
+- **Nuxt.js**: Good option, but I preferred the React ecosystem
+
+---
+
+# ADR-002: TailwindCSS for Styling
+
+## Context
+
+I needed a styling solution that:
+
+- Was consistent and scalable
+- Reduced custom CSS
+- Had good performance
+- Was easy to maintain
+- Supported design system
+
+## Decision
+
+I implemented **TailwindCSS v4+** as the styling solution, utilizing:
+
+- Design tokens consistent
+- Automatic CSS purge for unused styles
+- Dark mode support
+
+## Alternatives Considered
+
+- **Styled Components**: I really like CSS-in-JS, but styled components is
+  [discontinued](https://opencollective.com/styled-components/updates/thank-you).
+  Better not take the risk. :p
+
+---
+
+# ADR-003: Next-intl for Internationalization
+
+## Context
+
+The website needed to support Portuguese and English languages:
+
+- Portuguese (Brazil) as the main language
+- English as the secondary language
+- SEO optimized for both languages
+- Locale-based routing
+- Simple translation maintenance
+
+## Decision
+
+I implemented **next-intl 4.1.0** for internationalization, utilizing:
+
+- Locale-based routing (`/en/`, `/pt-br/`)
+- JSON files for translations
+- Server-side rendering of localized content
+- Automatic user language detection
+- Fallback to default language
+- SEO optimized for multiple languages
+- Optimized performance
+
+## Alternatives Considered
+
+- **next-i18next**: Good option, but less integration with App Router
+- **Manual implementation**: Too much work and error-prone
+
+---
+
+# ADR-004: ESLint + Prettier for Code Quality
+
+## Context
+
+I needed tools to ensure:
+
+- Code consistency
+- Error and problem detection
+- Automatic formatting
+- Development best practices
+- Integration with editor and CI/CD
+
+## Decision
+
+I implemented:
+
+- **ESLint 9.21.0** for static analysis
+- **Prettier 3.5.1** for formatting
+- Next.js integrated configuration
+- GitHub Actions integration
+
+## Alternatives Considered
+
+- **Biome**: Faster, but less mature. I've tested it, but being something new, I
+  haven't spent enough time to guarantee the technology's support in a more
+  long-lasting project like a blog.
+
+## More about
+
+If you're interested, I have this
+[gist](https://gist.github.com/gabrielduete/e0d047fcd20bb154a7904267bee50647) on
+GitHub where I save the Prettier configurations I use most.
+
+---
+
+# ADR-005: Jest for Testing
+
+## Context
+
+I needed a testing strategy that:
+
+- Worked well with Next.js and React
+- Supported TypeScript
+- Had good CI/CD integration
+- Generated coverage reports
+- Was easy to configure and maintain
+
+## Decision
+
+I implemented **Jest 30.0.2** as the testing framework, utilizing:
+
+- Testing Library for component tests
+- Custom configuration for Next.js
+- Automatic and monitored code coverage
+- Mocks for external dependencies
+- GitHub Actions integration
+
+---
+
+# ADR-006: Codecov for Test Coverage
+
+## Context
+
+I needed a tool to:
+
+- Monitor test code coverage
+- Ensure new commits don't reduce coverage
+- Visualize coverage reports
+- Integrate with GitHub Actions
+- Be free for open source projects
+
+## Decision
+
+I implemented **Codecov** for coverage monitoring, utilizing:
+
+- Automatic coverage report upload
+- GitHub Actions integration
+- Coverage badges in README
+- Alerts when coverage decreases
+- Detailed visual reports
+
+Dashboard:
+![Codecov dashboard showing code coverage reports](/assets/images/blog/architecture-decisions/codecov-1.png)
+
+Local coverage file:
+![Coverage dashboard showing code coverage reports](/assets/images/blog/architecture-decisions/codecov-2.png)
+
+## Alternatives Considered
+
+- **SonarQube**: Very good too, but I decided to give Codecov a chance, I've
+  been using SonarQube for a long time and wanted to try something different.
+- **Manual tracking**: Tedious and error-prone
+- **No monitoring**: Risk of low coverage
+
+---
+
+# ADR-007: Sentry for Error Monitoring
+
+## Context
+
+I needed monitoring to:
+
+- Detect errors in production
+- Automatic alerts
+- Integration with development workflow
+
+## Decision
+
+I implemented **Sentry** for monitoring, utilizing:
+
+- Automatic error tracking
+- Performance monitoring
+- User feedback
+- Release tracking
+- GitHub integration
+
+Dashboard showing logs:
+![Sentry dashboard showing error monitoring and performance](/assets/images/blog/architecture-decisions/sentry.png)
+
+---
+
+# ADR-008: GitHub Actions for CI/CD
+
+## Context
+
+I needed automation to:
+
+- Run tests automatically
+- Automatic deployment
+- Code quality verification
+- Integration with external tools
+- Consistent workflow
+
+## Decision
+
+I implemented **GitHub Actions** for CI/CD, utilizing:
+
+- Workflow for tests and build
+- Codecov integration
+- Automatic deployment to Vercel
+- Status notifications
+
+---
+
+# ADR-009: Microsoft Clarity for Analytics
+
+## Context
+
+I needed an analytics tool that:
+
+- Provided user behavior insights
+- Showed hot spots (heatmaps) of the site
+- Tracked clicks and interactions
+- Was free for personal use
+- Integrated well with Next.js
+- Respected user privacy
+
+## Decision
+
+I implemented **Microsoft Clarity** for analytics, utilizing:
+
+- Heatmaps to visualize most clicked areas
+- Session recordings to understand navigation
+- Performance and engagement metrics
+- Integration via script in Next.js
+- Dashboard for data analysis
+
+## More about
+
+Video showing the recordings tab, you can see in detail the interaction of each
+session:
+
+(one cool thing is the click sound when the user clicks ahuahu)
+
+<video controls width='100%'>
+  <source
+    src='/assets/images/blog/architecture-decisions/clarity-1.mp4'
+    type='video/mp4'
+  />
+  Your browser does not support HTML5 videos.
+</video>
+
+<br />
+Dashboard showing heatmaps and metrics: ![Microsoft Clarity dashboard showing
+heatmaps and metrics](/assets/images/blog/architecture-decisions/clarity-2.png)
+
+Dashboard showing a heat map of the home:
+![Microsoft Clarity heat map showing most clicked areas](/assets/images/blog/architecture-decisions/clarity-3.png)
+
+## Alternatives Considered
+
+- **Google Analytics**: More complete, but too complex for a personal blog
+- **Hotjar**: I thought about using Hotjar at first, but several cool features
+  are paid. With Clarity I got practically the same things for free.
+
+---
+
+# ADR-010: Vercel for Deploy and Hosting
+
+## Context
+
+I needed a deployment platform that:
+
+- Integrated with Next.js
+- Supported SSR and SSG
+- Had global CDN
+- Offered automatic deployment
+- Had good performance and reliability
+
+## Decision
+
+I chose **Vercel** as the hosting platform, utilizing:
+
+- Automatic deployment via GitHub
+- Global Edge Network CDN
+- Preview deployments for PRs (This helped a lot!)
+- Custom domain
+
+---
+
+# ADR-011: GitHub Projects for Task Management
+
+## Context
+
+I needed a tool to:
+
+- Organize project tasks
+- Visualize progress clearly
+- Integrate with GitHub issues and PRs
+- Be free and simple to use
+- Allow collaboration and tracking
+
+## Decision
+
+I implemented **GitHub Projects** for task management, utilizing:
+
+- Kanban board to visualize workflow
+- Columns: Backlog, Ready, In Progress, In Review, Done
+- Native integration with issues and pull requests
+- Estimates and progress metrics
+- Automatic workflows for transitions
+
+## More about
+
+I really like using GitHub Projects in projects, it helps maintain focus and
+organize tasks. The integration with issues is very good, when I create an
+issue, it already appears on the board automatically, I can reference the PR
+with the issue, which is linked to the task, so when merging the PR, the task is
+automatically moved to Done.
+
+It's also very good thinking about the open source side, because you can make
+the project public and people can see the progress of tasks, assignments,
+priorities, etc...
+
+![GitHub Projects board showing Kanban workflow](/assets/images/blog/architecture-decisions/projects.png)
+
+---
+
+# ADR-012: AI: GitHub Copilot + Cursor
+
+## Context
+
+I needed tools to:
+
+- Accelerate development
+- Generate PR descriptions automatically
+- Review code and suggest improvements
+- Reduce time on repetitive tasks
+- Maintain code quality
+
+## Decision
+
+I implemented **GitHub Copilot** and **Cursor** for development, utilizing:
+
+- **GitHub Copilot**: For generating PR descriptions and reviews
+- **Cursor**: IDE with integrated AI for more efficient development
+- Integration with development workflow
+- Contextual suggestions based on existing code
+- Automation of repetitive tasks
+
+## More about
+
+GitHub Copilot helped me a lot, especially for generating PR descriptions and
+reviewing PRs. It's really cool how it understands the context and makes
+relevant suggestions, it's a lifesaver. especially when we let something small
+slip through, like a failure in naming a function.
+
+At the end of development, the company where I work released Cursor, so I took
+advantage to use it too. The experience is very good! Cursor has integrated AI
+that works very well with a Next.js project.
+
+Example of a Copilot suggestion in a PR:
+![GitHub Copilot suggesting improvements in a PR](/assets/images/blog/architecture-decisions/copilot.png)
+
+---
+
+# ADR-013: Project Folder Structure
+
+## Context
+
+I needed to organize the code so that:
+
+- It was easy to navigate and understand
+- Followed Next.js conventions
+- Separated responsibilities clearly
+
+## Decision
+
+I implemented a structure based on Next.js App Router with feature organization:
+
+```
+┣ 📂 src
+┃ ┣ 📂 app
+┃ ┃ ┣ 📂 [locale]
+┃ ┃ ┃ ┣ 📂 blog
+┃ ┃ ┃ ┃ ┣ 📂 [slug]
+┃ ┃ ┃ ┃ ┃ ┣ 📜 page.jsx
+┃ ┃ ┃ ┃ ┃ ┗ 📜 page.spec.jsx
+┃ ┃ ┃ ┃ ┣ 📂 helpers
+┃ ┃ ┃ ┃ ┣ 📂 views
+┃ ┃ ┃ ┃ ┣ 📜 index.data.ts
+┃ ┃ ┃ ┃ ┣ 📜 page.spec.tsx
+┃ ┃ ┃ ┃ ┗ 📜 page.tsx
+┃ ┃ ┃ ┣ 📂 career
+┃ ┃ ┃ ┣ 📂 components
+┃ ┃ ┃ ┃ ┣ 📂 Footer
+┃ ┃ ┃ ┃ ┗ 📂 Header
+┃ ┃ ┃ ┃ ┃ ┗ 📂 components
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂 MenuDesktop
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂 MenuMobile
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂 Navigator
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂 ToggleLang
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂 ToggleTheme
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜 index.spec.tsx
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜 index.tsx
+┃ ┃ ┃ ┣ 📂 KeyboardEasterEgg
+┃ ┃ ┃ ┣ 📂 lab
+┃ ┃ ┃ ┣ 📜 layout.tsx
+┃ ┃ ┃ ┗ 📜 not-found.tsx
+┃ ┣ 📂 components
+┃ ┣ 📂 content
+┃ ┃ ┣ 📂 blog
+┃ ┃ ┃ ┣ 📂 en
+┃ ┃ ┃ ┗ 📂 pt-br
+┃ ┣ 📂 contexts
+┃ ┣ 📂 i18n
+┃ ┣ 📂 messages
+┃ ┣ 📂 styles
+┃ ┣ 📂 types
+┃ ┗ 📂 utils
+```
+
+## More about
+
+The structure follows the Next.js App Router pattern with some adaptations:
+
+- **`[locale]`**: Internationalized routing
+- **`blog/[slug]`**: Dynamic pages for posts
+- **`components`**: Reusable components
+- **`content`**: MDX content organized by language
+- **`i18n`**: Internationalization configurations
+- **`messages`**: JSON translations
+
+Each component has its own directory with test files, facilitating maintenance
+and testing.
+
+---
+
+# Conclusion
+
+These architectural decisions form the solid foundation of gabrielduete.com,
+prioritizing:
+
+1. **Performance**: Next.js + Vercel + TailwindCSS
+2. **Quality**: Jest + ESLint + Prettier + Sentry + Codecov
+3. **Experience**: React + TypeScript + i18n
+4. **Automation**: GitHub Actions + CI/CD
+5. **Monitoring**: Sentry + Microsoft Clarity
+6. **Analytics**: Microsoft Clarity for user insights
+7. **Organization**: GitHub Projects for task management
+8. **AI**: GitHub Copilot + Cursor for AI-assisted development
+9. **Structure**: Clear organization of folders and components
+
+I got excellent lighthouse scores, except for best practices, which lost some
+points because of Clarity. :noo:
+
+Performance on home + click on article:
+![Lighthouse results - Performance and SEO](/assets/images/blog/architecture-decisions/lighthouse-1.png)
+
+General results on home:
+![Lighthouse results - Performance and SEO](/assets/images/blog/architecture-decisions/lighthouse-3.png)
+
+Results from a post page:
+![Lighthouse results - Accessibility and Best Practices](/assets/images/blog/architecture-decisions/lighthouse-2.png)
+
+Each ADR documents not only the decision made, but also the context,
+alternatives considered and more about, facilitating future reviews,
+architectural evolutions, and understanding for anyone who wants to know more
+about the project.
+
+---
+
+<i>
+  This post follows the Architecture Decision Records (ADRs) format to document
+  important architectural decisions. For more information about ADRs, consult
+  the [official documentation](https://adr.github.io/).
+</i>
