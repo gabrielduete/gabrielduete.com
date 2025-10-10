@@ -95,6 +95,12 @@ const BlogPost = async ({ params }) => {
                 {...props}
               />
             ),
+            video: props => (
+              <video
+                className='rounded-lg mx-auto my-large max-w-full max-h-[860px]'
+                {...props}
+              />
+            ),
             a: props => (
               <a
                 className='text-secondary underline hover:text-primary'
