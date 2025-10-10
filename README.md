@@ -1,4 +1,4 @@
-# gabrielduete.com
+# [gabrielduete.com](gabrielduete.com)
 
 My personal blog and portfolio website built with Next.js, featuring
 internationalization, modern development practices, and comprehensive
@@ -94,12 +94,10 @@ understand the reasoning behind architectural decisions.
 
 - **[ADR Directory](./Architecture%20Decision%20Records/)** - Individual ADR
   files with detailed explanations
-- **[ADR README](./Architecture%20Decision%20Records/README.md)** - Complete
-  guide to all ADRs
-- **[Blog Post - English](../src/content/blog/en/architecture-decisions.mdx)** -
+- **[Blog Post - English](gabrielduete.com/en/blog/architecture-decisions)** -
   Full blog post with all ADRs
-- **[Blog Post - Portuguese](../src/content/blog/pt-br/architecture-decisions.mdx)** -
-  Versão em português
+- **[Blog Post - Portuguese](gabrielduete.com/pt-br/blog/architecture-decisions)** -
+  pt-br version
 
 ### Key ADRs
 
@@ -113,7 +111,7 @@ understand the reasoning behind architectural decisions.
 - **ADR-008**: GitHub Actions for CI/CD
 - **ADR-009**: Microsoft Clarity for Analytics
 - **ADR-010**: Vercel for Deploy and Hosting
-- **ADR-011**: GitHub Projects for Task Management
+- **ADR-011**: GitHub Projects for Tazsk Management
 - **ADR-012**: AI: GitHub Copilot + Cursor
 - **ADR-013**: Project Folder Structure
 
