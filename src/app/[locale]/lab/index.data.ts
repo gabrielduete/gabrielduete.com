@@ -6,8 +6,8 @@ import unleash from '@/../public/assets/images/lab/unleash.png'
 import logo from '@/../public/assets/images/logo.png'
 
 export const FILTERS = {
-  'pt-br': ['Todos', 'Open Source', 'Engenharia', 'Úteis'],
-  en: ['All', 'Open Source', 'Engineering', 'Utils'],
+  'pt-br': ['Todos', 'Open Source', 'Úteis'],
+  en: ['All', 'Open Source', 'Utils'],
 } as const
 
 export const CONTRIBUTIONS = [
@@ -93,8 +93,8 @@ export const CONTRIBUTIONS = [
     link: 'https://sandevistan.vercel.app/',
     age: '2024',
     category: {
-      pt: ['Úteis', 'Open Source'],
-      en: ['Utils', 'Open Source'],
+      pt: ['Úteis'],
+      en: ['Utils'],
     },
   },
   {
