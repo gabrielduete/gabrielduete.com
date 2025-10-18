@@ -1,4 +1,4 @@
-# [gabrielduete.com](gabrielduete.com)
+# [gabrielduete.com](https://gabrielduete.com)
 
 My personal blog and portfolio website built with Next.js, featuring
 internationalization, modern development practices, and comprehensive
