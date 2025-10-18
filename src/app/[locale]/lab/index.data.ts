@@ -24,8 +24,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/Unleash/unleash-js-sdk/pull/264',
     age: '2025',
     category: {
-      pt: ['Open Source', 'Engenharia'],
-      en: ['Open Source', 'Engineering'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
   {
@@ -41,8 +41,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/nuxt/nuxt/issues/32494',
     age: '2025',
     category: {
-      pt: ['Open Source', 'Engenharia'],
-      en: ['Open Source', 'Engineering'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
   {
@@ -75,8 +75,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/gabrielduete/gabrielduete.com',
     age: '2025',
     category: {
-      pt: ['Engenharia', 'Open Source'],
-      en: ['Engineering', 'Open Source'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
 
