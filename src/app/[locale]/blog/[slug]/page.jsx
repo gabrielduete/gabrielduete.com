@@ -11,17 +11,18 @@ import { getBlogData } from '../helpers/getDataContentFile'
 export async function generateMetadata({ params }) {
   const { slug, locale } = await params
   const { data } = getBlogData(slug, locale)
+  const { title, description, date, tags } = data
 
   const baseUrl = 'https://gabrielduete.com'
   const url = `${baseUrl}/${locale}/blog/${slug}`
   const imageUrl = `${baseUrl}/assets/images/post.jpg`
 
   return {
-    title: data.title,
-    description: data.description,
+    title,
+    description: description,
     openGraph: {
-      title: data.title,
-      description: data.description,
+      title,
+      description,
       url,
       siteName: 'Gabriel Duete',
       images: [
@@ -29,19 +30,19 @@ export async function generateMetadata({ params }) {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: data.title,
+          alt: title,
         },
       ],
       locale: locale,
       type: 'article',
-      publishedTime: data.date,
+      publishedTime: date,
       authors: ['Gabriel Duete'],
-      tags: data.tags || [],
+      tags: tags || [],
     },
     twitter: {
       card: 'summary_large_image',
-      title: data.title,
-      description: data.description,
+      title,
+      description,
       images: [imageUrl],
       creator: '@gabrielduetedev',
     },
@@ -56,27 +57,28 @@ const BlogPost = async ({ params }) => {
 
   const { slug, locale } = await params
   const { content, data } = getBlogData(slug, locale)
+  const { title, description, date } = data
 
   return (
     <section className='text-blog'>
-      <TabTitleWatcher originalTitle={data.title} />
+      <TabTitleWatcher originalTitle={title} />
       <BackButton path={Paths.BLOG} />
-      <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
-      <p className='text-subtitle-small text-gray-400'>{data.description}</p>
-      <p className='text-xsmall text-gray-600 mb-large'>{data.date}</p>
+      <h1 className='text-title-xgiant font-bold mb-xxsmall'>{title}</h1>
+      <p className='text-subtitle-small text-gray-400'>{description}</p>
+      <p className='text-xsmall text-gray-600 mb-large'>{date}</p>
       <div>
         <MDXRemote
           source={content}
           components={{
             h1: props => (
               <h1
-                className='text-title-giant font-bold mb-small mt-small'
+                className='text-title-giant font-bold mb-xxsmall mt-base'
                 {...props}
               />
             ),
             h2: props => (
               <h2
-                className='text-title-headline font-semibold mb-small'
+                className='text-title-headline mt-small font-semibold'
                 {...props}
               />
             ),
@@ -124,7 +126,7 @@ const BlogPost = async ({ params }) => {
           }}
         />
       </div>
-      <GiscusComments locale={locale} term={data.title} />
+      <GiscusComments locale={locale} term={title} />
       <ScrollTopButton />
     </section>
   )
