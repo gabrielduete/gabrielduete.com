@@ -1,8 +1,10 @@
+import ExternalLink from '@/app/[locale]/career/components/ExternalLink'
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
 import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
+import { SocialMedia } from '@/enums/SocialMedia'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 
@@ -63,10 +65,12 @@ const BlogPost = async ({ params }) => {
     <section className='text-blog'>
       <TabTitleWatcher originalTitle={title} />
       <BackButton path={Paths.BLOG} />
-      <h1 className='text-title-xgiant font-bold mb-xxsmall'>{title}</h1>
-      <p className='text-subtitle-small text-gray-400'>{description}</p>
-      <p className='text-xsmall text-gray-600 mb-large'>{date}</p>
-      <div>
+      <header>
+        <h1 className='text-title-xgiant font-bold mb-xxsmall'>{title}</h1>
+        <p className='text-subtitle-small text-gray-400'>{description}</p>
+        <p className='text-xsmall text-gray-600 mb-large'>{date}</p>
+      </header>
+      <article>
         <MDXRemote
           source={content}
           components={{
@@ -125,7 +129,66 @@ const BlogPost = async ({ params }) => {
             ),
           }}
         />
-      </div>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>
+          Gostou do conteúdo? Aceito uma contribuição! :){' '}
+        </h3>
+        <p>PIX: gabrielmonteiroduete@gmail.com</p>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>
+          Tem algo para acrescentar?
+        </h3>
+        <p>
+          Esse blog é open source, então fique a vontade para fazer abrir um{' '}
+          <ExternalLink href={`${SocialMedia.GITHUB}/gabrielduete.com`}>
+            PR no repositório.
+          </ExternalLink>
+        </p>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>
+          Me encontre também em:
+        </h3>
+        <ul className='list-disc pl-medium mb-base'>
+          <li>
+            GitHub:{' '}
+            <ExternalLink href={SocialMedia.GITHUB}>@gabrielduete</ExternalLink>
+          </li>
+          <li>
+            LinkedIn:{' '}
+            <ExternalLink href={SocialMedia.LINKEDIN}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            DEV:{' '}
+            <ExternalLink href={SocialMedia.DEV}>@gabrielduete</ExternalLink>
+          </li>
+          <li>
+            Tabnews:{' '}
+            <ExternalLink href={SocialMedia.TABNEWS}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            StackOverflow:{' '}
+            <ExternalLink href={SocialMedia.STACKOVERFLOW}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            Beecrowd:{' '}
+            <ExternalLink href={SocialMedia.BEECROWD}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            LeetCode:{' '}
+            <ExternalLink href={SocialMedia.LEETCODE}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+        </ul>
+      </article>
       <GiscusComments locale={locale} term={title} />
       <ScrollTopButton />
     </section>
