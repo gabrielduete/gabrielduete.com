@@ -12,7 +12,7 @@ const ExternalLink: FC<ExternalLinkProps> = ({ href, children }) => (
     href={href}
     target='_blank'
     rel='noopener noreferrer'
-    className='underline text-secondary'
+    className='underline text-secondary hover:text-primary'
   >
     {children}
   </Link>

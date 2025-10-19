@@ -4,6 +4,7 @@ import nuxt from '@/../public/assets/images/lab/nuxt.png'
 import sandevistan from '@/../public/assets/images/lab/sandevistan.png'
 import unleash from '@/../public/assets/images/lab/unleash.png'
 import logo from '@/../public/assets/images/logo.png'
+import { SocialMedia } from '@/enums/SocialMedia'
 
 export const FILTERS = {
   'pt-br': ['Todos', 'Open Source', 'Úteis'],
@@ -72,7 +73,7 @@ export const CONTRIBUTIONS = [
       en: 'My personal portfolio and blog, where I share my articles and projects.',
     },
     image: logo,
-    link: 'https://github.com/gabrielduete/gabrielduete.com',
+    link: `${SocialMedia.GITHUB}/gabrielduete.com`,
     age: '2025',
     category: {
       pt: ['Open Source'],
