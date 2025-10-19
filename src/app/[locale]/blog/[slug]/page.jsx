@@ -1,8 +1,11 @@
+import ExternalLink from '@/app/[locale]/career/components/ExternalLink'
 import BackButton from '@/components/BackButton'
 import { GiscusComments } from '@/components/Giscus'
 import ScrollTopButton from '@/components/ScrollTopButton'
 import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
+import { SocialMedia } from '@/enums/SocialMedia'
+import { getTranslations } from 'next-intl/server'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 
@@ -11,17 +14,18 @@ import { getBlogData } from '../helpers/getDataContentFile'
 export async function generateMetadata({ params }) {
   const { slug, locale } = await params
   const { data } = getBlogData(slug, locale)
+  const { title, description, date, tags } = data
 
   const baseUrl = 'https://gabrielduete.com'
   const url = `${baseUrl}/${locale}/blog/${slug}`
   const imageUrl = `${baseUrl}/assets/images/post.jpg`
 
   return {
-    title: data.title,
-    description: data.description,
+    title,
+    description: description,
     openGraph: {
-      title: data.title,
-      description: data.description,
+      title,
+      description,
       url,
       siteName: 'Gabriel Duete',
       images: [
@@ -29,19 +33,19 @@ export async function generateMetadata({ params }) {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: data.title,
+          alt: title,
         },
       ],
       locale: locale,
       type: 'article',
-      publishedTime: data.date,
+      publishedTime: date,
       authors: ['Gabriel Duete'],
-      tags: data.tags || [],
+      tags: tags || [],
     },
     twitter: {
       card: 'summary_large_image',
-      title: data.title,
-      description: data.description,
+      title,
+      description,
       images: [imageUrl],
       creator: '@gabrielduetedev',
     },
@@ -56,27 +60,31 @@ const BlogPost = async ({ params }) => {
 
   const { slug, locale } = await params
   const { content, data } = getBlogData(slug, locale)
+  const { title, description, date } = data
+  const t = await getTranslations('BlogPage')
 
   return (
     <section className='text-blog'>
-      <TabTitleWatcher originalTitle={data.title} />
+      <TabTitleWatcher originalTitle={title} />
       <BackButton path={Paths.BLOG} />
-      <h1 className='text-title-xgiant font-bold mb-xxsmall'>{data.title}</h1>
-      <p className='text-subtitle-small text-gray-400'>{data.description}</p>
-      <p className='text-xsmall text-gray-600 mb-large'>{data.date}</p>
-      <div>
+      <header>
+        <h1 className='text-title-xgiant font-bold mb-xxsmall'>{title}</h1>
+        <p className='text-subtitle-small text-gray-400'>{description}</p>
+        <p className='text-xsmall text-gray-600 mb-large'>{date}</p>
+      </header>
+      <article>
         <MDXRemote
           source={content}
           components={{
             h1: props => (
               <h1
-                className='text-title-giant font-bold mb-small mt-small'
+                className='text-title-giant font-bold mb-xxsmall mt-base'
                 {...props}
               />
             ),
             h2: props => (
               <h2
-                className='text-title-headline font-semibold mb-small'
+                className='text-title-headline mt-small font-semibold'
                 {...props}
               />
             ),
@@ -123,8 +131,75 @@ const BlogPost = async ({ params }) => {
             ),
           }}
         />
-      </div>
-      <GiscusComments locale={locale} term={data.title} />
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>
+          {t('contribution')}
+        </h3>
+        <p>{t('contributionDescription1')}</p>
+        <p>
+          {t.rich('contributionDescription2', {
+            a: chunks => (
+              <ExternalLink href={SocialMedia.KOFI}>{chunks}</ExternalLink>
+            ),
+          })}
+        </p>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>
+          {t('addSomething')}
+        </h3>
+        <p>
+          {t.rich('addSomethingDescription', {
+            a: chunks => (
+              <ExternalLink href={`${SocialMedia.GITHUB}/gabrielduete.com`}>
+                {chunks}
+              </ExternalLink>
+            ),
+          })}
+        </p>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>{t('findMe')}</h3>
+        <ul className='list-disc pl-medium mb-base'>
+          <li>
+            GitHub:{' '}
+            <ExternalLink href={SocialMedia.GITHUB}>@gabrielduete</ExternalLink>
+          </li>
+          <li>
+            LinkedIn:{' '}
+            <ExternalLink href={SocialMedia.LINKEDIN}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            DEV:{' '}
+            <ExternalLink href={SocialMedia.DEV}>@gabrielduete</ExternalLink>
+          </li>
+          <li>
+            Tabnews:{' '}
+            <ExternalLink href={SocialMedia.TABNEWS}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            StackOverflow:{' '}
+            <ExternalLink href={SocialMedia.STACKOVERFLOW}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            Beecrowd:{' '}
+            <ExternalLink href={SocialMedia.BEECROWD}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+          <li>
+            LeetCode:{' '}
+            <ExternalLink href={SocialMedia.LEETCODE}>
+              @gabrielduete
+            </ExternalLink>
+          </li>
+        </ul>
+      </article>
+      <GiscusComments locale={locale} term={title} />
       <ScrollTopButton />
     </section>
   )

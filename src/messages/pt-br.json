@@ -12,30 +12,30 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
-        "totalContributions": "10",
+        "totalContributions": "8",
         "contributions": {
           "1": "Desenvolvi funcionalidades contínuas para a plataforma de e-commerce e programa de fidelidade.",
-          "2": "Liderei o time de front-end da Obra Premiada 2024, garantindo a implementação da interface e integrações, atuando também com alinhamento entre front com produto, UI/UX e time de back-end.",
-          "3": "Atuei no Design System open source <atomium>Atomium</atomium>, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
-          "4": "Reformulei o processo de documentação do time de engenharia de front.",
-          "5": "Contribuí em um épico com o time para migração do e-commerce de SPA para SSR, melhorando desempenho, SEO e experiência do usuário.",
-          "6": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-          "7": "Desenvolvi soluções para regras de segurança, além de escrever documentações sobre a causa, análise e solução.",
-          "8": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
-          "9": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal.",
-          "10": "Colaborei com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+          "2": "Atuei no Design System open source <atomium>Atomium</atomium>, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
+          "3": "Reformulei o processo de documentação do time de engenharia de front.",
+          "4": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+          "5": "Desenvolvi soluções para regras de segurança, além de escrever documentações sobre a causa, análise e solução.",
+          "6": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
+          "7": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal.",
+          "8": "Colaborei com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
         },
         "link": "https://g.co/kgs/eVwdD6s"
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
         "time": "2024 - Present",
-        "totalContributions": "4",
+        "totalContributions": "6",
         "contributions": {
-          "1": "Fiz contribuições para a plataforma de cloud.",
-          "2": "Criei o layout no figma e padrões do design system, tais como cores, tipografia, espaçamento, etc.",
-          "3": "Integração com APIs de pagamento, cloud, crud de usuários, etc.",
-          "4": "Documentei a decisão de arquitetura e as tecnologias utilizadas no front-end"
+          "1": "Meu primeiro projeto internacional como freelancer.",
+          "2": "Fiz contribuições para a plataforma de cloud.",
+          "3": "Criei o layout no figma e padrões do design system, tais como cores, tipografia, espaçamento, etc.",
+          "4": "Integração com APIs de pagamento, cloud, crud de usuários, etc.",
+          "5": "Documentei a decisão de arquitetura e as tecnologias utilizadas no front-end",
+          "6": "Discuti regras de negócio com o time e sugeri melhorias no fluxo de trabalho."
         },
         "link": ""
       },
@@ -65,5 +65,13 @@
         "link": ""
       }
     }
+  },
+  "BlogPage": {
+    "contribution": "Gostou do conteúdo? Aceito uma contribuição! :)",
+    "contributionDescription1": "PIX: gabrielmonteiroduete@gmail.com",
+    "contributionDescription2": "Aceito um café: <a>ko-fi.com/gabrielduete</a>",
+    "addSomething": "Tem algo para acrescentar?",
+    "addSomethingDescription": "Esse blog é open source, então fique à vontade para abrir um <a>PR no repositório.</a>",
+    "findMe": "Me encontre também em:"
   }
 }

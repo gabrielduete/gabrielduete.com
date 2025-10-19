@@ -8,12 +8,12 @@ category: 'Engineering'
 tags: ['engineering', 'web']
 ---
 
-## Introduction
+# Introduction
 
-Understanding internet concepts is crucial in a programmer’s daily
-routine—believe me! Grasping these terms can save you countless hours when
-solving problems at work or dealing with production issues. It helps you
-identify issues faster and troubleshoot with confidence.
+Understanding internet concepts is crucial in a programmer’s daily routine,
+believe me! Grasping these terms can save you countless hours when solving
+problems at work or dealing with production issues. It helps you identify issues
+faster and troubleshoot with confidence.
 
 Let’s explore the most basic and essential concepts of the internet.
 
@@ -26,13 +26,13 @@ Here's a simple diagram of an HTTP communication:
 
 ![HTTP communication diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gdcoe95zpp0l9wcl5wr.png)
 
-Notice that the user sends a request for certain data to the server — this is
+Notice that the user sends a request for certain data to the server, this is
 called an `HTTP REQUEST`. The server receives the request and returns a response
-— called an `HTTP RESPONSE`.
+called an `HTTP RESPONSE`.
 
 ## HTTP Methods
 
-### GET
+### **GET**
 
 The `GET` method requests a resource from the server, and the expected outcome
 is the return of the requested data.
@@ -42,46 +42,46 @@ is the return of the requested data.
 We can describe the `HTTP REQUEST` here as a `GET` method asking the server for
 some data.
 
-### HEAD
+### **HEAD**
 
-The `HEAD` method is similar to `GET`, except the response has no body — just
-the headers.
+The `HEAD` method is similar to `GET`, except the response has no body, just the
+headers.
 
-## POST
+### **POST**
 
 The `POST` method sends data to the server, which then receives and stores the
 data.
 
-## PUT
+### **PUT**
 
 The `PUT` method updates or replaces data on the server. You must send all the
 necessary data to update the resource. If the resource (e.g., a user with
 ID 1234) doesn't exist, `PUT` will create it; if it exists, it will update it.
 
-## DELETE
+### **DELETE**
 
 The `DELETE` method is used to remove a specific resource.
 
-## CONNECT
+### **CONNECT**
 
 `CONNECT` is rarely used and is mainly for establishing a tunnel to a server
-through a proxy — typically used in secure, proxy-based environments.
+through a proxy, typically used in secure, proxy-based environments.
 
-## OPTIONS
+### **OPTIONS**
 
 The `OPTIONS` method returns information about the server's communication
 options. It's commonly used in application deployment platforms to retrieve
 configuration details.
 
-## PATCH
+### **PATCH**
 
 The `PATCH` method is similar to `PUT`, but it allows partial updates to a
 resource (e.g., updating just the user's name). Unlike `PUT`, `PATCH` cannot
 create a new resource.
 
-## TRACE
+### **TRACE**
 
-The `TRACE` method is like a debug tool — it echoes the received request to test
+The `TRACE` method is like a debug tool, it echoes the received request to test
 what’s received on the server and verify the request path.
 
 ## Real Example
@@ -101,7 +101,7 @@ Check out the screenshots:
 ![request result](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mjnug7n42unayl5hybsa.png)
 
 By clicking on the request in the Network tab and viewing the **Preview**,
-you’ll see the server’s response — in this case, the video suggestions. The
+you’ll see the server’s response, in this case, the video suggestions. The
 response returned with a status code `200`, meaning success.
 
 ## HTTPS
@@ -115,7 +115,7 @@ unless they have the correct key. Most browsers show a “secure” indicator fo
 sites with HTTPS.
 
 To use HTTPS on your site, you need an **SSL certificate**. Most hosting
-platforms offer plans that include SSL — how you obtain it is up to you.
+platforms offer plans that include SSL, how you obtain it is up to you.
 
 # How DNS Works
 
@@ -146,7 +146,7 @@ that into a domain name.
 For example, in `http://www.mycoolsite.com`, everything after `www.` is the
 **domain name**: `mycoolsite.com`.
 
-The domain is your site’s unique address — what users type to access it, without
+The domain is your site’s unique address, what users type to access it, without
 needing to know the IP.
 
 To host a site, you must **register the domain** with a provider who coordinates
@@ -158,23 +158,23 @@ must be unique worldwide.
 When registering a domain, you can choose between national or international
 options.
 
-### National Domains
+## National Domains
 
 In Brazil, domains are handled by **RegistroBR**. Common domains include
 `.com.br`, but there are also specific ones like `.gov.br` or `.blog.br`.  
 [See more domain categories](https://registro.br/dominio/categorias/)
 
-### International Domains
+## International Domains
 
 These include `.com`, `.org`, `.net`, and others. They’re managed by ICANN and
 can be used by anyone worldwide, including Brazilian sites.
 
 # How Servers Work
 
-### What Is a Server?
+## What Is a Server?
 
-A server is essentially a powerful computer — often more powerful than typical
-desktops — equipped with advanced CPUs, memory, cooling systems, and other
+A server is essentially a powerful computer, often more powerful than typical
+desktops, equipped with advanced CPUs, memory, cooling systems, and other
 hardware.
 
 Servers offer **centralized services**, meaning you only need to set up software
@@ -189,7 +189,7 @@ Examples of server services:
 - VoIP systems
 - Payment systems
 
-### How Does It Work?
+## How Does It Work?
 
 Each server type works differently, but let’s focus on **web servers**.
 

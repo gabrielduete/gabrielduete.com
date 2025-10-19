@@ -9,6 +9,14 @@ jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
 }))
 
+jest.mock('next-intl/server', () => ({
+  getTranslations: jest.fn(() => {
+    const mockT = jest.fn(key => `translated_${key}`)
+    mockT.rich = jest.fn((key, values) => `translated_${key}`)
+    return mockT
+  }),
+}))
+
 jest.mock('../helpers/getDataContentFile', () => ({
   getBlogData: jest.fn(),
 }))

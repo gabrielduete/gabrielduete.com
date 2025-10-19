@@ -4,10 +4,11 @@ import nuxt from '@/../public/assets/images/lab/nuxt.png'
 import sandevistan from '@/../public/assets/images/lab/sandevistan.png'
 import unleash from '@/../public/assets/images/lab/unleash.png'
 import logo from '@/../public/assets/images/logo.png'
+import { SocialMedia } from '@/enums/SocialMedia'
 
 export const FILTERS = {
-  'pt-br': ['Todos', 'Open Source', 'Engenharia', 'Úteis'],
-  en: ['All', 'Open Source', 'Engineering', 'Utils'],
+  'pt-br': ['Todos', 'Open Source', 'Úteis'],
+  en: ['All', 'Open Source', 'Utils'],
 } as const
 
 export const CONTRIBUTIONS = [
@@ -24,8 +25,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/Unleash/unleash-js-sdk/pull/264',
     age: '2025',
     category: {
-      pt: ['Open Source', 'Engenharia'],
-      en: ['Open Source', 'Engineering'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
   {
@@ -41,8 +42,8 @@ export const CONTRIBUTIONS = [
     link: 'https://github.com/nuxt/nuxt/issues/32494',
     age: '2025',
     category: {
-      pt: ['Open Source', 'Engenharia'],
-      en: ['Open Source', 'Engineering'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
   {
@@ -72,11 +73,11 @@ export const CONTRIBUTIONS = [
       en: 'My personal portfolio and blog, where I share my articles and projects.',
     },
     image: logo,
-    link: 'https://github.com/gabrielduete/gabrielduete.com',
+    link: `${SocialMedia.GITHUB}/gabrielduete.com`,
     age: '2025',
     category: {
-      pt: ['Engenharia', 'Open Source'],
-      en: ['Engineering', 'Open Source'],
+      pt: ['Open Source'],
+      en: ['Open Source'],
     },
   },
 
@@ -93,8 +94,8 @@ export const CONTRIBUTIONS = [
     link: 'https://sandevistan.vercel.app/',
     age: '2024',
     category: {
-      pt: ['Úteis', 'Open Source'],
-      en: ['Utils', 'Open Source'],
+      pt: ['Úteis'],
+      en: ['Utils'],
     },
   },
   {

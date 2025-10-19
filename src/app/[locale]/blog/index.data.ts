@@ -1,4 +1,4 @@
 export const FILTERS = {
-  'pt-br': ['Todos', 'Front-end', 'Engenharia', 'Úteis'],
-  en: ['All', 'Front-end', 'Engineering', 'Utils'],
+  'pt-br': ['Todos', 'Engenharia', 'Front-end', 'Úteis'],
+  en: ['All', 'Engineering', 'Front-end', 'Utils'],
 } as const

@@ -117,7 +117,7 @@ uma **grande diferença** no consumo de recursos e no tempo de carregamento.
 # 2. React Lazy
 
 Também podemos usar o `React.lazy`, que é uma funcionalidade nativa do React
-para importar componentes dinamicamente — bem parecido com os dynamic imports do
+para importar componentes dinamicamente, bem parecido com os dynamic imports do
 Next.js.
 
 A diferença é que aqui, **precisamos usar o `Suspense`** para envolver o
@@ -125,7 +125,7 @@ componente, e passar um componente no `fallback`, que será exibido **enquanto o
 componente está sendo carregado**.
 
 Esse carregamento ocorre **apenas na primeira vez** que o componente é usado. Se
-o usuário recarregar a página, será carregado novamente — mas se ele continuar
+o usuário recarregar a página, será carregado novamente, mas se ele continuar
 navegando, não haverá novo carregamento.
 
 Exemplo:
@@ -147,7 +147,7 @@ Houve uma **redução ainda maior** do que com os Dynamic Imports do Next.js.
 Porém, há um **componente de loading adicional**, o que pode impactar na
 experiência do usuário (UX).
 
-Por isso, **essa abordagem deve ser alinhada com o time de design e produto** —
+Por isso, **essa abordagem deve ser alinhada com o time de design e produto**,
 pois exibir um loading pode não ser uma boa ideia em alguns casos. É
 recomendável usar apenas quando o componente for **realmente pesado** ou a
 página estiver **muito lenta**.

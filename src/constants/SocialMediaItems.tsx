@@ -1,3 +1,4 @@
+import { SocialMedia } from '@/enums/SocialMedia'
 import { FaStackOverflow } from 'react-icons/fa'
 import { FaDev } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
@@ -8,26 +9,26 @@ export const SocialMediaItems = [
   {
     Icon: PiLinkedinLogo,
     name: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/gabrielduete/',
+    link: SocialMedia.LINKEDIN,
   },
   {
     Icon: TbBrandGithubFilled,
     name: 'GitHub',
-    link: 'https://github.com/gabrielduete',
+    link: SocialMedia.GITHUB,
   },
   {
     Icon: FaStackOverflow,
     name: 'StackOverflow',
-    link: 'https://stackoverflow.com/users/16782642/gabriel-duete',
+    link: SocialMedia.STACKOVERFLOW,
   },
   {
     Icon: FaDev,
     name: 'DEV',
-    link: 'https://dev.to/gabrielduete',
+    link: SocialMedia.DEV,
   },
   {
     Icon: MdEmail,
     name: 'Email',
-    link: 'mailto:gabrielmonteiroduete@gmail.com',
+    link: SocialMedia.EMAIL,
   },
 ]
