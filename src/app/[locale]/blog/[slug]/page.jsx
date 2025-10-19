@@ -5,6 +5,7 @@ import ScrollTopButton from '@/components/ScrollTopButton'
 import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
 import { SocialMedia } from '@/enums/SocialMedia'
+import { getTranslations } from 'next-intl/server'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 
@@ -60,6 +61,7 @@ const BlogPost = async ({ params }) => {
   const { slug, locale } = await params
   const { content, data } = getBlogData(slug, locale)
   const { title, description, date } = data
+  const t = await getTranslations('BlogPage')
 
   return (
     <section className='text-blog'>
@@ -131,23 +133,31 @@ const BlogPost = async ({ params }) => {
         />
         <hr className='mt-large mb-large text-gray-600 w-10' />
         <h3 className='text-title-headline text-green-white'>
-          Gostou do conteúdo? Aceito uma contribuição! :){' '}
+          {t('contribution')}
         </h3>
-        <p>PIX: gabrielmonteiroduete@gmail.com</p>
-        <hr className='mt-large mb-large text-gray-600 w-10' />
-        <h3 className='text-title-headline text-green-white'>
-          Tem algo para acrescentar?
-        </h3>
+        <p>{t('contributionDescription1')}</p>
         <p>
-          Esse blog é open source, então fique a vontade para fazer abrir um{' '}
-          <ExternalLink href={`${SocialMedia.GITHUB}/gabrielduete.com`}>
-            PR no repositório.
-          </ExternalLink>
+          {t.rich('contributionDescription2', {
+            a: chunks => (
+              <ExternalLink href={SocialMedia.KOFI}>{chunks}</ExternalLink>
+            ),
+          })}
         </p>
         <hr className='mt-large mb-large text-gray-600 w-10' />
         <h3 className='text-title-headline text-green-white'>
-          Me encontre também em:
+          {t('addSomething')}
         </h3>
+        <p>
+          {t.rich('addSomethingDescription', {
+            a: chunks => (
+              <ExternalLink href={`${SocialMedia.GITHUB}/gabrielduete.com`}>
+                {chunks}
+              </ExternalLink>
+            ),
+          })}
+        </p>
+        <hr className='mt-large mb-large text-gray-600 w-10' />
+        <h3 className='text-title-headline text-green-white'>{t('findMe')}</h3>
         <ul className='list-disc pl-medium mb-base'>
           <li>
             GitHub:{' '}

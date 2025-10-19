@@ -7,4 +7,5 @@ export enum SocialMedia {
   BEECROWD = 'https://judge.beecrowd.com/pt/profile/412152',
   LEETCODE = 'https://leetcode.com/gabrielduete/',
   EMAIL = 'mailto:gabrielmonteiroduete@gmail.com',
+  KOFI = 'https://ko-fi.com/gabrielduete',
 }

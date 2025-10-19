@@ -28,12 +28,13 @@
       "Nimbus Black": {
         "title": "Nimbus Black",
         "time": "2024 - Present",
-        "totalContributions": "4",
+        "totalContributions": "5",
         "contributions": {
-          "1": "Contributed to the cloud platform.",
-          "2": "Created layout and design system standards in Figma, such as colors, typography, spacing, etc.",
-          "3": "Integrated with payment APIs, cloud services, user CRUD, and more.",
-          "4": "Documented architecture decisions and the technologies used on the front-end."
+          "1": "My first international project as a freelancer.",
+          "2": "Contributed to the cloud platform.",
+          "3": "Created layout and design system standards in Figma, such as colors, typography, spacing, etc.",
+          "4": "Integrated with payment APIs, cloud services, user CRUD, and more.",
+          "5": "Documented architecture decisions and the technologies used on the front-end."
         },
         "link": ""
       },
@@ -62,5 +63,13 @@
         "link": ""
       }
     }
+  },
+  "BlogPage": {
+    "contribution": "Liked the content? I accept a contribution! :)",
+    "contributionDescription1": "PIX (Brazil Only): gabrielmonteiroduete@gmail.com",
+    "contributionDescription2": "Buy me a coffee: <a>ko-fi.com/gabrielduete</a>",
+    "addSomething": "Have something to contribute?",
+    "addSomethingDescription": "This blog is open source, so feel free to open a <a>PR in the repository.</a>",
+    "findMe": "Find me also in:"
   }
 }

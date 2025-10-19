@@ -28,12 +28,14 @@
       "Nimbus Black": {
         "title": "Nimbus Black",
         "time": "2024 - Present",
-        "totalContributions": "4",
+        "totalContributions": "5",
         "contributions": {
-          "1": "Fiz contribuições para a plataforma de cloud.",
-          "2": "Criei o layout no figma e padrões do design system, tais como cores, tipografia, espaçamento, etc.",
-          "3": "Integração com APIs de pagamento, cloud, crud de usuários, etc.",
-          "4": "Documentei a decisão de arquitetura e as tecnologias utilizadas no front-end"
+          "1": "Meu primeiro projeto internacional como freelancer.",
+          "2": "Fiz contribuições para a plataforma de cloud.",
+          "3": "Criei o layout no figma e padrões do design system, tais como cores, tipografia, espaçamento, etc.",
+          "4": "Integração com APIs de pagamento, cloud, crud de usuários, etc.",
+          "5": "Documentei a decisão de arquitetura e as tecnologias utilizadas no front-end",
+          "6": "Discuti regras de negócio com o time e sugeri melhorias no fluxo de trabalho."
         },
         "link": ""
       },
@@ -63,5 +65,13 @@
         "link": ""
       }
     }
+  },
+  "BlogPage": {
+    "contribution": "Gostou do conteúdo? Aceito uma contribuição! :)",
+    "contributionDescription": "PIX: gabrielmonteiroduete@gmail.com",
+    "contributionDescription2": "Aceito um café: <a>ko-fi.com/gabrielduete</a>",
+    "addSomething": "Tem algo para acrescentar?",
+    "addSomethingDescription": "Esse blog é open source, então fique a vontade para fazer abrir um <a>PR no repositório.</a>",
+    "findMe": "Me encontre também em:"
   }
 }
