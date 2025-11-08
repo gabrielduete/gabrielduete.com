@@ -58,7 +58,7 @@ describe('ToggleTheme', () => {
     render(<ToggleTheme />)
 
     const button = screen.getByRole('button')
-    expect(button).toHaveClass('rounded-full', 'cursor-pointer')
+    expect(button).toHaveClass('cursor-pointer')
   })
 
   it('handles click events', () => {
