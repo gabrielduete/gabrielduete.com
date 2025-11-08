@@ -12,7 +12,7 @@ const Filter = () => {
 
   return (
     <div data-testid='component-filter'>
-      <ul className='flex gap-xxxxlarge'>
+      <ul className='flex flex-wrap gap-xxxxlarge'>
         {localizedFilters?.map((filter: string) => (
           <li key={filter}>
             <button
