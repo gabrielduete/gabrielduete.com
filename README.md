@@ -179,7 +179,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - **LinkedIn**: [@gabrielduete](https://linkedin.com/in/gabrielduete)
 - **DEV**: [@gabrielduete](https://dev.to/gabrielduete)
-- **Tabwews**: [@gabrielduete](https://www.tabnews.com.br/gabrielduete)
+- **TabNews**: [@gabrielduete](https://www.tabnews.com.br/gabrielduete)
 - **StackOverflow**:
   [@gabrielduete](https://stackoverflow.com/users/16782642/gabriel-duete)
 - **Beecrowd**: [@gabrielduete](https://judge.beecrowd.com/pt/profile/412152)
