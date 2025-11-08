@@ -43,17 +43,21 @@ const ToggleLang = () => {
     <div className='flex gap-2'>
       <button
         className={`cursor-pointer uppercase ${
-          isSelect(Locales.PT_BR) ? 'text-secondary' : 'text-primary'
+          isSelect(Locales.PT_BR)
+            ? 'text-secondary'
+            : 'lg:text-primary text-white'
         }`}
         onClick={() => switchLanguage(Locales.PT_BR)}
       >
         pt-br
       </button>
-      <p className='text-primary'>/</p>
+      <p className='lg:text-primary text-white'>/</p>
       <button
         className={clsx(
           'uppercase cursor-pointer',
-          isSelect(Locales.EN) ? 'text-secondary' : 'text-primary',
+          isSelect(Locales.EN)
+            ? 'text-secondary'
+            : 'lg:text-primary text-white',
         )}
         onClick={() => switchLanguage(Locales.EN)}
       >
