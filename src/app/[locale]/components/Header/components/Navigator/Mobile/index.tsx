@@ -22,12 +22,12 @@ const NavigatorMobile = ({ closeMenu }: NavigatorMobileProps) => {
     <ul>
       {items.map(({ name, name_en, href }) => {
         return (
-          <li key={name} className='text-subtitle text-primary'>
+          <li key={name} className='text-subtitle'>
             <Link href={`/${locale}${href}`} passHref onClick={closeMenu}>
               <p
                 className={`
-                  cursor-pointer transition-colors text-primary hover:text-secondary mb-base
-                  ${isSelect(pathname, name_en ?? name) && 'text-secondary'}`}
+                  cursor-pointer transition-colors hover:text-secondary mb-base
+                  ${isSelect(pathname, name_en ?? name) ? 'text-secondary' : 'text-white'}`}
               >
                 {isEn ? (name_en ?? name) : name}
               </p>

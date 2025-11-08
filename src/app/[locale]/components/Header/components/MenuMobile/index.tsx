@@ -17,7 +17,7 @@ const MenuMobile = () => {
       <CgMenuRound
         size={38}
         className={`
-              text-primary hover:text-secondary  
+              lg:text-primary text-white hover:text-secondary
               cursor-pointer transition-colors duration-200
               ${isOpen ? 'hidden' : 'block'}`}
         aria-label='Open Menu'
@@ -34,7 +34,7 @@ const MenuMobile = () => {
         <CgCloseO
           size={38}
           className={`
-              text-primary hover:text-secondary mt-xxlarge mr-xxlarge
+              lg:text-primary text-white hover:text-secondary mt-xxlarge mr-xxlarge
               cursor-pointer transition-colors duration-200 place-self-end
               ${isOpen ? 'block ' : 'hidden'}`}
           aria-label='Close Menu'
