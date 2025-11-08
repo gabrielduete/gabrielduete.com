@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { Storages } from '@/enums/Storages'
+import { MdDarkMode, MdLightMode } from 'react-icons/md'
 
 const ToggleTheme = () => {
   const [theme, setThemeState] = useState<Themes>('dark')
@@ -30,7 +31,7 @@ const ToggleTheme = () => {
 
   return (
     <div
-      className='rounded-full cursor-pointer w-large h-large bg-bg-secondary'
+      className='cursor-pointer'
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label='Toggle theme'
       role='button'
@@ -40,7 +41,13 @@ const ToggleTheme = () => {
           setTheme(isDark ? 'light' : 'dark')
         }
       }}
-    />
+    >
+      {isDark ? (
+        <MdLightMode size={24} className='text-secondary' />
+      ) : (
+        <MdDarkMode size={24} className='text-primary' />
+      )}
+    </div>
   )
 }
 
