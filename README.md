@@ -175,13 +175,15 @@ Contributions are welcome! Here's how you can help:
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## Links
+## Find me also in:
 
-- **Website**: [gabrielduete.com](https://gabrielduete.com)
-- **Blog**: [gabrielduete.com/blog](https://gabrielduete.com/blog)
-- **GitHub**: [github.com/gabrielduete](https://github.com/gabrielduete)
-- **LinkedIn**:
-  [linkedin.com/in/gabrielduete](https://linkedin.com/in/gabrielduete)
+- **LinkedIn**: [@gabrielduete](https://linkedin.com/in/gabrielduete)
+- **DEV**: [@gabrielduete](https://dev.to/gabrielduete)
+- **TabNews**: [@gabrielduete](https://www.tabnews.com.br/gabrielduete)
+- **StackOverflow**:
+  [@gabrielduete](https://stackoverflow.com/users/16782642/gabriel-duete)
+- **Beecrowd**: [@gabrielduete](https://judge.beecrowd.com/pt/profile/412152)
+- **LeetCode**: [@gabrielduete](https://leetcode.com/gabrielduete/)
 
 ---
 
