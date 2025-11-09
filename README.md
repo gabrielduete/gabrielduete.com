@@ -23,15 +23,15 @@ a focus on performance, accessibility, and maintainability.
 
 ### Tech Stack
 
-- **Framework**: Next.js 15+ with App Router
-- **Styling**: TailwindCSS v4+
+- **UI**: React + Next.js 15+ with App Router
+- **Styling**: TailwindCSS
 - **Language**: TypeScript
 - **Internationalization**: next-intl
 - **Testing**: Jest + Testing Library
 - **Deployment**: Vercel
 - **Monitoring**: Sentry
 - **Analytics**: Microsoft Clarity
-- **Code Quality**: ESLint + Prettier
+- **Code Quality**: Codecov, ESLint, Prettier
 
 ## How to Run the Project
 
