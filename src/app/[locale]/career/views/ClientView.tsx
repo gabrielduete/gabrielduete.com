@@ -11,6 +11,7 @@ import ExternalLink from '../components/ExternalLink'
 import { experiences } from '../data'
 import { IExperiences } from '../types'
 
+
 const CarrerView = () => {
   const [selectedExperience, setSelectedExperience] =
     useState<IExperiences>('Juntos Somos Mais')
@@ -68,7 +69,6 @@ const CarrerView = () => {
                 </ExternalLink>
               ),
               a: (chunks: ReactNode) => {
-                // Extract URL from chunks - next-intl passes the content as children
                 const extractUrl = (node: ReactNode): string => {
                   if (typeof node === 'string') {
                     return node.trim()
@@ -76,9 +76,11 @@ const CarrerView = () => {
                   if (Array.isArray(node)) {
                     return node.map(extractUrl).join('').trim()
                   }
+
                   if (node && typeof node === 'object' && 'props' in node) {
-                    return extractUrl((node as any).props?.children || node)
+                    return extractUrl((node).props?.children || node)
                   }
+
                   return String(node).trim()
                 }
                 const url = extractUrl(chunks)
