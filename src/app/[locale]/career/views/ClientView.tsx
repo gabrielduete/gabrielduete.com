@@ -1,23 +1,68 @@
 'use client'
 
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import { Locales } from '@/enums/Locales'
 import clsx from 'clsx'
 import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import ExternalLink from '../components/ExternalLink'
 import { experiences } from '../data'
 import { IExperiences } from '../types'
 
-const CarrerView = () => {
-  const [selectedExperience, setSelectedExperience] =
-    useState<IExperiences>('Juntos Somos Mais')
+const formatExperienceForUrl = (experience: string): string => {
+  return experience.replace(/\s+/g, '-')
+}
 
+const parseExperienceFromUrl = (urlValue: string): IExperiences | null => {
+  const formattedExperience = urlValue.replace(/-/g, ' ')
+  
+  return experiences.find(
+    exp => formatExperienceForUrl(exp) === urlValue || exp === formattedExperience
+  ) as IExperiences | null
+}
+
+const CarrerView = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const locale = useLocale()
   const isEn = locale === Locales.EN
   const t = useTranslations('CarrerPage')
+
+  const getInitialExperience = (): IExperiences => {
+    const filterParam = searchParams.get('filter')
+
+    if (filterParam) {
+      const parsed = parseExperienceFromUrl(filterParam)
+      if (parsed) return parsed
+    }
+    return 'Juntos Somos Mais'
+  }
+
+  const [selectedExperience, setSelectedExperience] =
+    useState<IExperiences>(getInitialExperience())
+
+  useEffect(() => {
+    const filterParam = searchParams.get('filter')
+    if (filterParam) {
+      const parsed = parseExperienceFromUrl(filterParam)
+
+      if (parsed && parsed !== selectedExperience) {
+        setSelectedExperience(parsed)
+      }
+    }
+  }, [searchParams])
+
+  const handleExperienceClick = (experience: IExperiences) => {
+    setSelectedExperience(experience)
+
+    const params = new URLSearchParams(searchParams.toString())
+    
+    params.set('filter', formatExperienceForUrl(experience))
+    router.push(`?${params.toString()}`)
+  }
 
   const experience = `Experiences.${selectedExperience}`
 
@@ -39,7 +84,7 @@ const CarrerView = () => {
         {experiences.map(experience => (
           <button
             key={experience}
-            onClick={() => setSelectedExperience(experience as IExperiences)}
+            onClick={() => handleExperienceClick(experience as IExperiences)}
             className={clsx(
               'rounded-sm bg-green-weak-border w-full w-max-[248px] p-small cursor-pointer text-large hover:bg-secondary hover:text-black transition-colors duration-500',
               selectedExperience === experience &&
@@ -67,6 +112,28 @@ const CarrerView = () => {
                   {chunks}
                 </ExternalLink>
               ),
+              a: (chunks: ReactNode) => {
+                const extractUrl = (node: ReactNode): string => {
+                  if (typeof node === 'string') {
+                    return node.trim()
+                  }
+                  if (Array.isArray(node)) {
+                    return node.map(extractUrl).join('').trim()
+                  }
+
+                  if (node && typeof node === 'object' && 'props' in node) {
+                    return extractUrl((node).props?.children || node)
+                  }
+
+                  return String(node).trim()
+                }
+                const url = extractUrl(chunks)
+                return (
+                  <ExternalLink href={url}>
+                    {chunks}
+                  </ExternalLink>
+                )
+              },
             })
 
             return (

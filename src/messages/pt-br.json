@@ -12,16 +12,23 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
-        "totalContributions": "8",
+        "totalContributions": "15",
         "contributions": {
-          "1": "Desenvolvi funcionalidades contínuas para a plataforma de e-commerce e programa de fidelidade.",
-          "2": "Atuei no Design System open source <atomium>Atomium</atomium>, priorizando demandas, desenvolvendo componentes, corrigindo bugs e revisando PRs.",
-          "3": "Reformulei o processo de documentação do time de engenharia de front.",
-          "4": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-          "5": "Desenvolvi soluções para regras de segurança, além de escrever documentações sobre a causa, análise e solução.",
-          "6": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
-          "7": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal.",
-          "8": "Colaborei com produto, UI/UX e engenharia para alinhar soluções técnicas com os objetivos do negócio e design system."
+          "1": "Desenvolvi features críticas para plataforma de e-commerce, aumentando conversão e satisfação do cliente.",
+          "2": "Otimizei o pipeline de CI/CD ao paralelizar a execução de testes e análise de código (Sonar), reduzindo o tempo de build/deploy de ~1h para ~12 minutos (~80% de redução) e eliminando gargalos no processo de entrega.",
+          "3": "Contribuí para o Nuxt.js reportando e documentando uma issue, auxiliando na identificação de um problema no build da versão 3.16.0+ e na discussão da solução (<a>https://github.com/nuxt/nuxt/issues/32494</a>).",
+          "4": "Contribuí para o Unleash (SDK JS) com um Pull Request, melhorando a biblioteca e colaborando com o core do projeto. A alteração foi feita para prover benefícios no nosso uso do Unleash nas nossas aplicações (<a>https://l1nq.com/unleash-pr</a>).",
+          "5": "Resolvi um problema de segurança no redirecionamento da aplicação, evitando que os cookies/cache do usuário sejam invadidos por links externos.",
+          "6": "Resolvi um problema de XSS em um web-component, evitando que seja possível aplicar HTML Injection pelos campos do componente (<a>https://sl1nk.com/atomium</a>).",
+          "7": "Trabalhei no desenvolvimento de componentes no Design System Atomium (open-source), resultando em 40% redução no tempo de desenvolvimento de novas features. Priorizando demandas, desenvolvendo componentes, resolvendo issues e revisando PRs. Contribuições: <a>https://shre.ink/Mliv</a>.",
+          "8": "Reformulei o processo de documentação do time de engenharia de front. Na intenção de criar e centralizar ADR's e documentações diversas.",
+          "9": "Criei e documentei soluções de segurança front-end, reduzindo vulnerabilidades críticas em 100% e estabelecendo padrões de segurança para o time.",
+          "10": "Desenvolvi POCs técnicas para avaliar a viabilidade de novas funcionalidades, incluindo a implementação de animações, orientando decisões arquiteturais.",
+          "11": "Redução de débito técnico por meio de refatorações, otimizações e melhorias de performance.",
+          "12": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas para os objetivos do negócio.",
+          "13": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
+          "14": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
+          "15": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal."
         },
         "link": "https://g.co/kgs/eVwdD6s"
       },
