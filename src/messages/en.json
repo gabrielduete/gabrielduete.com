@@ -12,16 +12,23 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "time": "2021 - Present",
-        "totalContributions": "8",
+        "totalContributions": "15",
         "contributions": {
-          "1": "Developed continuous features for the e-commerce platform and loyalty program.",
-          "2": "Worked on the open-source design system <atomium>Atomium</atomium>, prioritizing tasks, developing components, fixing bugs, and reviewing PRs.",
-          "3": "Redesigned the front-end engineering team's documentation process.",
-          "4": "Contributed to reducing technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
-          "5": "Developed solutions for security rules, including writing documentation about the causes, analysis, and resolutions.",
-          "6": "Contributed to improving the squad's workflow both individually and collectively.",
-          "7": "Participated in meetings and events focused on front-end and other broad topics, connecting with professionals who have enhanced my technical and interpersonal development.",
-          "8": "Collaborated with product, UI/UX, and engineering teams to align technical solutions with business objectives and the design system."
+          "1": "Developed critical features for the e-commerce platform, increasing conversion and customer satisfaction.",
+          "2": "Optimized the CI/CD pipeline by parallelizing test execution and code analysis (Sonar), reducing build/deploy time from ~1h to ~12 minutes (~80% reduction) and eliminating bottlenecks in the delivery process.",
+          "3": "Contributed to Nuxt.js by reporting and documenting an issue, helping identify a problem in the build of version 3.16.0+ and discussing the solution (<a>https://github.com/nuxt/nuxt/issues/32494</a>).",
+          "4": "Contributed to Unleash (JS SDK) with a Pull Request, improving the library and collaborating with the project's core. The change was made to provide benefits in our use of Unleash in our applications (<a>https://l1nq.com/unleash-pr</a>).",
+          "5": "Resolved a security issue in application redirection, preventing user cookies/cache from being compromised by external links.",
+          "6": "Resolved an XSS issue in a web component, preventing HTML Injection from being applied through the component's fields (<a>https://sl1nk.com/atomium</a>).",
+          "7": "Worked on component development in the Atomium Design System (open-source), resulting in a 40% reduction in new feature development time. Prioritizing demands, developing components, resolving issues, and reviewing PRs. Contributions: <a>https://shre.ink/Mliv</a>.",
+          "8": "Redesigned the front-end engineering team's documentation process, with the intention of creating and centralizing ADRs and various documentation.",
+          "9": "Created and documented front-end security solutions, reducing critical vulnerabilities by 100% and establishing security standards for the team.",
+          "10": "Developed technical POCs to evaluate the feasibility of new features, including animation implementation, guiding architectural decisions.",
+          "11": "Reduced technical debt through refactoring, optimizations, and performance improvements.",
+          "12": "Collaborated with product, UI/UX, and engineering to align technical solutions with business objectives.",
+          "13": "Contributed to reducing technical debt through refactoring, optimizations, security fixes, and performance improvements, such as handling chunk errors.",
+          "14": "Contributed to improving the squad's workflow both individually and collectively.",
+          "15": "Participated in meetings and events focused on front-end and other broad topics, connecting with professionals who have enhanced my technical and interpersonal development."
         },
         "link": "https://g.co/kgs/eVwdD6s"
       },

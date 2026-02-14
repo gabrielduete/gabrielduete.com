@@ -67,6 +67,27 @@ const CarrerView = () => {
                   {chunks}
                 </ExternalLink>
               ),
+              a: (chunks: ReactNode) => {
+                // Extract URL from chunks - next-intl passes the content as children
+                const extractUrl = (node: ReactNode): string => {
+                  if (typeof node === 'string') {
+                    return node.trim()
+                  }
+                  if (Array.isArray(node)) {
+                    return node.map(extractUrl).join('').trim()
+                  }
+                  if (node && typeof node === 'object' && 'props' in node) {
+                    return extractUrl((node as any).props?.children || node)
+                  }
+                  return String(node).trim()
+                }
+                const url = extractUrl(chunks)
+                return (
+                  <ExternalLink href={url}>
+                    {chunks}
+                  </ExternalLink>
+                )
+              },
             })
 
             return (
