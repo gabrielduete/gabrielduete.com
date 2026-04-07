@@ -23,8 +23,8 @@ const Home = async () => {
   const MediasLink = [
     {
       Icon: FaBuilding,
-      name: 'JSM',
-      link: 'https://g.co/kgs/eVwdD6s',
+      name: 'Petlove',
+      link: 'https://www.petlove.com.br/',
     },
     ...SocialMediaItems,
   ]
