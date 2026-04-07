@@ -39,15 +39,15 @@ describe('<Home />', () => {
     expect(mediaLinks).toHaveLength(SocialMediaItems.length + 1)
   })
 
-  it('should render the "Juntos Somos Mais" link correctly', async () => {
+  it('should render the "Petlove" link correctly', async () => {
     render(await Home())
 
-    const juntosLink = screen.getByText('JSM')
+    const petloveLink = screen.getByText('Petlove')
 
-    expect(juntosLink).toBeInTheDocument()
-    expect(juntosLink.closest('a')).toHaveAttribute(
+    expect(petloveLink).toBeInTheDocument()
+    expect(petloveLink.closest('a')).toHaveAttribute(
       'href',
-      'https://g.co/kgs/eVwdD6s',
+      'https://www.petlove.com.br/',
     )
   })
 

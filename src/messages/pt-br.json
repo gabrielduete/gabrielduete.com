@@ -5,13 +5,26 @@
     "articles": "Posts fixados:"
   },
   "IndexPage": {
-    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Juntos Somos Mais."
+    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Petlove."
   },
   "CarrerPage": {
     "Experiences": {
+      "Petlove": {
+        "title": "Petlove",
+        "role": "Desenvolvedor Front-end Pleno",
+        "time": "Mar de 2026 - o momento",
+        "location": "São Paulo, Brasil · Remoto",
+        "totalContributions": "1",
+        "contributions": {
+          "1": "Loading... :D"
+        },
+        "link": "https://www.petlove.com.br/"
+      },
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
-        "time": "2021 - Present",
+        "role": "Desenvolvedor Front-end",
+        "time": "Dez de 2021 - Mar de 2026 · 4 anos e 4 meses",
+        "location": "São Paulo, Brasil · Remoto",
         "totalContributions": "15",
         "contributions": {
           "1": "Desenvolvi features críticas para plataforma de e-commerce, aumentando conversão e satisfação do cliente.",
@@ -34,21 +47,25 @@
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
-        "time": "2024 - Present",
+        "role": "Product-minded Frontend Developer",
+        "time": "Ago de 2024 - Mar de 2025 · 8 meses",
+        "location": "Massachusetts, Estados Unidos · Remoto",
         "totalContributions": "6",
         "contributions": {
-          "1": "Meu primeiro projeto internacional como freelancer.",
-          "2": "Fiz contribuições para a plataforma de cloud.",
-          "3": "Criei o layout no figma e padrões do design system, tais como cores, tipografia, espaçamento, etc.",
-          "4": "Integração com APIs de pagamento, cloud, crud de usuários, etc.",
-          "5": "Documentei a decisão de arquitetura e as tecnologias utilizadas no front-end",
-          "6": "Discuti regras de negócio com o time e sugeri melhorias no fluxo de trabalho."
+          "1": "Liderei o desenvolvimento frontend de um MVP SaaS de cloud backup voltado para MSPs e empresas de setores regulados.",
+          "2": "Desenhei e implementei a UI/UX, criando layouts, fluxos de usuário e um design system escalável (cores, tipografia, espaçamentos e padrões de componentes) no Figma.",
+          "3": "Defini decisões de arquitetura frontend, documentando escolhas técnicas e estabelecendo padrões.",
+          "4": "Colaborei com stakeholders na definição e refinamento de regras de negócio e fluxos do produto.",
+          "5": "Integrei o frontend com APIs de cloud, incluindo gestão de usuários, fluxos de autenticação e operações CRUD principais.",
+          "6": "Garanti consistência entre requisitos de produto, decisões de UX e implementação técnica."
         },
         "link": ""
       },
       "React4Noobs": {
         "title": "React4Noobs",
-        "time": "2023 - Present",
+        "role": "Colaborador",
+        "time": "Set de 2023 - o momento",
+        "location": "Remoto",
         "totalContributions": "4",
         "contributions": {
           "1": "Criação de artigos sobre conceitos de Design Patterns em React, como Compound Components, Error Boundaries, etc...",
@@ -60,7 +77,9 @@
       },
       "He4rt Team": {
         "title": "He4rt Team",
-        "time": "Jun 2022 - Jan 2023",
+        "role": "Desenvolvedor Front-end",
+        "time": "Jun de 2022 - Jan de 2023 · 8 meses",
+        "location": "Remoto",
         "totalContributions": "5",
         "contributions": {
           "1": "Contribuição no desenvolvimento front-end para o site que estava em andamento, mas acabou que o projeto teve que ser pausado.",

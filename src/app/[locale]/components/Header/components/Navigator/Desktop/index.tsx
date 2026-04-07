@@ -19,10 +19,22 @@ const NavigatorDesktop = () => {
       className='bg-bg-primary rounded-sm border-[1px] border-green-weak-border w-full max-w-[1000px]
       p-base flex items-center justify-center gap-(--spacing-xxxxlarge) list-none'
     >
-      {items.map(({ name, name_en, href }) => {
+      {items.map(item => {
+        const { name, name_en } = item
+        const isExternal = 'external' in item && item.external
+        const href = isExternal
+          ? isEn
+            ? item.hrefEn
+            : item.href
+          : `/${locale}${item.href}`
         return (
           <li key={name}>
-            <Link href={`/${locale}${href}`}>
+            <Link
+              href={href}
+              {...(isExternal
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
+            >
               <p
                 className={`
                   text-subtitle-small cursor-pointer transition-colors hover:text-secondary

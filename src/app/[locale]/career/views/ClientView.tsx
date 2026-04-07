@@ -18,9 +18,10 @@ const formatExperienceForUrl = (experience: string): string => {
 
 const parseExperienceFromUrl = (urlValue: string): IExperiences | null => {
   const formattedExperience = urlValue.replace(/-/g, ' ')
-  
+
   return experiences.find(
-    exp => formatExperienceForUrl(exp) === urlValue || exp === formattedExperience
+    exp =>
+      formatExperienceForUrl(exp) === urlValue || exp === formattedExperience,
   ) as IExperiences | null
 }
 
@@ -38,11 +39,12 @@ const CarrerView = () => {
       const parsed = parseExperienceFromUrl(filterParam)
       if (parsed) return parsed
     }
-    return 'Juntos Somos Mais'
+    return 'Petlove'
   }
 
-  const [selectedExperience, setSelectedExperience] =
-    useState<IExperiences>(getInitialExperience())
+  const [selectedExperience, setSelectedExperience] = useState<IExperiences>(
+    getInitialExperience(),
+  )
 
   useEffect(() => {
     const filterParam = searchParams.get('filter')
@@ -59,7 +61,7 @@ const CarrerView = () => {
     setSelectedExperience(experience)
 
     const params = new URLSearchParams(searchParams.toString())
-    
+
     params.set('filter', formatExperienceForUrl(experience))
     router.push(`?${params.toString()}`)
   }
@@ -99,9 +101,11 @@ const CarrerView = () => {
         <h1 className='text-green-neutral text-title-giant'>
           {t(`${experience}.title`)}
         </h1>
-        <p className='text-green-white text-medium mb-xsmall'>
-          {t(`${experience}.time`)}
-        </p>
+        <p className='text-large text-primary'>{t(`${experience}.role`)}</p>
+        <div className='flex flex-col gap-2xs text-green-white text-medium mb-xsmall'>
+          <p>{t(`${experience}.time`)}</p>
+          <p>{t(`${experience}.location`)}</p>
+        </div>
         <ul className='flex flex-col gap-small'>
           {contributionKeys.map(contribution => {
             const path = `${experience}.contributions.${contribution}`
@@ -122,17 +126,13 @@ const CarrerView = () => {
                   }
 
                   if (node && typeof node === 'object' && 'props' in node) {
-                    return extractUrl((node).props?.children || node)
+                    return extractUrl(node.props?.children || node)
                   }
 
                   return String(node).trim()
                 }
                 const url = extractUrl(chunks)
-                return (
-                  <ExternalLink href={url}>
-                    {chunks}
-                  </ExternalLink>
-                )
+                return <ExternalLink href={url}>{chunks}</ExternalLink>
               },
             })
 
