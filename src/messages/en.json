@@ -9,9 +9,22 @@
   },
   "CarrerPage": {
     "Experiences": {
+      "Petlove": {
+        "title": "Petlove",
+        "role": "Mid-level Front-end Developer",
+        "time": "Mar 2026 - Present",
+        "location": "São Paulo, Brazil · Remote",
+        "totalContributions": "1",
+        "contributions": {
+          "1": "Loading... :D"
+        },
+        "link": "https://www.petlove.com.br/"
+      },
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
-        "time": "2021 - Present",
+        "role": "Front-end Developer",
+        "time": "Dec 2021 - Mar 2026 · 4 years and 4 months",
+        "location": "São Paulo, Brazil · Remote",
         "totalContributions": "15",
         "contributions": {
           "1": "Developed critical features for the e-commerce platform, increasing conversion and customer satisfaction.",
@@ -34,20 +47,25 @@
       },
       "Nimbus Black": {
         "title": "Nimbus Black",
-        "time": "2024 - Present",
+        "role": "Product-minded Frontend Developer",
+        "time": "Aug 2024 - Mar 2025 · 8 months",
+        "location": "Massachusetts, United States · Remote",
         "totalContributions": "5",
         "contributions": {
-          "1": "My first international project as a freelancer.",
-          "2": "Contributed to the cloud platform.",
-          "3": "Created layout and design system standards in Figma, such as colors, typography, spacing, etc.",
-          "4": "Integrated with payment APIs, cloud services, user CRUD, and more.",
-          "5": "Documented architecture decisions and the technologies used on the front-end."
+          "1": "Led the frontend development of an MVP SaaS for cloud backup targeting MSPs and regulated industries.",
+          "2": "Designed and implemented the UI/UX, creating scalable layouts, user flows, and a design system (colors, typography, spacing, component patterns) in Figma.",
+          "3": "Defined frontend architecture decisions, documenting technical choices and establishing standards.",
+          "4": "Collaborated with stakeholders to define and refine business rules and product flows.",
+          "5": "Integrated the frontend with cloud APIs, including user management, authentication flows, and core CRUD operations.",
+          "6": "Ensured consistency between product requirements, UX decisions, and technical implementation."
         },
         "link": ""
       },
       "React4Noobs": {
         "title": "React4Noobs",
-        "time": "2023 - Present",
+        "role": "Contributor",
+        "time": "Sep 2023 - Present",
+        "location": "Remote",
         "totalContributions": "3",
         "contributions": {
           "1": "Created articles on React Design Patterns concepts such as Compound Components, Error Boundaries, etc.",
@@ -58,7 +76,9 @@
       },
       "He4rt Team": {
         "title": "He4rt Team",
-        "time": "Jun 2022 - Jan 2023",
+        "role": "Front-end Developer",
+        "time": "Jun 2022 - Jan 2023 · 8 months",
+        "location": "Remote",
         "totalContributions": "5",
         "contributions": {
           "1": "Front-end development contributions to a website project that was paused.",
