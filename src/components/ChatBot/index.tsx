@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai'
+import { UIMessage } from 'ai'
 import { useTranslations } from 'next-intl'
 import { FaComments, FaTimes } from 'react-icons/fa'
 
@@ -16,6 +17,16 @@ const ChatBot = () => {
   const { locale, slug } = useCurrentPost()
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
+
+  // Restore persisted messages from localStorage on mount (SSR-safe lazy initializer)
+  const [restoredMessages] = useState<UIMessage[]>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    } catch {
+      return []
+    }
+  })
 
   // Keep latest slug/locale in refs so the transport body function always reads fresh values
   const slugRef = useRef(slug)
@@ -33,7 +44,7 @@ const ChatBot = () => {
     [],
   )
 
-  const { messages, sendMessage, status } = useChat({ transport })
+  const { messages, sendMessage, status } = useChat({ transport, messages: restoredMessages })
 
   const listRef = useRef<HTMLDivElement>(null)
 
