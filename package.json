@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
+    "prebuild": "ts-node --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register scripts/index-blog.ts",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
