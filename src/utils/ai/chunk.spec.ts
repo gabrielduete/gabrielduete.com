@@ -26,4 +26,10 @@ describe('chunkMarkdown', () => {
     expect(chunks.length).toBeGreaterThan(1)
     chunks.forEach(c => expect(c.length).toBeLessThanOrEqual(1000 + 50))
   })
+
+  it('hard-splits a single token longer than maxChars', () => {
+    const md = `# T\n${'a'.repeat(2500)}`
+    const chunks = chunkMarkdown(md, 1000)
+    chunks.forEach(c => expect(c.length).toBeLessThanOrEqual(1000))
+  })
 })

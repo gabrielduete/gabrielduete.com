@@ -27,7 +27,19 @@ function splitLongSection(section: string, maxChars: number): string[] {
           out.push(wordBuffer.trim())
           wordBuffer = ''
         }
-        wordBuffer += (wordBuffer ? ' ' : '') + word
+
+        // Hard-split if a single word exceeds maxChars
+        if (word.length > maxChars) {
+          if (wordBuffer.trim()) {
+            out.push(wordBuffer.trim())
+            wordBuffer = ''
+          }
+          for (let i = 0; i < word.length; i += maxChars) {
+            out.push(word.slice(i, i + maxChars))
+          }
+        } else {
+          wordBuffer += (wordBuffer ? ' ' : '') + word
+        }
       }
       if (wordBuffer.trim()) out.push(wordBuffer.trim())
     } else {
