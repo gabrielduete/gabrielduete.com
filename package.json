@@ -12,8 +12,14 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^3.0.42",
+    "@ai-sdk/react": "^3.0.211",
     "@giscus/react": "^3.1.0",
     "@sentry/nextjs": "^10",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
+    "@upstash/vector": "^1.2.3",
+    "ai": "^6.0.209",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "fs": "^0.0.1-security",
