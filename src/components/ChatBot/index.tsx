@@ -11,6 +11,7 @@ import { FaComments, FaTimes } from 'react-icons/fa'
 import { useCurrentPost } from './useCurrentPost'
 
 const STORAGE_KEY = 'chatbot-history'
+const MAX_PERSISTED = 50
 
 const ChatBot = () => {
   const t = useTranslations('ChatBot')
@@ -50,7 +51,11 @@ const ChatBot = () => {
 
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-MAX_PERSISTED)))
+      } catch {
+        // persistence is best-effort; ignore quota errors
+      }
     }
   }, [messages])
 

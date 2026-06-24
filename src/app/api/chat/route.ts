@@ -24,47 +24,52 @@ function latestUserText(messages: UIMessage[]): string {
 }
 
 export async function POST(req: Request) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
-
-  const { success } = await checkRateLimit(ip)
-  if (!success) {
-    return new Response('Too many requests', { status: 429 })
-  }
-
-  let body: Record<string, unknown>
   try {
-    body = await req.json()
-  } catch {
-    return new Response('Bad request', { status: 400 })
-  }
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
 
-  const messages: UIMessage[] = Array.isArray(body.messages) ? (body.messages as UIMessage[]) : []
-  const locale = resolveLocale(body.locale)
-  const currentSlug = typeof body.currentSlug === 'string' ? body.currentSlug : undefined
-
-  let currentArticle: { title: string; content: string } | null = null
-  if (currentSlug) {
-    try {
-      const { content, data } = getBlogData(currentSlug, locale as Locales)
-      currentArticle = {
-        title: typeof data.title === 'string' ? data.title : currentSlug,
-        content,
-      }
-    } catch {
-      currentArticle = null
+    const { success } = await checkRateLimit(ip)
+    if (!success) {
+      return new Response('Too many requests', { status: 429 })
     }
+
+    let body: Record<string, unknown>
+    try {
+      body = await req.json()
+    } catch {
+      return new Response('Bad request', { status: 400 })
+    }
+
+    const messages: UIMessage[] = Array.isArray(body.messages) ? (body.messages as UIMessage[]) : []
+    const locale = resolveLocale(body.locale)
+    const currentSlug = typeof body.currentSlug === 'string' ? body.currentSlug : undefined
+
+    let currentArticle: { title: string; content: string } | null = null
+    if (currentSlug) {
+      try {
+        const { content, data } = getBlogData(currentSlug, locale as Locales)
+        currentArticle = {
+          title: typeof data.title === 'string' ? data.title : currentSlug,
+          content,
+        }
+      } catch {
+        currentArticle = null
+      }
+    }
+
+    const query = latestUserText(messages)
+    const chunks = query ? await queryRelevantChunks(query, locale) : []
+
+    const system = buildSystemPrompt({ locale, currentArticle, chunks })
+
+    const result = streamText({
+      model: groq(MODEL),
+      system,
+      messages: await convertToModelMessages(messages),
+    })
+
+    return result.toUIMessageStreamResponse()
+  } catch (err) {
+    console.error('[POST /api/chat] Unhandled error:', err)
+    return new Response('Internal error', { status: 500 })
   }
-
-  const query = latestUserText(messages)
-  const chunks = query ? await queryRelevantChunks(query, locale) : []
-
-  const system = buildSystemPrompt({ locale, currentArticle, chunks })
-
-  const result = streamText({
-    model: groq(MODEL),
-    system,
-    messages: await convertToModelMessages(messages),
-  })
-
-  return result.toUIMessageStreamResponse()
 }

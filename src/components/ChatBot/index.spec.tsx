@@ -61,4 +61,27 @@ describe('<ChatBot />', () => {
       }),
     )
   })
+
+  it('persists at most 50 messages to localStorage when history exceeds the cap', () => {
+    const manyMessages = Array.from({ length: 60 }, (_, i) => ({
+      id: String(i),
+      role: i % 2 === 0 ? 'user' : 'assistant',
+      parts: [{ type: 'text', text: `msg ${i}` }],
+    }))
+    useChatMock.mockReturnValue({
+      messages: manyMessages,
+      sendMessage: sendMessageMock,
+      status: 'ready',
+    })
+
+    render(<ChatBot />)
+
+    const stored = localStorage.getItem('chatbot-history')
+    expect(stored).not.toBeNull()
+    const parsed = JSON.parse(stored!)
+    expect(parsed).toHaveLength(50)
+    // should be the LAST 50
+    expect(parsed[0].id).toBe('10')
+    expect(parsed[49].id).toBe('59')
+  })
 })

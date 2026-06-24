@@ -46,6 +46,14 @@ export async function indexBlog(): Promise<number> {
 }
 
 if (require.main === module) {
+  const vercelEnv = process.env.VERCEL_ENV
+  if (vercelEnv && vercelEnv !== 'production') {
+    console.log(
+      `[index-blog] Skipping indexing on non-production Vercel env (VERCEL_ENV=${vercelEnv}).`,
+    )
+    process.exit(0)
+  }
+
   const hasEnv =
     process.env.UPSTASH_VECTOR_REST_URL && process.env.UPSTASH_VECTOR_REST_TOKEN
 

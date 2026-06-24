@@ -83,4 +83,13 @@ describe('POST /api/chat', () => {
     expect(res.status).toBe(200)
     expect(streamTextMock).toHaveBeenCalledTimes(1)
   })
+
+  it('returns 500 and does not call streamText when checkRateLimit throws', async () => {
+    ;(checkRateLimit as jest.Mock).mockRejectedValue(new Error('no env'))
+
+    const res = await POST(makeRequest({ messages: [], locale: 'en' }))
+
+    expect(res.status).toBe(500)
+    expect(streamTextMock).not.toHaveBeenCalled()
+  })
 })
