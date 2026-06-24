@@ -1,9 +1,9 @@
 const limitMock = jest.fn()
 
 jest.mock('@upstash/ratelimit', () => {
-  const Ratelimit: any = jest
+  const Ratelimit = jest
     .fn()
-    .mockImplementation(() => ({ limit: limitMock }))
+    .mockImplementation(() => ({ limit: limitMock })) as jest.Mock & { slidingWindow: jest.Mock }
   Ratelimit.slidingWindow = jest.fn(() => 'sliding-window')
   return { Ratelimit }
 })

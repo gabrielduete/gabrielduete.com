@@ -1,13 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 
 const sendMessageMock = jest.fn()
-const useChatMock = jest.fn((opts: any) => ({
+type ChatMockReturn = { messages: unknown[]; sendMessage: jest.Mock; status: string }
+const useChatMock = jest.fn<ChatMockReturn, [Record<string, unknown>]>(() => ({
   messages: [],
   sendMessage: sendMessageMock,
   status: 'ready',
 }))
 jest.mock('@ai-sdk/react', () => ({
-  useChat: (opts: any) => useChatMock(opts),
+  useChat: (opts: Record<string, unknown>) => useChatMock(opts),
 }))
 jest.mock('ai', () => ({ DefaultChatTransport: jest.fn() }))
 jest.mock('next/navigation', () => ({ usePathname: () => '/en/blog/post' }))

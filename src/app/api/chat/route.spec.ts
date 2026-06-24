@@ -12,21 +12,20 @@ jest.mock('@/app/[locale]/blog/helpers/getDataContentFile', () => ({
   getBlogData: jest.fn(() => ({ content: 'post body', data: { title: 'Post' } })),
 }))
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const streamTextMock = jest.fn((_args: any) => ({
+type StreamMockReturn = { toUIMessageStreamResponse: () => Response }
+const streamTextMock = jest.fn<StreamMockReturn, [Record<string, unknown>]>(() => ({
   toUIMessageStreamResponse: () => new Response('ok', { status: 200 }),
 }))
 jest.mock('ai', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  streamText: (args: any) => streamTextMock(args),
-  convertToModelMessages: (m: any) => Promise.resolve(m),
+  streamText: (args: Record<string, unknown>) => streamTextMock(args),
+  convertToModelMessages: (m: unknown) => Promise.resolve(m),
 }))
 jest.mock('@ai-sdk/groq', () => ({ groq: () => 'model' }))
 
 import { checkRateLimit } from '@/utils/ai/ratelimit'
 import { POST } from './route'
 
-function makeRequest(body: any) {
+function makeRequest(body: Record<string, unknown>) {
   return new Request('http://localhost/api/chat', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-forwarded-for': '9.9.9.9' },

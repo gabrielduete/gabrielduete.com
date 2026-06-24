@@ -4,7 +4,7 @@ import { buildSystemPrompt } from '@/utils/ai/buildPrompt'
 import { checkRateLimit } from '@/utils/ai/ratelimit'
 import { queryRelevantChunks } from '@/utils/ai/upstashVector'
 import { groq } from '@ai-sdk/groq'
-import { convertToModelMessages, streamText, type UIMessage } from 'ai'
+import { convertToModelMessages, streamText, type UIMessage, type TextUIPart } from 'ai'
 
 export const runtime = 'nodejs'
 
@@ -18,8 +18,8 @@ function latestUserText(messages: UIMessage[]): string {
   const last = [...messages].reverse().find(m => m.role === 'user')
   if (!last) return ''
   return (last.parts ?? [])
-    .filter((p: any) => p.type === 'text')
-    .map((p: any) => p.text)
+    .filter((p): p is TextUIPart => p.type === 'text')
+    .map(p => p.text)
     .join(' ')
 }
 
@@ -31,22 +31,23 @@ export async function POST(req: Request) {
     return new Response('Too many requests', { status: 429 })
   }
 
-  let body: any
+  let body: Record<string, unknown>
   try {
     body = await req.json()
   } catch {
     return new Response('Bad request', { status: 400 })
   }
 
-  const messages: UIMessage[] = Array.isArray(body.messages) ? body.messages : []
+  const messages: UIMessage[] = Array.isArray(body.messages) ? (body.messages as UIMessage[]) : []
   const locale = resolveLocale(body.locale)
+  const currentSlug = typeof body.currentSlug === 'string' ? body.currentSlug : undefined
 
   let currentArticle: { title: string; content: string } | null = null
-  if (body.currentSlug) {
+  if (currentSlug) {
     try {
-      const { content, data } = getBlogData(body.currentSlug, locale as Locales)
+      const { content, data } = getBlogData(currentSlug, locale as Locales)
       currentArticle = {
-        title: typeof data.title === 'string' ? data.title : body.currentSlug,
+        title: typeof data.title === 'string' ? data.title : currentSlug,
         content,
       }
     } catch {

@@ -1,4 +1,5 @@
 import { buildVectorRecords } from './index-blog'
+import type { PostEntry } from '../src/utils/ai/listPosts'
 
 describe('buildVectorRecords', () => {
   it('produces one record per chunk with deterministic ids and metadata', () => {
@@ -12,7 +13,7 @@ describe('buildVectorRecords', () => {
       },
     ]
 
-    const records = buildVectorRecords(posts as any)
+    const records = buildVectorRecords(posts as PostEntry[])
 
     expect(records.length).toBe(2)
     expect(records[0].id).toBe('en:my-post:0')

@@ -1,5 +1,5 @@
 import { getAiEnv } from './env'
-import { Index } from '@upstash/vector'
+import { Index, type QueryResult } from '@upstash/vector'
 
 let index: Index | null = null
 
@@ -30,7 +30,7 @@ export async function queryRelevantChunks(
     filter: `locale = '${locale}'`,
   })
 
-  return (results ?? []).map((r: any) => ({
+  return (results ?? []).map((r: QueryResult<Record<string, unknown>>) => ({
     text: String(r.metadata?.text ?? ''),
     slug: String(r.metadata?.slug ?? ''),
     title: String(r.metadata?.title ?? ''),
