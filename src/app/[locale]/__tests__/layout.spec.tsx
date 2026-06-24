@@ -39,6 +39,11 @@ jest.mock('../components/KeyboardEasterEgg', () => {
   }
 })
 
+jest.mock('@/components/ChatBot', () => ({
+  __esModule: true,
+  default: () => <div data-testid='chatbot' />,
+}))
+
 jest.mock('@/i18n/routing', () => ({
   routing: {
     locales: ['en', 'pt-br'],
@@ -69,6 +74,7 @@ describe('<Layout />', () => {
     expect(screen.getByTestId('footer')).toBeInTheDocument()
     expect(screen.getByTestId('keyboard-easter-egg')).toBeInTheDocument()
     expect(screen.getByTestId('children')).toBeInTheDocument()
+    expect(screen.getByTestId('chatbot')).toBeInTheDocument()
   })
 
   it('should render with correct HTML structure', async () => {
