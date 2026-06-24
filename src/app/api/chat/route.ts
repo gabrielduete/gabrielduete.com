@@ -31,8 +31,14 @@ export async function POST(req: Request) {
     return new Response('Too many requests', { status: 429 })
   }
 
-  const body = await req.json()
-  const messages: UIMessage[] = body.messages ?? []
+  let body: any
+  try {
+    body = await req.json()
+  } catch {
+    return new Response('Bad request', { status: 400 })
+  }
+
+  const messages: UIMessage[] = Array.isArray(body.messages) ? body.messages : []
   const locale = resolveLocale(body.locale)
 
   let currentArticle: { title: string; content: string } | null = null

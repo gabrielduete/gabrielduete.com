@@ -61,4 +61,27 @@ describe('POST /api/chat', () => {
     expect(res.status).toBe(200)
     expect(streamTextMock).toHaveBeenCalledTimes(1)
   })
+
+  it('returns 400 on malformed JSON body', async () => {
+    const req = new Request('http://localhost/api/chat', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '9.9.9.9' },
+      body: 'not json',
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(400)
+    expect(streamTextMock).not.toHaveBeenCalled()
+  })
+
+  it('treats non-array messages as empty array', async () => {
+    const res = await POST(
+      makeRequest({
+        messages: 'not an array',
+        locale: 'en',
+      }),
+    )
+
+    expect(res.status).toBe(200)
+    expect(streamTextMock).toHaveBeenCalledTimes(1)
+  })
 })
