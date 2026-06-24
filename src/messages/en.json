@@ -91,6 +91,14 @@
       }
     }
   },
+  "ChatBot": {
+    "open": "Open chat",
+    "close": "Close chat",
+    "title": "Ask about the blog",
+    "placeholder": "Ask anything…",
+    "send": "Send",
+    "empty": "Hi! Ask me anything about this blog or the post you're reading."
+  },
   "BlogPage": {
     "contribution": "Liked the content? I accept a contribution! :)",
     "contributionDescription1": "PIX (Brazil Only): gabrielmonteiroduete@gmail.com",

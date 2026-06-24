@@ -92,6 +92,14 @@
       }
     }
   },
+  "ChatBot": {
+    "open": "Abrir chat",
+    "close": "Fechar chat",
+    "title": "Pergunte sobre o blog",
+    "placeholder": "Pergunte qualquer coisa…",
+    "send": "Enviar",
+    "empty": "Oi! Pergunte qualquer coisa sobre o blog ou sobre o post que você está lendo."
+  },
   "BlogPage": {
     "contribution": "Gostou do conteúdo? Aceito uma contribuição! :)",
     "contributionDescription1": "PIX: gabrielmonteiroduete@gmail.com",
