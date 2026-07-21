@@ -12,20 +12,28 @@ const Filter = () => {
 
   return (
     <div data-testid='component-filter'>
-      <ul className='flex flex-wrap gap-xxxxlarge'>
-        {localizedFilters?.map((filter: string) => (
-          <li key={filter}>
-            <button
-              onClick={() => setSelectedFilter(filter as IFilters)}
-              className={clsx(
-                'cursor-pointer text-large text-primary hover:text-secondary',
-                selectedFilter === filter && 'text-secondary',
-              )}
-            >
-              {filter}
-            </button>
-          </li>
-        ))}
+      <ul className='flex flex-wrap gap-xxlarge'>
+        {localizedFilters?.map((filter: string) => {
+          const isSelected = selectedFilter === filter
+
+          return (
+            <li key={filter}>
+              <button
+                onClick={() => setSelectedFilter(filter as IFilters)}
+                aria-pressed={isSelected}
+                className={clsx(
+                  'cursor-pointer text-large text-primary hover:text-secondary',
+                  'border-b pb-xxsmall transition-colors',
+                  isSelected
+                    ? 'text-secondary border-secondary'
+                    : 'border-transparent',
+                )}
+              >
+                {filter}
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

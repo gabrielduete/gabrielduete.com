@@ -109,6 +109,9 @@
     "findMe": "Find me also in:"
   },
   "Common": {
-    "noResults": "No results found."
+    "noResults": "No results found.",
+    "goToPage": "Go to page {page}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   }
 }

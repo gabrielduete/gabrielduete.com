@@ -20,10 +20,10 @@ const Card = (article: IArticle) => {
         className='
           max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
           cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
-          flex flex-col justify-between gap-large
+          flex flex-col gap-medium
         '
       >
-        <header className='flex justify-between'>
+        <header className='flex justify-between gap-medium'>
           <h1 className='text-subtitle font-bold max-w-[330px] w-full'>
             {title}
           </h1>

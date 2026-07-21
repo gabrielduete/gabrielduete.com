@@ -110,6 +110,9 @@
     "findMe": "Me encontre também em:"
   },
   "Common": {
-    "noResults": "Nenhum resultado encontrado."
+    "noResults": "Nenhum resultado encontrado.",
+    "goToPage": "Ir para a página {page}",
+    "previousPage": "Página anterior",
+    "nextPage": "Próxima página"
   }
 }

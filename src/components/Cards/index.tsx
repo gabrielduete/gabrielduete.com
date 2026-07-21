@@ -48,6 +48,10 @@ const Cards = ({ articles }: CardsProps) => {
   })
 
   const orderArticles = [...filteredArticles].sort((a, b) => {
+    if (a.pinned !== b.pinned) {
+      return a.pinned ? -1 : 1
+    }
+
     const dateA = parseArticleDate(a.date, locale as Langs)
     const dateB = parseArticleDate(b.date, locale as Langs)
 
