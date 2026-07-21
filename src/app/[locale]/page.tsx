@@ -7,7 +7,7 @@ import { getPinnedArticles } from '@/utils/getArticles'
 import { getLocale, getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaBuilding } from 'react-icons/fa6'
+import { FaArrowRight, FaBuilding } from 'react-icons/fa6'
 
 export const metadata = {
   title: 'Gabriel Duete',
@@ -41,7 +41,7 @@ const Home = async () => {
         >
           <Image
             src={ProfilePic}
-            alt='Profile Pic'
+            alt='Gabriel Duete'
             className='max-w-[148px] max-h-[148px] rounded-sm'
           />
           <div className='text-center lg:text-left'>
@@ -50,9 +50,9 @@ const Home = async () => {
               {t('about')}
             </h2>
             <div className='flex gap-large flex-wrap justify-center lg:justify-start'>
-              {MediasLink.map(({ Icon, name, link }, index) => (
+              {MediasLink.map(({ Icon, name, link }) => (
                 <Link
-                  key={index}
+                  key={name}
                   href={link}
                   target='_blank'
                   rel='noopener noreferrer'
@@ -74,6 +74,22 @@ const Home = async () => {
         </div>
         <div className='mt-xxxxlarge'>
           <Cards articles={pinnedArticles} />
+        </div>
+        <div className='mt-xxxlarge flex justify-center lg:justify-start'>
+          <Link
+            href={`/${locale}/blog`}
+            data-testid='home-page__view-all-posts'
+            className='
+              flex items-center gap-xsmall text-medium text-white
+              transition-colors hover:text-secondary group
+            '
+          >
+            {t('viewAllPosts')}
+            <FaArrowRight
+              className='transition-transform group-hover:translate-x-1'
+              size={14}
+            />
+          </Link>
         </div>
       </section>
     </FilterProvider>

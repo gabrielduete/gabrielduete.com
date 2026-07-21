@@ -5,7 +5,8 @@
     "articles": "Pinned posts:"
   },
   "IndexPage": {
-    "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Petlove."
+    "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Petlove.",
+    "viewAllPosts": "View all posts"
   },
   "CarrerPage": {
     "Experiences": {

@@ -4,8 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
-import { Locales } from '@/enums/Locales'
-import { parseDate } from '@/utils/formatterDate'
+import { parseArticleDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
 
 import Card from './components/Card'
@@ -48,19 +47,10 @@ const Cards = ({ articles }: CardsProps) => {
   })
 
   const orderArticles = [...filteredArticles].sort((a, b) => {
-    const isEN = locale === Locales.EN
+    const dateA = parseArticleDate(a.date, locale as Langs)
+    const dateB = parseArticleDate(b.date, locale as Langs)
 
-    if (!isEN) {
-      const dateA = parseDate(a.date)
-      const dateB = parseDate(b.date)
-
-      return dateB.getTime() - dateA.getTime()
-    }
-
-    const dateA = new Date(a.date).getTime()
-    const dateB = new Date(b.date).getTime()
-
-    return dateB - dateA
+    return dateB.getTime() - dateA.getTime()
   })
 
   const totalPages = Math.ceil(orderArticles.length / articlesPerPage)

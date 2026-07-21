@@ -5,7 +5,8 @@
     "articles": "Posts fixados:"
   },
   "IndexPage": {
-    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Petlove."
+    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Petlove.",
+    "viewAllPosts": "Ver todos os posts"
   },
   "CarrerPage": {
     "Experiences": {

@@ -1,4 +1,5 @@
 import { Storages } from '@/enums/Storages'
+import { formatDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
 import Link from 'next/link'
 
@@ -26,7 +27,9 @@ const Card = (article: IArticle) => {
           <h1 className='text-subtitle font-bold max-w-[330px] w-full'>
             {title}
           </h1>
-          <p className='text-small text-gray-400 mt-xxsmall'>{date}</p>
+          <p className='text-small text-gray-400 mt-xxsmall shrink-0'>
+            {formatDate(date, locale as Langs)}
+          </p>
         </header>
         <p className='text-medium text-ellipsis line-clamp-3'>{description}</p>
       </article>
