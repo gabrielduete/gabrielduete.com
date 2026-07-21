@@ -75,19 +75,19 @@ const Home = async () => {
         <div className='mt-xxxxlarge'>
           <Cards articles={pinnedArticles} />
         </div>
-        <div className='mt-large flex justify-center lg:justify-start'>
+        <div className='mt-large flex justify-center lg:justify-start lg:pl-xxsmall'>
           <Link
             href={`/${locale}/blog`}
             data-testid='home-page__view-all-posts'
             className='
-              flex items-center gap-xsmall text-medium text-white
+              flex items-center gap-xsmall text-small text-white
               transition-colors hover:text-secondary group
             '
           >
             {t('viewAllPosts')}
             <FaArrowRight
               className='transition-transform group-hover:translate-x-1'
-              size={14}
+              size={12}
             />
           </Link>
         </div>
