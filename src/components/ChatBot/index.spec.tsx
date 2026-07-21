@@ -11,6 +11,10 @@ jest.mock('@ai-sdk/react', () => ({
   useChat: (opts: Record<string, unknown>) => useChatMock(opts),
 }))
 jest.mock('ai', () => ({ DefaultChatTransport: jest.fn() }))
+jest.mock('./MarkdownMessage', () => ({
+  __esModule: true,
+  default: ({ content }: { content: string }) => <div>{content}</div>,
+}))
 jest.mock('next/navigation', () => ({ usePathname: () => '/en/blog/post' }))
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
