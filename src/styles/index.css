@@ -45,6 +45,7 @@ body {
 
 .spotlight-card {
   position: relative;
+  isolation: isolate;
 }
 
 /* Borda que da uma volta no card e para cheia (independe do mouse) */
