@@ -27,6 +27,24 @@ describe('getAiEnv', () => {
     })
   })
 
+  it('reads Redis creds from the KV_* names injected by the Vercel integration', () => {
+    process.env.GROQ_API_KEY = 'g'
+    process.env.UPSTASH_VECTOR_REST_URL = 'vu'
+    process.env.UPSTASH_VECTOR_REST_TOKEN = 'vt'
+    delete process.env.UPSTASH_REDIS_REST_URL
+    delete process.env.UPSTASH_REDIS_REST_TOKEN
+    process.env.KV_REST_API_URL = 'kvu'
+    process.env.KV_REST_API_TOKEN = 'kvt'
+
+    expect(getAiEnv()).toEqual({
+      groqApiKey: 'g',
+      vectorUrl: 'vu',
+      vectorToken: 'vt',
+      redisUrl: 'kvu',
+      redisToken: 'kvt',
+    })
+  })
+
   it('throws when a required var is missing', () => {
     delete process.env.GROQ_API_KEY
     expect(() => getAiEnv()).toThrow('GROQ_API_KEY')
