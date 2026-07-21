@@ -75,7 +75,7 @@ const Home = async () => {
         <div className='mt-xxxxlarge'>
           <Cards articles={pinnedArticles} />
         </div>
-        <div className='mt-xxxlarge flex justify-center lg:justify-start'>
+        <div className='mt-large flex justify-center lg:justify-start'>
           <Link
             href={`/${locale}/blog`}
             data-testid='home-page__view-all-posts'
