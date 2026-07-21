@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { MouseEvent, useEffect } from 'react'
 
 import Filter from '@/components/Filter'
 import { useFilter } from '@/contexts/FilterContext'
@@ -17,6 +17,19 @@ const LabView = () => {
   const { setFilters, selectedFilter } = useFilter()
 
   const isEN = locale === Locales.EN
+
+  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    event.currentTarget.style.setProperty(
+      '--mouse-x',
+      `${event.clientX - rect.left}px`,
+    )
+    event.currentTarget.style.setProperty(
+      '--mouse-y',
+      `${event.clientY - rect.top}px`,
+    )
+  }
 
   const filteredLabs = CONTRIBUTIONS.filter(article => {
     const isAll = selectedFilter === 'Todos' || selectedFilter === 'All'
@@ -49,9 +62,11 @@ const LabView = () => {
           return (
             <article
               key={titleText}
+              onMouseMove={handleMouseMove}
               className='
-                max-w-[312px] w-full p-xxlarge bg-bg-cards cursor-pointer 
-                rounded-sm border border-bg-cards hover:border-secondary
+                spotlight-card
+                max-w-[312px] w-full p-xxlarge bg-bg-cards cursor-pointer
+                rounded-sm border border-bg-cards
               '
             >
               <Link
