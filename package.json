@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
-    "prebuild": "ts-node --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register scripts/index-blog.ts",
+    "prebuild": "ts-node --compiler-options '{\"module\":\"commonjs\"}' -r dotenv/config -r tsconfig-paths/register scripts/index-blog.ts",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -53,6 +53,7 @@
     "autoprefixer": "^10.4.21",
     "babel-jest": "^30.0.0-beta.3",
     "codecov": "^3.8.3",
+    "dotenv": "^17.4.2",
     "eslint": "^9.21.0",
     "eslint-config-next": "^15.5.12",
     "eslint-config-prettier": "^10.0.1",
