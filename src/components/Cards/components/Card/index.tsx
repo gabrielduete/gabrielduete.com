@@ -38,12 +38,12 @@ const Card = (article: IArticle) => {
         className='
           spotlight-card
           max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
-          cursor-pointer rounded-sm border border-bg-cards
+          cursor-pointer rounded-sm border border-bg-cards overflow-hidden
           flex flex-col gap-medium
         '
       >
         <header className='flex justify-between gap-medium'>
-          <h1 className='text-subtitle font-bold max-w-[330px] w-full'>
+          <h1 className='text-subtitle font-bold max-w-[330px] w-full line-clamp-2'>
             {title}
           </h1>
           <p className='text-small text-gray-400 mt-xxsmall shrink-0'>

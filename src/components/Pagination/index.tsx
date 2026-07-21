@@ -17,6 +17,7 @@ const Pagination = ({
 
   const isFirst = currentPage <= 1
   const isLast = currentPage >= totalPages
+  const hasArrows = totalPages > 1
 
   const arrowClass =
     'flex items-center cursor-pointer text-white transition-colors hover:text-secondary ' +
@@ -24,14 +25,16 @@ const Pagination = ({
 
   return (
     <nav className='flex justify-center items-center gap-medium'>
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={isFirst}
-        aria-label={t('previousPage')}
-        className={arrowClass}
-      >
-        <FaChevronLeft size={14} />
-      </button>
+      {hasArrows && (
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={isFirst}
+          aria-label={t('previousPage')}
+          className={arrowClass}
+        >
+          <FaChevronLeft size={14} />
+        </button>
+      )}
       {Array.from({ length: totalPages }, (_, index) => {
         const page = index + 1
         const isCurrent = currentPage === page
@@ -51,14 +54,16 @@ const Pagination = ({
           </button>
         )
       })}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={isLast}
-        aria-label={t('nextPage')}
-        className={arrowClass}
-      >
-        <FaChevronRight size={14} />
-      </button>
+      {hasArrows && (
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={isLast}
+          aria-label={t('nextPage')}
+          className={arrowClass}
+        >
+          <FaChevronRight size={14} />
+        </button>
+      )}
     </nav>
   )
 }
