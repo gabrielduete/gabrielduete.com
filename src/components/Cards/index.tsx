@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
 import { parseArticleDate } from '@/utils/formatterDate'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import Card from './components/Card'
 
@@ -15,6 +15,7 @@ type CardsProps = {
 
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
+  const t = useTranslations('Common')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -62,6 +63,17 @@ const Cards = ({ articles }: CardsProps) => {
   const currentPageArticles = orderArticles.slice(startIndex, endIndex)
 
   const currentArticles = totalPages === 1 ? orderArticles : currentPageArticles
+
+  if (orderArticles.length === 0) {
+    return (
+      <p
+        className='text-medium text-gray-400 text-center lg:text-left'
+        data-testid='cards__empty'
+      >
+        {t('noResults')}
+      </p>
+    )
+  }
 
   return (
     <>

@@ -107,5 +107,8 @@
     "addSomething": "Have something to contribute?",
     "addSomethingDescription": "This blog is open source, so feel free to open a <a>PR in the repository.</a>",
     "findMe": "Find me also in:"
+  },
+  "Common": {
+    "noResults": "No results found."
   }
 }

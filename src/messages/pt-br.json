@@ -108,5 +108,8 @@
     "addSomething": "Tem algo para acrescentar?",
     "addSomethingDescription": "Esse blog é open source, então fique à vontade para abrir um <a>PR no repositório.</a>",
     "findMe": "Me encontre também em:"
+  },
+  "Common": {
+    "noResults": "Nenhum resultado encontrado."
   }
 }
