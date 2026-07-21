@@ -47,6 +47,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
       const params = new URLSearchParams(searchParams.toString())
 
       params.set('filter', filter)
+      params.delete('page')
       router.push(`?${params.toString()}`)
     },
     [router, searchParams],

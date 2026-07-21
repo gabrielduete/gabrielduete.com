@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
@@ -16,7 +16,27 @@ type CardsProps = {
 
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
-  const [currentPage, setCurrentPage] = useState(1)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const pageParam = Number(searchParams.get('page'))
+  const currentPage = pageParam > 0 ? pageParam : 1
+
+  const setCurrentPage = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (page <= 1) {
+      params.delete('page')
+    } else {
+      params.set('page', String(page))
+    }
+
+    const query = params.toString()
+
+    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+  }
+
   const { selectedFilter } = useFilter()
 
   const articlesPerPage = 4
@@ -43,11 +63,13 @@ const Cards = ({ articles }: CardsProps) => {
     return dateB - dateA
   })
 
-  const startIndex = (currentPage - 1) * articlesPerPage
+  const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
+
+  const safePage = Math.min(Math.max(currentPage, 1), Math.max(totalPages, 1))
+
+  const startIndex = (safePage - 1) * articlesPerPage
   const endIndex = startIndex + articlesPerPage
   const currentPageArticles = orderArticles.slice(startIndex, endIndex)
-
-  const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
 
   const currentArticles = totalPages === 1 ? orderArticles : currentPageArticles
 
@@ -61,7 +83,7 @@ const Cards = ({ articles }: CardsProps) => {
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
-          currentPage={currentPage}
+          currentPage={safePage}
           onPageChange={setCurrentPage}
         />
       )}
