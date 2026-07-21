@@ -1,3 +1,7 @@
+'use client'
+
+import { MouseEvent } from 'react'
+
 import { Storages } from '@/enums/Storages'
 import { formatDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
@@ -14,12 +18,27 @@ const Card = (article: IArticle) => {
     }
   }
 
+  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    event.currentTarget.style.setProperty(
+      '--mouse-x',
+      `${event.clientX - rect.left}px`,
+    )
+    event.currentTarget.style.setProperty(
+      '--mouse-y',
+      `${event.clientY - rect.top}px`,
+    )
+  }
+
   return (
     <Link href={`/${locale}/blog/${slug}`} onClick={setNavigation}>
       <article
+        onMouseMove={handleMouseMove}
         className='
+          spotlight-card
           max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
-          cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
+          cursor-pointer rounded-sm border border-bg-cards
           flex flex-col gap-medium
         '
       >
