@@ -3,7 +3,8 @@
     "allow": [
       "Bash(python3 -)",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(timeout 300 npx next build)"
     ]
   }
 }
