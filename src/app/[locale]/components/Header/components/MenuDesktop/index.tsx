@@ -4,14 +4,14 @@ import ToggleTheme from '../ToggleTheme'
 
 const MenuDesktop = () => {
   return (
-    <nav className='relative lg:block mt-xxxlarge mb-xxxlarge hidden w-full max-w-ultrawidemin m-auto'>
-      <div className='absolute left-10 top-large'>
+    <nav className='hidden lg:flex items-center justify-between gap-large px-large mt-xxxlarge mb-xxxlarge w-full max-w-ultrawidemin m-auto'>
+      <div className='shrink-0'>
         <ToggleLang />
       </div>
-      <div className='w-full max-w-content m-auto'>
+      <div className='flex-1 min-w-0 flex justify-center'>
         <NavigatorDesktop />
       </div>
-      <div className='absolute right-10 top-large'>
+      <div className='shrink-0'>
         <ToggleTheme />
       </div>
     </nav>
