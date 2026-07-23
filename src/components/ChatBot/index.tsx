@@ -8,6 +8,7 @@ import { UIMessage } from 'ai'
 import { useTranslations } from 'next-intl'
 import { FaComments, FaPaperPlane, FaTimes } from 'react-icons/fa'
 
+import { ASK_BOT_EVENT } from './askBot'
 import MarkdownMessage from './MarkdownMessage'
 import { useCurrentPost } from './useCurrentPost'
 
@@ -88,6 +89,18 @@ const ChatBot = () => {
   useEffect(() => {
     if (isOpen) textareaRef.current?.focus()
   }, [isOpen])
+
+  // Open and ask the model when the selection toolbar requests it
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const snippet = (event as CustomEvent<string>).detail?.trim()
+      if (!snippet) return
+      setIsOpen(true)
+      sendMessage({ text: t('askAboutSnippet', { snippet }) })
+    }
+    window.addEventListener(ASK_BOT_EVENT, handler)
+    return () => window.removeEventListener(ASK_BOT_EVENT, handler)
+  }, [sendMessage, t])
 
   // Auto-grow the textarea up to a max height as the user types
   const handleInput = (value: string) => {

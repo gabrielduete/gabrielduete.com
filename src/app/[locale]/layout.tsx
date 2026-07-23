@@ -7,6 +7,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 
 import ChatBot from '@/components/ChatBot'
+import SelectionToolbar from '@/components/SelectionToolbar'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -58,6 +59,7 @@ const Layout = async ({ children, params }: Props) => {
             </main>
             <Footer />
             <ChatBot />
+            <SelectionToolbar />
           </FilterProvider>
         </NextIntlClientProvider>
       </body>

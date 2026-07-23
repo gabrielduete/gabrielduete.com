@@ -98,7 +98,16 @@
     "title": "Ask about the blog",
     "placeholder": "Ask anything…",
     "send": "Send",
-    "empty": "Hi! Ask me anything about this blog or the post you're reading."
+    "empty": "Hi! Ask me anything about this blog or the post you're reading.",
+    "askAboutSnippet": "Can you explain this excerpt from the article?\n\n\"{snippet}\""
+  },
+  "SelectionToolbar": {
+    "label": "Text selection actions",
+    "askBot": "Ask the bot",
+    "copy": "Copy",
+    "share": "Share",
+    "copied": "Copied!",
+    "shared": "Link copied!"
   },
   "BlogPage": {
     "contribution": "Liked the content? I accept a contribution! :)",

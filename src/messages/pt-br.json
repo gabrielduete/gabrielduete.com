@@ -99,7 +99,16 @@
     "title": "Pergunte sobre o blog",
     "placeholder": "Pergunte qualquer coisa…",
     "send": "Enviar",
-    "empty": "Oi! Pergunte qualquer coisa sobre o blog ou sobre o post que você está lendo."
+    "empty": "Oi! Pergunte qualquer coisa sobre o blog ou sobre o post que você está lendo.",
+    "askAboutSnippet": "Pode explicar este trecho do artigo?\n\n\"{snippet}\""
+  },
+  "SelectionToolbar": {
+    "label": "Ações da seleção de texto",
+    "askBot": "Perguntar ao bot",
+    "copy": "Copiar",
+    "share": "Compartilhar",
+    "copied": "Copiado!",
+    "shared": "Link copiado!"
   },
   "BlogPage": {
     "contribution": "Gostou do conteúdo? Aceito uma contribuição! :)",

@@ -44,6 +44,11 @@ jest.mock('@/components/ChatBot', () => ({
   default: () => <div data-testid='chatbot' />,
 }))
 
+jest.mock('@/components/SelectionToolbar', () => ({
+  __esModule: true,
+  default: () => <div data-testid='selection-toolbar' />,
+}))
+
 jest.mock('@/i18n/routing', () => ({
   routing: {
     locales: ['en', 'pt-br'],
