@@ -106,6 +106,8 @@
     "askBot": "Ask the bot",
     "copy": "Copy",
     "share": "Share",
+    "shareX": "Share on X",
+    "shareLinkedin": "Share on LinkedIn",
     "copied": "Copied!",
     "shared": "Link copied!"
   },

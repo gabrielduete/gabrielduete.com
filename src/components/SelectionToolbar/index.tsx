@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { useTranslations } from 'next-intl'
 import { FaRegCommentDots, FaRegCopy, FaShareAlt } from 'react-icons/fa'
+import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 
 import { askBot } from '../ChatBot/askBot'
 
@@ -14,11 +15,12 @@ type ToolbarState = {
 }
 
 // Floating toolbar shown when the reader selects text inside a blog article.
-// Offers: ask the bot about the snippet, copy it, or copy a shareable link.
+// Offers: ask the bot about the snippet, copy it, or share it to X / LinkedIn.
 const SelectionToolbar = () => {
   const t = useTranslations('SelectionToolbar')
   const [state, setState] = useState<ToolbarState | null>(null)
   const [feedback, setFeedback] = useState<string | null>(null)
+  const [mode, setMode] = useState<'actions' | 'share'>('actions')
   const barRef = useRef<HTMLDivElement>(null)
   const dismissTimer = useRef<number | null>(null)
 
@@ -55,6 +57,7 @@ const SelectionToolbar = () => {
 
       const rect = range.getBoundingClientRect()
       setFeedback(null)
+      setMode('actions')
       setState({
         text,
         top: rect.top,
@@ -89,38 +92,109 @@ const SelectionToolbar = () => {
     setState(null)
   }
 
-  const copyToClipboard = async (value: string) => {
-    try {
-      await navigator.clipboard.writeText(value)
-    } catch {
-      // clipboard may be unavailable; fail silently
-    }
-  }
-
   const handleAsk = () => {
     askBot(state.text)
     clearSelection()
   }
 
-  const dismissAfterFeedback = () => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(state.text)
+    } catch {
+      // clipboard may be unavailable; fail silently
+    }
+    setFeedback(t('copied'))
     if (dismissTimer.current) window.clearTimeout(dismissTimer.current)
     dismissTimer.current = window.setTimeout(clearSelection, 1000)
   }
 
-  const handleCopy = async () => {
-    await copyToClipboard(state.text)
-    setFeedback(t('copied'))
-    dismissAfterFeedback()
+  // Open the platform's pre-filled compose window in a new tab
+  const openShare = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer')
+    clearSelection()
   }
 
-  const handleShare = async () => {
-    await copyToClipboard(`${window.location.href}\n\n"${state.text}"`)
-    setFeedback(t('shared'))
-    dismissAfterFeedback()
+  const shareOnX = () => {
+    const quote = `"${state.text}"`
+    const url =
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote)}` +
+      `&url=${encodeURIComponent(window.location.href)}`
+    openShare(url)
+  }
+
+  const shareOnLinkedin = () => {
+    // LinkedIn only accepts the URL to share; it no longer prefills text.
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      window.location.href,
+    )}`
+    openShare(url)
   }
 
   const buttonClass =
     'flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-white/10'
+
+  const renderContent = () => {
+    if (feedback) {
+      return (
+        <span className='px-3 py-1.5 text-xs font-medium text-secondary'>
+          {feedback}
+        </span>
+      )
+    }
+
+    if (mode === 'share') {
+      return (
+        <>
+          <button
+            type='button'
+            onClick={shareOnX}
+            aria-label={t('shareX')}
+            className={buttonClass}
+          >
+            <FaXTwitter size={13} />X
+          </button>
+          <span className='mx-0.5 h-4 w-px bg-gray-600' />
+          <button
+            type='button'
+            onClick={shareOnLinkedin}
+            aria-label={t('shareLinkedin')}
+            className={buttonClass}
+          >
+            <FaLinkedinIn size={13} />
+            LinkedIn
+          </button>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <button type='button' onClick={handleAsk} className={buttonClass}>
+          <FaRegCommentDots size={13} />
+          {t('askBot')}
+        </button>
+        <span className='mx-0.5 h-4 w-px bg-gray-600' />
+        <button
+          type='button'
+          onClick={handleCopy}
+          aria-label={t('copy')}
+          className={buttonClass}
+        >
+          <FaRegCopy size={13} />
+          {t('copy')}
+        </button>
+        <button
+          type='button'
+          onClick={() => setMode('share')}
+          aria-label={t('share')}
+          className={buttonClass}
+        >
+          <FaShareAlt size={13} />
+          {t('share')}
+        </button>
+      </>
+    )
+  }
 
   return (
     <div
@@ -137,37 +211,7 @@ const SelectionToolbar = () => {
       }}
       className='z-[60] flex items-center rounded-xl border border-gray-600 bg-green-black p-1 text-white shadow-2xl'
     >
-      {feedback ? (
-        <span className='px-3 py-1.5 text-xs font-medium text-secondary'>
-          {feedback}
-        </span>
-      ) : (
-        <>
-          <button type='button' onClick={handleAsk} className={buttonClass}>
-            <FaRegCommentDots size={13} />
-            {t('askBot')}
-          </button>
-          <span className='mx-0.5 h-4 w-px bg-gray-600' />
-          <button
-            type='button'
-            onClick={handleCopy}
-            aria-label={t('copy')}
-            className={buttonClass}
-          >
-            <FaRegCopy size={13} />
-            {t('copy')}
-          </button>
-          <button
-            type='button'
-            onClick={handleShare}
-            aria-label={t('share')}
-            className={buttonClass}
-          >
-            <FaShareAlt size={13} />
-            {t('share')}
-          </button>
-        </>
-      )}
+      {renderContent()}
     </div>
   )
 }

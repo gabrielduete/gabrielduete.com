@@ -101,4 +101,36 @@ describe('<SelectionToolbar />', () => {
 
     expect(writeText).toHaveBeenCalledWith('copy me')
   })
+
+  it('opens the X compose intent with the snippet and post url', async () => {
+    const open = jest.spyOn(window, 'open').mockImplementation(() => null)
+    render(<SelectionToolbar />)
+    selectInsideArticle('great point')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('share'))
+    fireEvent.click(screen.getByText('X'))
+
+    expect(open).toHaveBeenCalled()
+    const url = open.mock.calls[0][0] as string
+    expect(url).toContain('twitter.com/intent/tweet')
+    expect(url).toContain(encodeURIComponent('"great point"'))
+  })
+
+  it('opens the LinkedIn share when choosing LinkedIn', async () => {
+    const open = jest.spyOn(window, 'open').mockImplementation(() => null)
+    render(<SelectionToolbar />)
+    selectInsideArticle('great point')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('share'))
+    fireEvent.click(screen.getByText('LinkedIn'))
+
+    expect(open).toHaveBeenCalled()
+    expect(open.mock.calls[0][0]).toContain(
+      'linkedin.com/sharing/share-offsite',
+    )
+  })
 })
