@@ -128,9 +128,11 @@ const SelectionToolbar = () => {
   }
 
   const shareOnLinkedin = () => {
-    // LinkedIn only accepts the URL to share; it no longer prefills text.
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      window.location.href,
+    // LinkedIn dropped the official text prefill; the feed composer with a
+    // `text` param is the current working way to open it pre-filled.
+    const text = `"${state.text}"\n\n${window.location.href}`
+    const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(
+      text,
     )}`
     openShare(url)
   }

@@ -144,8 +144,8 @@ describe('<SelectionToolbar />', () => {
     fireEvent.click(screen.getByText('LinkedIn'))
 
     expect(open).toHaveBeenCalled()
-    expect(open.mock.calls[0][0]).toContain(
-      'linkedin.com/sharing/share-offsite',
-    )
+    const url = open.mock.calls[0][0] as string
+    expect(url).toContain('linkedin.com/feed')
+    expect(url).toContain(encodeURIComponent('"great point"'))
   })
 })
