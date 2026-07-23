@@ -15,6 +15,7 @@
   "dependencies": {
     "@ai-sdk/groq": "^3.0.42",
     "@ai-sdk/react": "^3.0.211",
+    "@bprogress/next": "^3.2.12",
     "@giscus/react": "^3.1.0",
     "@sentry/nextjs": "^10",
     "@upstash/ratelimit": "^2.0.8",

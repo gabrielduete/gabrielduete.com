@@ -12,6 +12,7 @@ import SelectionToolbar from '@/components/SelectionToolbar'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import KeyboardEasterEgg from './components/KeyboardEasterEgg'
+import ProgressBar from './components/ProgressBar'
 
 export const metadata = {
   title: 'Gabriel Duete',
@@ -51,16 +52,18 @@ const Layout = async ({ children, params }: Props) => {
       </head>
       <body>
         <NextIntlClientProvider>
-          <FilterProvider>
-            <Header />
-            <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
-              <KeyboardEasterEgg />
-              {children}
-            </main>
-            <Footer />
-            <ChatBot />
-            <SelectionToolbar />
-          </FilterProvider>
+          <ProgressBar>
+            <FilterProvider>
+              <Header />
+              <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
+                <KeyboardEasterEgg />
+                {children}
+              </main>
+              <Footer />
+              <ChatBot />
+              <SelectionToolbar />
+            </FilterProvider>
+          </ProgressBar>
         </NextIntlClientProvider>
       </body>
     </html>
