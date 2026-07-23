@@ -138,7 +138,7 @@ const ChatBot = () => {
       <button
         aria-label={t('open')}
         onClick={() => setIsOpen(true)}
-        className='fixed bottom-6 left-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-green-black text-white shadow-lg transition-transform hover:scale-105 hover:opacity-90'
+        className='fixed bottom-24 right-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-green-black text-secondary shadow-lg transition-transform hover:scale-105 hover:opacity-90'
       >
         <FaRobot size={22} />
       </button>
@@ -146,7 +146,7 @@ const ChatBot = () => {
   }
 
   return (
-    <div className='fixed bottom-0 left-0 z-50 flex h-[85vh] max-h-[36rem] w-full flex-col border border-gray-600 bg-green-black text-white shadow-2xl sm:bottom-6 sm:left-6 sm:h-[34rem] sm:w-[24rem] sm:rounded-2xl'>
+    <div className='fixed bottom-0 right-0 z-50 flex h-[85vh] max-h-[36rem] w-full flex-col border border-gray-600 bg-green-black text-white shadow-2xl sm:bottom-6 sm:right-6 sm:h-[34rem] sm:w-[24rem] sm:rounded-2xl'>
       <header className='flex items-center justify-between border-b border-gray-600 px-4 py-3'>
         <span className='font-semibold'>{t('title')}</span>
         <button
