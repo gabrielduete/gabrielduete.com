@@ -102,6 +102,21 @@ describe('<SelectionToolbar />', () => {
     expect(writeText).toHaveBeenCalledWith('copy me')
   })
 
+  it('keeps the share submenu open after a mouseup inside the toolbar', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('great point')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('share'))
+    // a mouseup bubbling from inside the toolbar must not reset the submenu
+    fireEvent.mouseUp(screen.getByRole('toolbar'))
+    await new Promise(resolve => setTimeout(resolve, 10))
+
+    expect(screen.getByText('X')).toBeInTheDocument()
+    expect(screen.getByText('LinkedIn')).toBeInTheDocument()
+  })
+
   it('opens the X compose intent with the snippet and post url', async () => {
     const open = jest.spyOn(window, 'open').mockImplementation(() => null)
     render(<SelectionToolbar />)

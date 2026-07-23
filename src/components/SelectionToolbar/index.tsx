@@ -65,7 +65,12 @@ const SelectionToolbar = () => {
       })
     }
 
-    const onMouseUp = () => window.setTimeout(readSelection, 0)
+    const onMouseUp = (event: MouseEvent) => {
+      // Clicks inside the toolbar must not re-read the selection (which would
+      // reset the submenu back to the default actions)
+      if (barRef.current?.contains(event.target as Node)) return
+      window.setTimeout(readSelection, 0)
+    }
     const onSelectionChange = () => {
       const text = window.getSelection()?.toString().trim() ?? ''
       if (!text) setState(null)
