@@ -138,7 +138,7 @@ const ChatBot = () => {
       <button
         aria-label={t('open')}
         onClick={() => setIsOpen(true)}
-        className='fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-black text-white shadow-lg transition-transform hover:scale-105 hover:opacity-90'
+        className='fixed bottom-6 right-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-green-black text-white shadow-lg transition-transform hover:scale-105 hover:opacity-90'
       >
         <FaComments size={22} />
       </button>
@@ -152,7 +152,7 @@ const ChatBot = () => {
         <button
           aria-label={t('close')}
           onClick={() => setIsOpen(false)}
-          className='rounded p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white'
+          className='cursor-pointer rounded p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white'
         >
           <FaTimes />
         </button>
@@ -218,7 +218,7 @@ const ChatBot = () => {
           type='submit'
           aria-label={t('send')}
           disabled={status !== 'ready' || !input.trim()}
-          className='flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-white transition-colors hover:bg-primary disabled:cursor-not-allowed disabled:opacity-40'
+          className='flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-secondary text-white transition-colors hover:bg-primary disabled:cursor-not-allowed disabled:opacity-40'
         >
           <FaPaperPlane size={15} />
         </button>

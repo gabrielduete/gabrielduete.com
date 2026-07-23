@@ -136,7 +136,7 @@ const SelectionToolbar = () => {
   }
 
   const buttonClass =
-    'flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-white/10'
+    'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-white/10'
 
   const renderContent = () => {
     if (feedback) {
