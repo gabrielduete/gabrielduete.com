@@ -20,7 +20,7 @@ const Pagination = ({
   const hasArrows = totalPages > 1
 
   const arrowClass =
-    'flex items-center cursor-pointer text-white transition-colors hover:text-secondary ' +
+    'flex items-center cursor-pointer text-primary transition-colors hover:text-secondary ' +
     'disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:text-gray-600'
 
   return (

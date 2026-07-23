@@ -80,7 +80,7 @@ const Home = async () => {
             href={`/${locale}/blog`}
             data-testid='home-page__view-all-posts'
             className='
-              flex items-center gap-xsmall text-small text-white
+              flex items-center gap-xsmall text-small text-primary
               transition-colors hover:text-secondary group
             '
           >

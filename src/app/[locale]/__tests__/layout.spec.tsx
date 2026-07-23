@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { notFound } from 'next/navigation'
@@ -36,6 +38,12 @@ jest.mock('../components/Header', () => {
 jest.mock('../components/KeyboardEasterEgg', () => {
   return function MockKeyboardEasterEgg() {
     return <div data-testid='keyboard-easter-egg'>Keyboard Easter Egg</div>
+  }
+})
+
+jest.mock('../components/ProgressBar', () => {
+  return function MockProgressBar({ children }: { children: ReactNode }) {
+    return <div data-testid='progress-bar'>{children}</div>
   }
 })
 

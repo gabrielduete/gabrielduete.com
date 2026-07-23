@@ -118,6 +118,23 @@ body {
   z-index: 2;
 }
 
+/* Theme toggle: circular reveal via the View Transitions API.
+   Kill the default cross-fade so only the clip-path circle animates,
+   and stack the incoming theme on top so it wipes over the old one. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
 *::-webkit-scrollbar {
   width: 12px;
 }
@@ -138,6 +155,7 @@ body {
   /* texts */
   --primary: #ffffff;
   --text-blog: #ffffff;
+  --secondary: #46ce7a;
 
   /* Backgrounds */
   --bg-theme: #132227;
@@ -150,18 +168,26 @@ body {
   /* texts */
   --primary: #20272f;
   --text-blog: #20272f;
+  /* darker green: better contrast on light backgrounds, keeps brand */
+  --secondary: #1f9d55;
 
   /* Backgrounds */
-  --bg-theme: #f8f8f8;
+  --bg-theme: #eef2f1;
   --bg-primary: #193038;
   --bg-secondary: #132227;
-  --bg-cards: #223843;
+  --bg-cards: #1d3540;
+}
+
+/* Dark panels floating on a light page need elevation to read as intentional */
+[data-theme='light'] .bg-bg-cards,
+[data-theme='light'] .bg-bg-primary {
+  box-shadow: 0 10px 30px -12px rgba(19, 34, 39, 0.35);
 }
 
 @theme inline {
   /* Text  */
   --color-primary: var(--primary);
-  --color-secondary: #46ce7a;
+  --color-secondary: var(--secondary);
   --color-blog: var(--text-blog);
   --color-white: #ffffff;
   --color-green-black: #20272f;
@@ -170,7 +196,7 @@ body {
   --color-green-weak-border: #223843;
   --color-green-strong: #193038;
   --color-green-weak: #46ce7a40;
-  --color-green-neutral: #46ce7a;
+  --color-green-neutral: var(--secondary);
 
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);
