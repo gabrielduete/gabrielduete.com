@@ -13,7 +13,8 @@ import { experiences } from '../data'
 import { IExperiences } from '../types'
 
 const COLLAPSED_CONTRIBUTIONS = 5
-const EXPAND_DURATION_MS = 120
+const FOCUS_OFFSET_PX = 100
+const FOCUS_DURATION_MS = 500
 
 const formatExperienceForUrl = (experience: string): string => {
   return experience.replace(/\s+/g, '-')
@@ -96,6 +97,7 @@ const CarrerView = () => {
 
   const timelineRef = useRef<HTMLOListElement>(null)
   const cardRefs = useRef<Record<string, HTMLLIElement | null>>({})
+  const focusFrameRef = useRef(0)
   const [timeline, setTimeline] = useState<{
     width: number
     height: number
@@ -140,6 +142,34 @@ const CarrerView = () => {
     }
   }, [searchParams])
 
+  const focusCard = (el: HTMLElement) => {
+    cancelAnimationFrame(focusFrameRef.current)
+
+    const prefersReduced = window.matchMedia?.(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+
+    const startTop = el.getBoundingClientRect().top
+    if (prefersReduced) {
+      window.scrollBy(0, startTop - FOCUS_OFFSET_PX)
+      return
+    }
+
+    const startTime = performance.now()
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / FOCUS_DURATION_MS, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const desiredTop = startTop + (FOCUS_OFFSET_PX - startTop) * eased
+      const currentTop = el.getBoundingClientRect().top
+      window.scrollBy(0, currentTop - desiredTop)
+
+      if (progress < 1) {
+        focusFrameRef.current = requestAnimationFrame(tick)
+      }
+    }
+    focusFrameRef.current = requestAnimationFrame(tick)
+  }
+
   const handleExperienceClick = (experience: IExperiences) => {
     const next = selectedExperience === experience ? null : experience
     setSelectedExperience(next)
@@ -147,12 +177,8 @@ const CarrerView = () => {
     if (!next) {
       setShowAllFor(prev => ({ ...prev, [experience]: false }))
     } else {
-      setTimeout(() => {
-        cardRefs.current[next]?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      }, EXPAND_DURATION_MS)
+      const el = cardRefs.current[next]
+      if (el) focusCard(el)
     }
 
     const params = new URLSearchParams(searchParams.toString())
@@ -249,7 +275,7 @@ const CarrerView = () => {
               ref={el => {
                 cardRefs.current[experience] = el
               }}
-              className='relative scroll-mt-[100px]'
+              className='relative'
             >
               <button
                 aria-hidden
