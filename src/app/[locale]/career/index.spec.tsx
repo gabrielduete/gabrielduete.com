@@ -67,15 +67,16 @@ jest.mock('next-intl', () => ({
 }))
 
 describe('<Career />', () => {
-  it('should render the component with default experience', () => {
+  it('should render the component with default experience expanded', () => {
     render(<Career />)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Petlove' }),
+      screen.getByRole('heading', { level: 2, name: 'Petlove' }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText('Mid-level Front-end Developer'),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
   })
 
   it('should render buttons for all experiences', () => {
@@ -87,14 +88,17 @@ describe('<Career />', () => {
     })
   })
 
-  it('should update the experience when a button is clicked', () => {
+  it('should expand the clicked experience and collapse the others', () => {
     render(<Career />)
 
     fireEvent.click(screen.getByRole('button', { name: 'React4Noobs' }))
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'React4Noobs' }),
-    ).toBeInTheDocument()
-    expect(screen.getByText('Contributor')).toBeInTheDocument()
+      screen.getByRole('button', { name: 'React4Noobs' }),
+    ).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
   })
 })
