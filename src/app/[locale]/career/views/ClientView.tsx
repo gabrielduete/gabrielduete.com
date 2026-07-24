@@ -9,8 +9,8 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import ExternalLink from '../components/ExternalLink'
-import { experiences } from '../data'
-import { IExperiences } from '../types'
+import { experienceFilters, experiences, experienceTypes } from '../data'
+import { ExperienceFilter, IExperiences } from '../types'
 
 const COLLAPSED_CONTRIBUTIONS = 5
 const FOCUS_OFFSET_PX = 100
@@ -90,6 +90,20 @@ const CarrerView = () => {
   const [selectedExperience, setSelectedExperience] =
     useState<IExperiences | null>(getInitialExperience())
 
+  const getInitialTypeFilter = (): ExperienceFilter => {
+    const typeParam = searchParams.get('type')
+    return experienceFilters.find(filter => filter === typeParam) ?? 'all'
+  }
+
+  const [typeFilter, setTypeFilter] = useState<ExperienceFilter>(
+    getInitialTypeFilter(),
+  )
+
+  const visibleExperiences = experiences.filter(
+    experience =>
+      typeFilter === 'all' || experienceTypes[experience] === typeFilter,
+  )
+
   const [showAllFor, setShowAllFor] = useState<Record<string, boolean>>({})
 
   const toggleShowAll = (experience: string) =>
@@ -129,7 +143,7 @@ const CarrerView = () => {
       observer?.disconnect()
       window.removeEventListener('resize', measure)
     }
-  }, [selectedExperience])
+  }, [selectedExperience, typeFilter])
 
   useEffect(() => {
     const filterParam = searchParams.get('filter')
@@ -193,6 +207,31 @@ const CarrerView = () => {
     router.push(query ? `?${query}` : '?')
   }
 
+  const handleTypeFilter = (type: ExperienceFilter) => {
+    setTypeFilter(type)
+
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (type === 'all') {
+      params.delete('type')
+    } else {
+      params.set('type', type)
+    }
+
+    const hidesSelected =
+      selectedExperience &&
+      type !== 'all' &&
+      experienceTypes[selectedExperience] !== type
+
+    if (hidesSelected) {
+      setSelectedExperience(null)
+      params.delete('filter')
+    }
+
+    const query = params.toString()
+    router.push(query ? `?${query}` : '?')
+  }
+
   const richHandlers = {
     atomium: (chunks: ReactNode) => (
       <ExternalLink href='https://github.com/juntossomosmais/atomium'>
@@ -232,7 +271,31 @@ const CarrerView = () => {
     : ''
 
   return (
-    <section className='w-full'>
+    <section className='flex w-full flex-col gap-xxlarge'>
+      <ul className='flex flex-wrap gap-xxlarge'>
+        {experienceFilters.map(filter => {
+          const isSelected = typeFilter === filter
+
+          return (
+            <li key={filter}>
+              <button
+                type='button'
+                onClick={() => handleTypeFilter(filter)}
+                aria-pressed={isSelected}
+                className={clsx(
+                  'cursor-pointer text-large text-primary hover:text-secondary',
+                  'border-b pb-xxsmall transition-colors',
+                  isSelected
+                    ? 'border-secondary text-secondary'
+                    : 'border-transparent',
+                )}
+              >
+                {t(`Filters.${filter}`)}
+              </button>
+            </li>
+          )
+        })}
+      </ul>
       <ol ref={timelineRef} className='relative flex flex-col gap-giant'>
         <span
           aria-hidden
@@ -252,7 +315,7 @@ const CarrerView = () => {
             vectorEffect='non-scaling-stroke'
           />
         </svg>
-        {experiences.map((experience, index) => {
+        {visibleExperiences.map((experience, index) => {
           const experienceKey = `Experiences.${experience}`
           const isActive = selectedExperience === experience
           const isLeft = index % 2 === 0

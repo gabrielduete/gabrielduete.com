@@ -56,7 +56,7 @@ const ChatBot = () => {
     [],
   )
 
-  const { messages, sendMessage, status } = useChat({
+  const { messages, sendMessage, status, error, regenerate } = useChat({
     transport,
     messages: restoredMessages,
   })
@@ -196,6 +196,20 @@ const ChatBot = () => {
               <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]' />
               <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]' />
               <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400' />
+            </div>
+          </div>
+        )}
+        {error && (
+          <div className='flex justify-start' aria-live='assertive'>
+            <div className='max-w-[90%] rounded-2xl rounded-bl-sm bg-red-500/10 px-3.5 py-2.5 text-sm text-red-400'>
+              {t('error')}
+              <button
+                type='button'
+                onClick={() => regenerate()}
+                className='mt-2 block cursor-pointer text-xs underline hover:text-red-300'
+              >
+                {t('retry')}
+              </button>
             </div>
           </div>
         )}

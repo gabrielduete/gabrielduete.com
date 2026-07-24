@@ -90,6 +90,12 @@
         },
         "link": ""
       }
+    },
+    "Filters": {
+      "all": "All",
+      "full-time": "Full-time",
+      "freelance": "Freelance",
+      "open-source": "Open Source"
     }
   },
   "ChatBot": {
@@ -99,7 +105,9 @@
     "placeholder": "Ask anything…",
     "send": "Send",
     "empty": "Hi! Ask me anything about this blog or the post you're reading.",
-    "askAboutSnippet": "Can you explain this excerpt from the article?\n\n\"{snippet}\""
+    "askAboutSnippet": "Can you explain this excerpt from the article?\n\n\"{snippet}\"",
+    "error": "Something went wrong. Please try again.",
+    "retry": "Retry"
   },
   "SelectionToolbar": {
     "label": "Text selection actions",

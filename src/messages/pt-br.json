@@ -91,6 +91,12 @@
         },
         "link": ""
       }
+    },
+    "Filters": {
+      "all": "Todos",
+      "full-time": "Tempo integral",
+      "freelance": "Freelance",
+      "open-source": "Open Source"
     }
   },
   "ChatBot": {
@@ -100,7 +106,9 @@
     "placeholder": "Pergunte qualquer coisa…",
     "send": "Enviar",
     "empty": "Oi! Pergunte qualquer coisa sobre o blog ou sobre o post que você está lendo.",
-    "askAboutSnippet": "Pode explicar este trecho do artigo?\n\n\"{snippet}\""
+    "askAboutSnippet": "Pode explicar este trecho do artigo?\n\n\"{snippet}\"",
+    "error": "Algo deu errado. Tente novamente.",
+    "retry": "Tentar novamente"
   },
   "SelectionToolbar": {
     "label": "Ações da seleção de texto",
