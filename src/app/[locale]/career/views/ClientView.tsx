@@ -13,6 +13,7 @@ import { experiences } from '../data'
 import { IExperiences } from '../types'
 
 const COLLAPSED_CONTRIBUTIONS = 5
+const EXPAND_DURATION_MS = 120
 
 const formatExperienceForUrl = (experience: string): string => {
   return experience.replace(/\s+/g, '-')
@@ -94,6 +95,7 @@ const CarrerView = () => {
     setShowAllFor(prev => ({ ...prev, [experience]: !prev[experience] }))
 
   const timelineRef = useRef<HTMLOListElement>(null)
+  const cardRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [timeline, setTimeline] = useState<{
     width: number
     height: number
@@ -144,6 +146,13 @@ const CarrerView = () => {
 
     if (!next) {
       setShowAllFor(prev => ({ ...prev, [experience]: false }))
+    } else {
+      setTimeout(() => {
+        cardRefs.current[next]?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }, EXPAND_DURATION_MS)
     }
 
     const params = new URLSearchParams(searchParams.toString())
@@ -235,7 +244,13 @@ const CarrerView = () => {
           const panelId = `experience-panel-${index}`
 
           return (
-            <li key={experience} className='relative'>
+            <li
+              key={experience}
+              ref={el => {
+                cardRefs.current[experience] = el
+              }}
+              className='relative scroll-mt-[100px]'
+            >
               <button
                 aria-hidden
                 tabIndex={-1}
