@@ -91,6 +91,35 @@ body {
   }
 }
 
+/* Angulo animavel para a borda em loop (card focado) */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Card focado: arco de borda girando em loop continuo */
+.spotlight-card.is-focused::before {
+  opacity: 1;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    var(--color-secondary) 70deg,
+    #ffffff 90deg,
+    var(--color-secondary) 110deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  animation: border-spin 2.5s linear infinite;
+}
+
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
 /* Brilho suave na superficie seguindo o cursor */
 .spotlight-card::after {
   content: '';

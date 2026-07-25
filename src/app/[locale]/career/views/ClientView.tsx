@@ -1,6 +1,13 @@
 'use client'
 
-import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  MouseEvent,
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 
 import { Locales } from '@/enums/Locales'
 import clsx from 'clsx'
@@ -207,6 +214,18 @@ const CarrerView = () => {
     router.push(query ? `?${query}` : '?')
   }
 
+  const handleCardMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty(
+      '--mouse-x',
+      `${event.clientX - rect.left}px`,
+    )
+    event.currentTarget.style.setProperty(
+      '--mouse-y',
+      `${event.clientY - rect.top}px`,
+    )
+  }
+
   const handleTypeFilter = (type: ExperienceFilter) => {
     setTypeFilter(type)
 
@@ -370,10 +389,11 @@ const CarrerView = () => {
                 )}
               >
                 <div
+                  onMouseMove={handleCardMouseMove}
                   className={clsx(
-                    'rounded-sm border-[1px] bg-bg-primary transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1',
+                    'spotlight-card rounded-sm border-[1px] bg-bg-primary transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1',
                     isActive
-                      ? 'border-secondary shadow-[0_10px_30px_-12px_rgba(70,206,122,0.35)]'
+                      ? 'is-focused border-green-weak-border shadow-[0_10px_30px_-12px_rgba(70,206,122,0.35)]'
                       : 'border-green-weak-border hover:border-green-white',
                   )}
                 >
