@@ -14,8 +14,8 @@ describe('<Pagination />', () => {
       />,
     )
 
-    const buttons = screen.getAllByRole('button')
-    expect(buttons).toHaveLength(5)
+    const pageButtons = screen.getAllByRole('button', { name: 'goToPage' })
+    expect(pageButtons).toHaveLength(5)
   })
 
   it('should highlight the current page button', () => {

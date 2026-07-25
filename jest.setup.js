@@ -17,6 +17,7 @@ jest.mock('next/navigation', () => ({
     push: jest.fn(),
     replace: jest.fn(),
   }),
+  usePathname: () => '/',
   useSearchParams: () => {
     const searchParams = new URLSearchParams()
     return {
@@ -27,6 +28,11 @@ jest.mock('next/navigation', () => ({
   },
 }))
 
-jest.mock('next-intl', () => ({
-  useLocale: () => 'en',
-}))
+jest.mock('next-intl', () => {
+  const translate = key => key
+  translate.rich = key => key
+  return {
+    useLocale: () => 'en',
+    useTranslations: () => translate,
+  }
+})

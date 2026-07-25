@@ -44,6 +44,6 @@ describe('MenuDesktop', () => {
     render(<MenuDesktop />)
 
     const nav = screen.getByRole('navigation')
-    expect(nav).toHaveClass('hidden', 'lg:block')
+    expect(nav).toHaveClass('hidden', 'lg:flex')
   })
 })

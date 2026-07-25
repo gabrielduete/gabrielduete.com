@@ -28,7 +28,7 @@ const ScrollTopButton = () => {
   return (
     <button
       className='
-        fixed hidden right-10 bottom-22 cursor-pointer 
+        fixed hidden right-6 bottom-40 cursor-pointer
         text-primary hover:text-secondary 
         bg-bg-secondary hover:bg-bg-primary p-base rounded-full
         transition-opacity duration-1000 ease-in-out

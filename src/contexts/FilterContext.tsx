@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 
 import { useLocale } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -34,19 +28,12 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
   const selectedFilter =
     (searchParams.get('filter') as IFilters) || DEFAULT_FILTER
 
-  useEffect(() => {
-    if (!searchParams.has('filter')) {
-      const params = new URLSearchParams(searchParams.toString())
-
-      router.replace(`?${params.toString()}`)
-    }
-  }, [searchParams, router, DEFAULT_FILTER])
-
   const setSelectedFilter = useCallback(
     (filter: IFilters) => {
       const params = new URLSearchParams(searchParams.toString())
 
       params.set('filter', filter)
+      params.delete('page')
       router.push(`?${params.toString()}`)
     },
     [router, searchParams],
