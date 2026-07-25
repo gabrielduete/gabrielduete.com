@@ -1,9 +1,11 @@
+import fs from 'fs'
+
 import { Paths } from '@/enums/Paths'
 import { render, screen } from '@testing-library/react'
 import { notFound } from 'next/navigation'
 
 import { getBlogData } from '../helpers/getDataContentFile'
-import BlogPost, { generateMetadata } from './page'
+import BlogPost, { generateMetadata, generateStaticParams } from './page'
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
@@ -292,6 +294,34 @@ describe('generateMetadata', () => {
       alternates: {
         canonical: 'https://gabrielduete.com/pt-br/blog/post-teste',
       },
+    })
+  })
+})
+
+describe('generateStaticParams', () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  it('should build one param pair per mdx file of each locale', async () => {
+    jest
+      .spyOn(fs, 'readdirSync')
+      .mockReturnValueOnce(['first.mdx', 'notes.txt'])
+      .mockReturnValueOnce(['segundo.mdx'])
+
+    await expect(generateStaticParams()).resolves.toEqual([
+      { locale: 'en', slug: 'first' },
+      { locale: 'pt-br', slug: 'segundo' },
+    ])
+  })
+
+  it('should list every post available on disk', async () => {
+    const params = await generateStaticParams()
+
+    expect(params.length).toBeGreaterThan(0)
+    params.forEach(param => {
+      expect(['en', 'pt-br']).toContain(param.locale)
+      expect(param.slug).not.toMatch(/\.mdx$/)
     })
   })
 })

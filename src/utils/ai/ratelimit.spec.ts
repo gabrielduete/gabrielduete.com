@@ -22,6 +22,7 @@ jest.mock('./env', () => ({
   }),
 }))
 
+import { Ratelimit } from '@upstash/ratelimit'
 import { checkRateLimit } from './ratelimit'
 
 describe('checkRateLimit', () => {
@@ -32,5 +33,23 @@ describe('checkRateLimit', () => {
 
     expect(limitMock).toHaveBeenCalledWith('1.2.3.4')
     expect(result.success).toBe(true)
+  })
+
+  it('reports a blocked ip', async () => {
+    limitMock.mockResolvedValue({ success: false })
+
+    await expect(checkRateLimit('5.6.7.8')).resolves.toEqual({ success: false })
+  })
+
+  it('builds the limiter only once', async () => {
+    limitMock.mockResolvedValue({ success: true })
+    const callsBefore = (Ratelimit as unknown as jest.Mock).mock.calls.length
+
+    await checkRateLimit('1.2.3.4')
+    await checkRateLimit('1.2.3.4')
+
+    expect((Ratelimit as unknown as jest.Mock).mock.calls.length).toBe(
+      callsBefore,
+    )
   })
 })

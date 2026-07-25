@@ -62,6 +62,74 @@ describe('<Pagination />', () => {
     expect(mockOnPageChange).toHaveBeenCalledWith(4)
   })
 
+  it('should go to the previous page through the left arrow', () => {
+    render(
+      <Pagination
+        totalPages={5}
+        currentPage={3}
+        onPageChange={mockOnPageChange}
+      />,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'previousPage' }))
+
+    expect(mockOnPageChange).toHaveBeenCalledWith(2)
+  })
+
+  it('should go to the next page through the right arrow', () => {
+    render(
+      <Pagination
+        totalPages={5}
+        currentPage={3}
+        onPageChange={mockOnPageChange}
+      />,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'nextPage' }))
+
+    expect(mockOnPageChange).toHaveBeenCalledWith(4)
+  })
+
+  it('should disable the arrows on the edges', () => {
+    const { rerender } = render(
+      <Pagination
+        totalPages={5}
+        currentPage={1}
+        onPageChange={mockOnPageChange}
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'previousPage' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'nextPage' })).toBeEnabled()
+
+    rerender(
+      <Pagination
+        totalPages={5}
+        currentPage={5}
+        onPageChange={mockOnPageChange}
+      />,
+    )
+
+    expect(screen.getByRole('button', { name: 'nextPage' })).toBeDisabled()
+  })
+
+  it('should not render the arrows when there is a single page', () => {
+    render(
+      <Pagination
+        totalPages={1}
+        currentPage={1}
+        onPageChange={mockOnPageChange}
+      />,
+    )
+
+    expect(
+      screen.queryByRole('button', { name: 'previousPage' }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'nextPage' }),
+    ).not.toBeInTheDocument()
+  })
+
   it('should render no buttons if totalPages is 0', () => {
     render(
       <Pagination

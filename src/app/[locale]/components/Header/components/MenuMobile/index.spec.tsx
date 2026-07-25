@@ -3,8 +3,12 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import MenuMobile from '.'
 
 jest.mock('../Navigator/Mobile', () => {
-  return function MockNavigatorMobile() {
-    return <div data-testid='navigator-mobile'>Navigator Mobile</div>
+  return function MockNavigatorMobile({ closeMenu }: { closeMenu: () => void }) {
+    return (
+      <div data-testid='navigator-mobile'>
+        <button onClick={closeMenu}>close from navigator</button>
+      </div>
+    )
   }
 })
 
@@ -65,5 +69,26 @@ describe('MenuMobile', () => {
 
     const nav = screen.getByRole('navigation')
     expect(nav).toHaveClass('lg:hidden', 'flex')
+  })
+
+  it('closes the menu when the close icon is clicked', () => {
+    render(<MenuMobile />)
+
+    fireEvent.click(screen.getByLabelText('Open Menu'))
+    expect(screen.getByLabelText('Open Menu')).toHaveClass('hidden')
+
+    fireEvent.click(screen.getByLabelText('Close Menu'))
+
+    expect(screen.getByLabelText('Close Menu')).toHaveClass('hidden')
+    expect(screen.getByLabelText('Open Menu')).toHaveClass('block')
+  })
+
+  it('closes the menu when the navigator asks for it', () => {
+    render(<MenuMobile />)
+
+    fireEvent.click(screen.getByLabelText('Open Menu'))
+    fireEvent.click(screen.getByText('close from navigator'))
+
+    expect(screen.getByLabelText('Close Menu')).toHaveClass('hidden')
   })
 })

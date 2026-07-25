@@ -4,6 +4,7 @@ import KeyBoardEasterEgg from '.'
 
 Object.defineProperty(navigator, 'vibrate', {
   writable: true,
+  configurable: true,
   value: jest.fn(),
 })
 
@@ -195,6 +196,46 @@ describe('<KeyBoardEasterEgg />', () => {
     expect(navigator.vibrate).toHaveBeenCalledWith([
       100, 50, 100, 50, 100, 50, 100,
     ])
+  })
+
+  it('should skip the vibration when the device does not support it', () => {
+    const original = navigator.vibrate
+    // @ts-expect-error simulating a device without the Vibration API
+    delete navigator.vibrate
+
+    render(<KeyBoardEasterEgg />)
+
+    secretKeys.forEach(key => {
+      fireEvent.keyDown(document, { key })
+    })
+
+    expect(
+      document.querySelector('div[style*="position: fixed"]'),
+    ).toBeInTheDocument()
+
+    Object.defineProperty(navigator, 'vibrate', {
+      writable: true,
+      configurable: true,
+      value: original,
+    })
+  })
+
+  it('should alternate the flash opacity while the animation runs', () => {
+    render(<KeyBoardEasterEgg />)
+
+    secretKeys.forEach(key => {
+      fireEvent.keyDown(document, { key })
+    })
+
+    const flash = document.querySelector(
+      'div[style*="position: fixed"]',
+    ) as HTMLElement
+
+    jest.advanceTimersByTime(100)
+    expect(flash.style.opacity).toBe('0.9')
+
+    jest.advanceTimersByTime(100)
+    expect(flash.style.opacity).toBe('0')
   })
 
   it('should clean up flash element after animation', () => {
