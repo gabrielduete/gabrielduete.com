@@ -36,6 +36,134 @@ body {
   background-color: var(--color-secondary);
 }
 
+/* Angulo animavel para o "desenho" da borda */
+@property --border-fill {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.spotlight-card {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Borda que da uma volta no card e para cheia (independe do mouse) */
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    conic-gradient(
+      from 180deg,
+      var(--color-secondary) 0deg var(--border-fill),
+      transparent var(--border-fill)
+    ),
+    conic-gradient(
+      from 180deg,
+      transparent 0deg calc(360deg - var(--border-fill)),
+      var(--color-secondary) calc(360deg - var(--border-fill))
+    );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease;
+  pointer-events: none;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+  animation: border-draw 0.5s ease-out forwards;
+}
+
+@keyframes border-draw {
+  from {
+    --border-fill: 0deg;
+  }
+  to {
+    --border-fill: 180deg;
+  }
+}
+
+/* Angulo animavel para a borda em loop (card focado) */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Card focado: arco de borda girando em loop continuo */
+.spotlight-card.is-focused::before {
+  opacity: 1;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    var(--color-secondary) 70deg,
+    #ffffff 90deg,
+    var(--color-secondary) 110deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  animation: border-spin 2.5s linear infinite;
+}
+
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* Brilho suave na superficie seguindo o cursor */
+.spotlight-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(70, 206, 122, 0.12),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-slow) ease;
+  pointer-events: none;
+}
+
+.spotlight-card:hover::before,
+.spotlight-card:hover::after {
+  opacity: 1;
+}
+
+.spotlight-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Theme toggle: circular reveal via the View Transitions API.
+   Kill the default cross-fade so only the clip-path circle animates,
+   and stack the incoming theme on top so it wipes over the old one. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
 *::-webkit-scrollbar {
   width: 12px;
 }
@@ -56,6 +184,7 @@ body {
   /* texts */
   --primary: #ffffff;
   --text-blog: #ffffff;
+  --secondary: #46ce7a;
 
   /* Backgrounds */
   --bg-theme: #132227;
@@ -68,18 +197,24 @@ body {
   /* texts */
   --primary: #20272f;
   --text-blog: #20272f;
+  --secondary: #1f9d55;
 
   /* Backgrounds */
-  --bg-theme: #f8f8f8;
+  --bg-theme: #eef2f1;
   --bg-primary: #193038;
   --bg-secondary: #132227;
-  --bg-cards: #223843;
+  --bg-cards: #1d3540;
+}
+
+[data-theme='light'] .bg-bg-cards,
+[data-theme='light'] .bg-bg-primary {
+  box-shadow: 0 10px 30px -12px rgba(19, 34, 39, 0.35);
 }
 
 @theme inline {
   /* Text  */
   --color-primary: var(--primary);
-  --color-secondary: #46ce7a;
+  --color-secondary: var(--secondary);
   --color-blog: var(--text-blog);
   --color-white: #ffffff;
   --color-green-black: #20272f;
@@ -88,7 +223,7 @@ body {
   --color-green-weak-border: #223843;
   --color-green-strong: #193038;
   --color-green-weak: #46ce7a40;
-  --color-green-neutral: #46ce7a;
+  --color-green-neutral: var(--secondary);
 
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);

@@ -5,11 +5,30 @@ import ScrollTopButton from '@/components/ScrollTopButton'
 import TabTitleWatcher from '@/components/TabTitleWatcher/TabTitleWatcher'
 import { Paths } from '@/enums/Paths'
 import { SocialMedia } from '@/enums/SocialMedia'
+import fs from 'fs'
 import { getTranslations } from 'next-intl/server'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
+import path from 'path'
 
 import { getBlogData } from '../helpers/getDataContentFile'
+
+// Revalidate static pages in the background once per hour so newly added
+// posts show up without requiring a full rebuild.
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const locales = ['en', 'pt-br']
+
+  return locales.flatMap(locale => {
+    const dir = path.join(process.cwd(), 'src/content/blog', locale)
+
+    return fs
+      .readdirSync(dir)
+      .filter(file => file.endsWith('.mdx'))
+      .map(file => ({ locale, slug: file.replace(/\.mdx$/, '') }))
+  })
+}
 
 export async function generateMetadata({ params }) {
   const { slug, locale } = await params

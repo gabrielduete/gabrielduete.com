@@ -5,7 +5,8 @@
     "articles": "Pinned posts:"
   },
   "IndexPage": {
-    "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Petlove."
+    "about": "I’ve been working as a Web Developer since 2021 and I’m currently a Front-End Developer at Petlove.",
+    "viewAllPosts": "View all posts"
   },
   "CarrerPage": {
     "Experiences": {
@@ -14,9 +15,12 @@
         "role": "Mid-level Front-end Developer",
         "time": "Mar 2026 - Present",
         "location": "São Paulo, Brazil · Remote",
-        "totalContributions": "1",
+        "totalContributions": "4",
         "contributions": {
-          "1": "Loading... :D"
+          "1": "Identified, via Microsoft Clarity heatmaps, a pattern of repeated clicks on a high-usage field: 1,928 clicks in 6 days, signaling friction in how users extracted the information. Shipped a dedicated solution for the case, reducing it to 690 clicks over the same period (−64%).",
+          "2": "Led an accessibility audit and fixes on the health center portal, raising the average Lighthouse accessibility score from ~64 to ~97 across more than 10 pages, fixing label associations, ARIA structure, landmarks, and semantic attributes in Vue components.",
+          "3": "Handled triage and fixes for bugs monitored via Honeybadger, analyzing production exceptions, estimating each bug and alert with AI support (Claude), and organizing the fix queue by criticality and effort.",
+          "4": "Documented business rules and feature flows in Confluence, centralizing behavior criteria and technical specs as a reference for the team."
         },
         "link": "https://www.petlove.com.br/"
       },
@@ -89,7 +93,34 @@
         },
         "link": ""
       }
+    },
+    "Filters": {
+      "all": "All",
+      "full-time": "Full-time",
+      "freelance": "Freelance",
+      "open-source": "Open Source"
     }
+  },
+  "ChatBot": {
+    "open": "Open chat",
+    "close": "Close chat",
+    "title": "Ask about the blog",
+    "placeholder": "Ask anything…",
+    "send": "Send",
+    "empty": "Hi! Ask me anything about this blog or the post you're reading.",
+    "askAboutSnippet": "Can you explain this excerpt from the article?\n\n\"{snippet}\"",
+    "error": "Something went wrong. Please try again.",
+    "retry": "Retry"
+  },
+  "SelectionToolbar": {
+    "label": "Text selection actions",
+    "askBot": "Ask the bot",
+    "copy": "Copy",
+    "share": "Share",
+    "shareX": "Share on X",
+    "shareLinkedin": "Share on LinkedIn",
+    "copied": "Copied!",
+    "shared": "Link copied!"
   },
   "BlogPage": {
     "contribution": "Liked the content? I accept a contribution! :)",
@@ -98,5 +129,11 @@
     "addSomething": "Have something to contribute?",
     "addSomethingDescription": "This blog is open source, so feel free to open a <a>PR in the repository.</a>",
     "findMe": "Find me also in:"
+  },
+  "Common": {
+    "noResults": "No results found.",
+    "goToPage": "Go to page {page}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   }
 }

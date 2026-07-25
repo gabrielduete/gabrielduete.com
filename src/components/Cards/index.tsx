@@ -1,12 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
-import { Locales } from '@/enums/Locales'
-import { parseDate } from '@/utils/formatterDate'
-import { useLocale } from 'next-intl'
+import { parseArticleDate } from '@/utils/formatterDate'
+import { useLocale, useTranslations } from 'next-intl'
 
 import Card from './components/Card'
 
@@ -16,7 +15,28 @@ type CardsProps = {
 
 const Cards = ({ articles }: CardsProps) => {
   const locale = useLocale()
-  const [currentPage, setCurrentPage] = useState(1)
+  const t = useTranslations('Common')
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const pageParam = Number(searchParams.get('page'))
+  const currentPage = pageParam > 0 ? pageParam : 1
+
+  const setCurrentPage = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (page <= 1) {
+      params.delete('page')
+    } else {
+      params.set('page', String(page))
+    }
+
+    const query = params.toString()
+
+    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+  }
+
   const { selectedFilter } = useFilter()
 
   const articlesPerPage = 4
@@ -28,28 +48,36 @@ const Cards = ({ articles }: CardsProps) => {
   })
 
   const orderArticles = [...filteredArticles].sort((a, b) => {
-    const isEN = locale === Locales.EN
-
-    if (!isEN) {
-      const dateA = parseDate(a.date)
-      const dateB = parseDate(b.date)
-
-      return dateB.getTime() - dateA.getTime()
+    if (a.pinned !== b.pinned) {
+      return a.pinned ? -1 : 1
     }
 
-    const dateA = new Date(a.date).getTime()
-    const dateB = new Date(b.date).getTime()
+    const dateA = parseArticleDate(a.date, locale as Langs)
+    const dateB = parseArticleDate(b.date, locale as Langs)
 
-    return dateB - dateA
+    return dateB.getTime() - dateA.getTime()
   })
-
-  const startIndex = (currentPage - 1) * articlesPerPage
-  const endIndex = startIndex + articlesPerPage
-  const currentPageArticles = orderArticles.slice(startIndex, endIndex)
 
   const totalPages = Math.ceil(orderArticles.length / articlesPerPage)
 
+  const safePage = Math.min(Math.max(currentPage, 1), Math.max(totalPages, 1))
+
+  const startIndex = (safePage - 1) * articlesPerPage
+  const endIndex = startIndex + articlesPerPage
+  const currentPageArticles = orderArticles.slice(startIndex, endIndex)
+
   const currentArticles = totalPages === 1 ? orderArticles : currentPageArticles
+
+  if (orderArticles.length === 0) {
+    return (
+      <p
+        className='text-medium text-gray-400 text-center lg:text-left'
+        data-testid='cards__empty'
+      >
+        {t('noResults')}
+      </p>
+    )
+  }
 
   return (
     <>
@@ -61,7 +89,7 @@ const Cards = ({ articles }: CardsProps) => {
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
-          currentPage={currentPage}
+          currentPage={safePage}
           onPageChange={setCurrentPage}
         />
       )}

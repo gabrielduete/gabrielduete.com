@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { notFound } from 'next/navigation'
@@ -39,6 +41,22 @@ jest.mock('../components/KeyboardEasterEgg', () => {
   }
 })
 
+jest.mock('../components/ProgressBar', () => {
+  return function MockProgressBar({ children }: { children: ReactNode }) {
+    return <div data-testid='progress-bar'>{children}</div>
+  }
+})
+
+jest.mock('@/components/ChatBot', () => ({
+  __esModule: true,
+  default: () => <div data-testid='chatbot' />,
+}))
+
+jest.mock('@/components/SelectionToolbar', () => ({
+  __esModule: true,
+  default: () => <div data-testid='selection-toolbar' />,
+}))
+
 jest.mock('@/i18n/routing', () => ({
   routing: {
     locales: ['en', 'pt-br'],
@@ -69,6 +87,7 @@ describe('<Layout />', () => {
     expect(screen.getByTestId('footer')).toBeInTheDocument()
     expect(screen.getByTestId('keyboard-easter-egg')).toBeInTheDocument()
     expect(screen.getByTestId('children')).toBeInTheDocument()
+    expect(screen.getByTestId('chatbot')).toBeInTheDocument()
   })
 
   it('should render with correct HTML structure', async () => {

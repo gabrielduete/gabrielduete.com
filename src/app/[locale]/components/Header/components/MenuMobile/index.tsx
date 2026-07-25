@@ -34,7 +34,7 @@ const MenuMobile = () => {
         <CgCloseO
           size={38}
           className={`
-              lg:text-primary text-white hover:text-secondary mt-xxlarge mr-xxlarge
+              lg:text-primary text-white hover:text-secondary m-small
               cursor-pointer transition-colors duration-200 place-self-end
               ${isOpen ? 'block ' : 'hidden'}`}
           aria-label='Close Menu'

@@ -18,7 +18,7 @@ describe('<Home />', () => {
   it('should render the profile picture', async () => {
     render(await Home())
 
-    const profilePic = screen.getByAltText('Profile Pic')
+    const profilePic = screen.getByAltText('Gabriel Duete')
 
     expect(profilePic).toBeInTheDocument()
   })

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(node -e ' *)",
+      "Bash(timeout 300 npx next build)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'fix\\(chatbot\\): read Redis creds from Vercel KV_* env names *)",
+      "Bash(git check-ignore *)",
+      "Bash(node -r dotenv/config node_modules/.bin/ts-node --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register scripts/index-blog.ts)",
+      "Bash(git commit -m 'build\\(chatbot\\): load .env in prebuild via dotenv for local indexing *)"
+    ]
+  }
+}

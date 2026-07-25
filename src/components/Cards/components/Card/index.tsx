@@ -1,4 +1,9 @@
+'use client'
+
+import { MouseEvent } from 'react'
+
 import { Storages } from '@/enums/Storages'
+import { formatDate } from '@/utils/formatterDate'
 import { useLocale } from 'next-intl'
 import Link from 'next/link'
 
@@ -13,20 +18,37 @@ const Card = (article: IArticle) => {
     }
   }
 
+  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    event.currentTarget.style.setProperty(
+      '--mouse-x',
+      `${event.clientX - rect.left}px`,
+    )
+    event.currentTarget.style.setProperty(
+      '--mouse-y',
+      `${event.clientY - rect.top}px`,
+    )
+  }
+
   return (
     <Link href={`/${locale}/blog/${slug}`} onClick={setNavigation}>
       <article
+        onMouseMove={handleMouseMove}
         className='
+          spotlight-card
           max-w-[484px] w-full h-[260px] p-xxlarge bg-bg-cards text-white
-          cursor-pointer rounded-sm border border-bg-cards hover:border-secondary
-          flex flex-col justify-between gap-large
+          cursor-pointer rounded-sm border border-bg-cards overflow-hidden
+          flex flex-col gap-medium
         '
       >
-        <header className='flex justify-between'>
-          <h1 className='text-subtitle font-bold max-w-[330px] w-full'>
+        <header className='flex justify-between gap-medium'>
+          <h1 className='text-subtitle font-bold max-w-[330px] w-full line-clamp-2'>
             {title}
           </h1>
-          <p className='text-small text-gray-400 mt-xxsmall'>{date}</p>
+          <p className='text-small text-gray-400 mt-xxsmall shrink-0'>
+            {formatDate(date, locale as Langs)}
+          </p>
         </header>
         <p className='text-medium text-ellipsis line-clamp-3'>{description}</p>
       </article>

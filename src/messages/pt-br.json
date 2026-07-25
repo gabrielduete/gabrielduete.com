@@ -5,7 +5,8 @@
     "articles": "Posts fixados:"
   },
   "IndexPage": {
-    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Petlove."
+    "about": "Trabalho como desenvolvedor web desde 2021 e atualmente sou desenvolvedor front-end na Petlove.",
+    "viewAllPosts": "Ver todos os posts"
   },
   "CarrerPage": {
     "Experiences": {
@@ -14,9 +15,12 @@
         "role": "Desenvolvedor Front-end Pleno",
         "time": "Mar de 2026 - o momento",
         "location": "São Paulo, Brasil · Remoto",
-        "totalContributions": "1",
+        "totalContributions": "4",
         "contributions": {
-          "1": "Loading... :D"
+          "1": "Identifiquei via heatmaps do Microsoft Clarity um padrão de cliques repetidos em um campo de alto uso: 1.928 cliques em 6 dias, indicando atrito na forma como os usuários extraíam a informação. Implementei uma solução dedicada ao caso, reduzindo para 690 cliques no mesmo período (−64%).",
+          "2": "Conduzi auditoria e correção de acessibilidade no portal de central de saúde, elevando o score médio de acessibilidade no Lighthouse de ~64 para ~97 em mais de 10 páginas, corrigindo associações de labels, estrutura ARIA, landmarks e atributos semânticos em componentes Vue.",
+          "3": "Atuei na triagem e correção de bugs monitorados via Honeybadger, analisando exceções em produção, levantando estimativas de cada bug e alerta com apoio de I.A. (Claude) e organizando a fila de correções por criticidade e esforço.",
+          "4": "Documentei regras de negócio e fluxos de funcionalidades no Confluence, centralizando critérios de comportamento e especificações técnicas como referência para o time."
         },
         "link": "https://www.petlove.com.br/"
       },
@@ -66,12 +70,11 @@
         "role": "Colaborador",
         "time": "Set de 2023 - o momento",
         "location": "Remoto",
-        "totalContributions": "4",
+        "totalContributions": "3",
         "contributions": {
           "1": "Criação de artigos sobre conceitos de Design Patterns em React, como Compound Components, Error Boundaries, etc...",
           "2": "Melhorias do projeto, como gerenciamento de arquitetura e organização.",
-          "3": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas.",
-          "4": "Link do repositório: https://github.com/he4rt/react4noobs"
+          "3": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas."
         },
         "link": "https://github.com/he4rt/react4noobs"
       },
@@ -90,7 +93,34 @@
         },
         "link": ""
       }
+    },
+    "Filters": {
+      "all": "Todos",
+      "full-time": "Tempo integral",
+      "freelance": "Freelance",
+      "open-source": "Open Source"
     }
+  },
+  "ChatBot": {
+    "open": "Abrir chat",
+    "close": "Fechar chat",
+    "title": "Pergunte sobre o blog",
+    "placeholder": "Pergunte qualquer coisa…",
+    "send": "Enviar",
+    "empty": "Oi! Pergunte qualquer coisa sobre o blog ou sobre o post que você está lendo.",
+    "askAboutSnippet": "Pode explicar este trecho do artigo?\n\n\"{snippet}\"",
+    "error": "Algo deu errado. Tente novamente.",
+    "retry": "Tentar novamente"
+  },
+  "SelectionToolbar": {
+    "label": "Ações da seleção de texto",
+    "askBot": "Perguntar ao bot",
+    "copy": "Copiar",
+    "share": "Compartilhar",
+    "shareX": "Compartilhar no X",
+    "shareLinkedin": "Compartilhar no LinkedIn",
+    "copied": "Copiado!",
+    "shared": "Link copiado!"
   },
   "BlogPage": {
     "contribution": "Gostou do conteúdo? Aceito uma contribuição! :)",
@@ -99,5 +129,11 @@
     "addSomething": "Tem algo para acrescentar?",
     "addSomethingDescription": "Esse blog é open source, então fique à vontade para abrir um <a>PR no repositório.</a>",
     "findMe": "Me encontre também em:"
+  },
+  "Common": {
+    "noResults": "Nenhum resultado encontrado.",
+    "goToPage": "Ir para a página {page}",
+    "previousPage": "Página anterior",
+    "nextPage": "Próxima página"
   }
 }
