@@ -15,9 +15,12 @@
         "role": "Mid-level Front-end Developer",
         "time": "Mar 2026 - Present",
         "location": "São Paulo, Brazil · Remote",
-        "totalContributions": "1",
+        "totalContributions": "4",
         "contributions": {
-          "1": "Loading... :D"
+          "1": "Identified, via Microsoft Clarity heatmaps, a pattern of repeated clicks on a high-usage field: 1,928 clicks in 6 days, signaling friction in how users extracted the information. Shipped a dedicated solution for the case, reducing it to 690 clicks over the same period (−64%).",
+          "2": "Led an accessibility audit and fixes on the health center portal, raising the average Lighthouse accessibility score from ~64 to ~97 across more than 10 pages, fixing label associations, ARIA structure, landmarks, and semantic attributes in Vue components.",
+          "3": "Handled triage and fixes for bugs monitored via Honeybadger, analyzing production exceptions, estimating each bug and alert with AI support (Claude), and organizing the fix queue by criticality and effort.",
+          "4": "Documented business rules and feature flows in Confluence, centralizing behavior criteria and technical specs as a reference for the team."
         },
         "link": "https://www.petlove.com.br/"
       },
