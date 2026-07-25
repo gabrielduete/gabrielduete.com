@@ -1,4 +1,7 @@
-import { getBlogData } from '@/app/[locale]/blog/helpers/getDataContentFile'
+import {
+  getBlogData,
+  isValidSlug,
+} from '@/app/[locale]/blog/helpers/getDataContentFile'
 import { Locales } from '@/enums/Locales'
 import { buildSystemPrompt } from '@/utils/ai/buildPrompt'
 import { checkRateLimit } from '@/utils/ai/ratelimit'
@@ -25,7 +28,10 @@ function latestUserText(messages: UIMessage[]): string {
 
 export async function POST(req: Request) {
   try {
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
+    // Trust the rightmost entry: it is appended by the proxy closest to us,
+    // while any client-supplied value stays on the left.
+    const forwardedFor = req.headers.get('x-forwarded-for')?.split(',') ?? []
+    const ip = forwardedFor[forwardedFor.length - 1]?.trim() || 'anonymous'
 
     const { success } = await checkRateLimit(ip)
     if (!success) {
@@ -41,7 +47,7 @@ export async function POST(req: Request) {
 
     const messages: UIMessage[] = Array.isArray(body.messages) ? (body.messages as UIMessage[]) : []
     const locale = resolveLocale(body.locale)
-    const currentSlug = typeof body.currentSlug === 'string' ? body.currentSlug : undefined
+    const currentSlug = isValidSlug(body.currentSlug) ? body.currentSlug : undefined
 
     let currentArticle: { title: string; content: string } | null = null
     if (currentSlug) {

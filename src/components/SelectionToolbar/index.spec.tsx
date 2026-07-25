@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import { ASK_BOT_EVENT } from '../ChatBot/askBot'
 import SelectionToolbar from '.'
@@ -131,6 +131,129 @@ describe('<SelectionToolbar />', () => {
     const url = open.mock.calls[0][0] as string
     expect(url).toContain('twitter.com/intent/tweet')
     expect(url).toContain(encodeURIComponent('"great point"'))
+  })
+
+  it('hides the toolbar when the selection is cleared', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('temporary')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    jest.spyOn(window, 'getSelection').mockReturnValue(mockSelection('', document.body))
+    fireEvent.mouseUp(document)
+
+    await waitFor(() =>
+      expect(screen.queryByRole('toolbar')).not.toBeInTheDocument(),
+    )
+  })
+
+  it('hides the toolbar when the browser reports an empty selection', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('temporary')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    jest.spyOn(window, 'getSelection').mockReturnValue(null)
+    fireEvent(document, new Event('selectionchange'))
+
+    await waitFor(() =>
+      expect(screen.queryByRole('toolbar')).not.toBeInTheDocument(),
+    )
+  })
+
+  it('hides the toolbar when the page scrolls', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('temporary')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.scroll(window)
+
+    await waitFor(() =>
+      expect(screen.queryByRole('toolbar')).not.toBeInTheDocument(),
+    )
+  })
+
+  it('hides the toolbar when the window is resized', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('temporary')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent(window, new Event('resize'))
+
+    await waitFor(() =>
+      expect(screen.queryByRole('toolbar')).not.toBeInTheDocument(),
+    )
+  })
+
+  it('keeps the selection alive on mousedown inside the toolbar', async () => {
+    render(<SelectionToolbar />)
+    selectInsideArticle('great point')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    const event = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+    })
+    fireEvent(screen.getByRole('toolbar'), event)
+
+    expect(event.defaultPrevented).toBe(true)
+  })
+
+  it('shows the copied feedback and dismisses itself', async () => {
+    jest.useFakeTimers()
+
+    render(<SelectionToolbar />)
+    selectInsideArticle('copy me')
+    fireEvent.mouseUp(document)
+    act(() => jest.advanceTimersByTime(1))
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('copy'))
+    await waitFor(() => expect(screen.getByText('copied')).toBeInTheDocument())
+
+    act(() => jest.advanceTimersByTime(1000))
+
+    await waitFor(() =>
+      expect(screen.queryByRole('toolbar')).not.toBeInTheDocument(),
+    )
+
+    jest.useRealTimers()
+  })
+
+  it('still shows the feedback when the clipboard is unavailable', async () => {
+    writeText.mockRejectedValueOnce(new Error('denied'))
+
+    render(<SelectionToolbar />)
+    selectInsideArticle('copy me')
+    fireEvent.mouseUp(document)
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('copy'))
+
+    await waitFor(() => expect(screen.getByText('copied')).toBeInTheDocument())
+  })
+
+  it('clears the pending dismiss timer on unmount', async () => {
+    jest.useFakeTimers()
+    const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout')
+
+    const { unmount } = render(<SelectionToolbar />)
+    selectInsideArticle('copy me')
+    fireEvent.mouseUp(document)
+    act(() => jest.advanceTimersByTime(1))
+    await waitFor(() => screen.getByRole('toolbar'))
+
+    fireEvent.click(screen.getByText('copy'))
+    await waitFor(() => expect(screen.getByText('copied')).toBeInTheDocument())
+
+    unmount()
+
+    expect(clearTimeoutSpy).toHaveBeenCalled()
+
+    jest.useRealTimers()
   })
 
   it('opens the LinkedIn share when choosing LinkedIn', async () => {

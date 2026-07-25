@@ -32,4 +32,31 @@ describe('chunkMarkdown', () => {
     const chunks = chunkMarkdown(md, 1000)
     chunks.forEach(c => expect(c.length).toBeLessThanOrEqual(1000))
   })
+
+  it('groups short paragraphs until the next one would overflow', () => {
+    const md = ['a'.repeat(60), 'b'.repeat(60), 'c'.repeat(60)].join('\n\n')
+    const chunks = chunkMarkdown(md, 100)
+
+    expect(chunks).toEqual(['a'.repeat(60), 'b'.repeat(60), 'c'.repeat(60)])
+  })
+
+  it('keeps paragraphs together while they still fit', () => {
+    const md = ['a'.repeat(20), 'b'.repeat(20), 'c'.repeat(60)].join('\n\n')
+    const chunks = chunkMarkdown(md, 100)
+
+    expect(chunks).toEqual([
+      `${'a'.repeat(20)}\n\n${'b'.repeat(20)}`,
+      'c'.repeat(60),
+    ])
+  })
+
+  it('falls back to the whole content when there is no heading', () => {
+    expect(chunkMarkdown('plain text without headings')).toEqual([
+      'plain text without headings',
+    ])
+  })
+
+  it('returns nothing for empty content', () => {
+    expect(chunkMarkdown('   ')).toEqual([])
+  })
 })

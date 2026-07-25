@@ -49,4 +49,16 @@ describe('getAiEnv', () => {
     delete process.env.GROQ_API_KEY
     expect(() => getAiEnv()).toThrow('GROQ_API_KEY')
   })
+
+  it('throws naming every accepted name when no Redis url is set', () => {
+    process.env.GROQ_API_KEY = 'g'
+    process.env.UPSTASH_VECTOR_REST_URL = 'vu'
+    process.env.UPSTASH_VECTOR_REST_TOKEN = 'vt'
+    delete process.env.KV_REST_API_URL
+    delete process.env.UPSTASH_REDIS_REST_URL
+
+    expect(() => getAiEnv()).toThrow(
+      'Missing required env var: one of KV_REST_API_URL, UPSTASH_REDIS_REST_URL',
+    )
+  })
 })

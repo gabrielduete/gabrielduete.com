@@ -22,4 +22,18 @@ describe('useCurrentPost', () => {
     expect(result.current.slug).toBeNull()
     expect(result.current.locale).toBe('en')
   })
+
+  it('falls back to the root path when there is no pathname', () => {
+    mockPath = ''
+    const { result } = renderHook(() => useCurrentPost())
+
+    expect(result.current).toEqual({ locale: 'en', slug: null })
+  })
+
+  it('decodes an encoded slug', () => {
+    mockPath = '/en/blog/hello%20world'
+    const { result } = renderHook(() => useCurrentPost())
+
+    expect(result.current.slug).toBe('hello world')
+  })
 })

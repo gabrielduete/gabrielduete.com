@@ -6,6 +6,9 @@ import BackButton from '.'
 const routerBackMock = jest.fn()
 const routerPushMock = jest.fn()
 
+let mockLocale = 'en'
+let mockHasWindow = true
+
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     back: routerBackMock,
@@ -13,7 +16,22 @@ jest.mock('next/navigation', () => ({
   }),
 }))
 
+jest.mock('next-intl', () => ({
+  useLocale: () => mockLocale,
+}))
+
+jest.mock('@/utils/hasWindow', () => ({
+  get hasWindow() {
+    return mockHasWindow
+  },
+}))
+
 describe('<BackButton />', () => {
+  beforeEach(() => {
+    mockLocale = 'en'
+    mockHasWindow = true
+  })
+
   afterEach(() => {
     routerBackMock.mockClear()
     routerPushMock.mockClear()
@@ -52,5 +70,27 @@ describe('<BackButton />', () => {
     render(<BackButton path='/home' />)
 
     expect(sessionStorage.getItem(Storages.CAME_FROM_NAVIGATION)).toBe('true')
+  })
+
+  it('should skip the navigation bookkeeping when there is no window', () => {
+    mockHasWindow = false
+
+    render(<BackButton path='/home' />)
+
+    expect(sessionStorage.getItem(Storages.CAME_FROM_NAVIGATION)).toBeNull()
+  })
+
+  it('should render the english label', () => {
+    render(<BackButton path='/home' />)
+
+    expect(screen.getByRole('button')).toHaveTextContent('Back')
+  })
+
+  it('should render the portuguese label', () => {
+    mockLocale = 'pt-br'
+
+    render(<BackButton path='/home' />)
+
+    expect(screen.getByRole('button')).toHaveTextContent('Voltar')
   })
 })

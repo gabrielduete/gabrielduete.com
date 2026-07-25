@@ -128,6 +128,31 @@ describe('TabTitleWatcher', () => {
     )
   })
 
+  it('restores the title without clearing anything when no interval is running', () => {
+    ;(useLocale as jest.Mock).mockReturnValue(Locales.EN)
+
+    render(<TabTitleWatcher originalTitle='Test Title' />)
+
+    const visibilityHandler = mockAddEventListener.mock.calls[0][1]
+    visibilityHandler()
+
+    expect(mockClearInterval).not.toHaveBeenCalled()
+    expect(document.title).toBe('Test Title')
+  })
+
+  it('does not clear any interval on unmount when the tab stayed visible', () => {
+    ;(useLocale as jest.Mock).mockReturnValue(Locales.EN)
+
+    const { unmount } = render(<TabTitleWatcher originalTitle='Test Title' />)
+    unmount()
+
+    expect(mockClearInterval).not.toHaveBeenCalled()
+    expect(mockRemoveEventListener).toHaveBeenCalledWith(
+      'visibilitychange',
+      expect.any(Function),
+    )
+  })
+
   it('handles multiple visibility changes correctly', () => {
     ;(useLocale as jest.Mock).mockReturnValue(Locales.EN)
 

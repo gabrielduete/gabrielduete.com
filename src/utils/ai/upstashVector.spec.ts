@@ -14,7 +14,8 @@ jest.mock('./env', () => ({
   }),
 }))
 
-import { queryRelevantChunks } from './upstashVector'
+import { Index } from '@upstash/vector'
+import { getVectorIndex, queryRelevantChunks } from './upstashVector'
 
 describe('queryRelevantChunks', () => {
   beforeEach(() => queryMock.mockReset())
@@ -41,5 +42,38 @@ describe('queryRelevantChunks', () => {
       url: '/en/blog/s',
       score: 0.9,
     })
+  })
+
+  it('defaults every missing metadata field', async () => {
+    queryMock.mockResolvedValue([{ metadata: undefined }])
+
+    const result = await queryRelevantChunks('hello', 'pt-br')
+
+    expect(result).toEqual([
+      { text: '', slug: '', title: '', url: '', score: 0 },
+    ])
+  })
+
+  it('returns an empty list when the index answers with nothing', async () => {
+    queryMock.mockResolvedValue(undefined)
+
+    await expect(queryRelevantChunks('hello', 'en')).resolves.toEqual([])
+  })
+
+  it('uses a topK of 4 by default', async () => {
+    queryMock.mockResolvedValue([])
+
+    await queryRelevantChunks('hello', 'en')
+
+    expect(queryMock.mock.calls[0][0].topK).toBe(4)
+  })
+
+  it('builds the index only once', () => {
+    const callsBefore = (Index as unknown as jest.Mock).mock.calls.length
+
+    getVectorIndex()
+    getVectorIndex()
+
+    expect((Index as unknown as jest.Mock).mock.calls.length).toBe(callsBefore)
   })
 })
