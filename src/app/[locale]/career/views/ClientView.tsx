@@ -84,14 +84,14 @@ const CarrerView = () => {
   const isEn = locale === Locales.EN
   const t = useTranslations('CarrerPage')
 
-  const getInitialExperience = (): IExperiences => {
+  const getInitialExperience = (): IExperiences | null => {
     const filterParam = searchParams.get('filter')
 
     if (filterParam) {
       const parsed = parseExperienceFromUrl(filterParam)
       if (parsed) return parsed
     }
-    return 'Petlove'
+    return null
   }
 
   const [selectedExperience, setSelectedExperience] =

@@ -67,16 +67,17 @@ jest.mock('next-intl', () => ({
 }))
 
 describe('<Career />', () => {
-  it('should render the component with default experience expanded', () => {
+  it('should render all experiences collapsed by default', () => {
     render(<Career />)
 
     expect(
       screen.getByRole('heading', { level: 2, name: 'Petlove' }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    )
+    experiences.forEach(experience => {
+      expect(
+        screen.getByRole('button', { name: experience }),
+      ).toHaveAttribute('aria-expanded', 'false')
+    })
   })
 
   it('should render buttons for all experiences', () => {
