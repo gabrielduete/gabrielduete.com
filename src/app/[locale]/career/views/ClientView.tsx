@@ -404,7 +404,7 @@ const CarrerView = () => {
                     onClick={() =>
                       handleExperienceClick(experience as IExperiences)
                     }
-                    className='group flex w-full cursor-pointer items-start justify-between gap-small p-large text-left'
+                    className='group flex w-full cursor-pointer items-start justify-between gap-small px-large pt-large pb-small text-left'
                   >
                     <span className='flex flex-col gap-2xs'>
                       <h2
@@ -417,10 +417,10 @@ const CarrerView = () => {
                       >
                         {experience}
                       </h2>
-                      <span className='text-medium text-primary'>
+                      <span className='text-subtitle-small text-white'>
                         {t(`${experienceKey}.role`)}
                       </span>
-                      <span className='text-xsmall text-green-white'>
+                      <span className='text-medium text-green-white'>
                         {t(`${experienceKey}.time`)}
                       </span>
                     </span>
@@ -447,7 +447,7 @@ const CarrerView = () => {
                         isActive ? 'opacity-100 delay-200' : 'opacity-0',
                       )}
                     >
-                      <p className='mb-small text-xsmall text-green-white'>
+                      <p className='mb-small text-medium text-green-white'>
                         {t(`${experienceKey}.location`)}
                       </p>
                       <ul className='flex flex-col gap-small'>
@@ -464,7 +464,7 @@ const CarrerView = () => {
                                   : '0ms',
                               }}
                               className={clsx(
-                                'text-large text-primary transition-all duration-300 ease-out',
+                                'text-large text-white transition-all duration-300 ease-out',
                                 isActive
                                   ? 'translate-x-0 opacity-100'
                                   : '-translate-x-1 opacity-0',

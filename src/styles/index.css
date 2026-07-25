@@ -197,7 +197,6 @@ body {
   /* texts */
   --primary: #20272f;
   --text-blog: #20272f;
-  /* darker green: better contrast on light backgrounds, keeps brand */
   --secondary: #1f9d55;
 
   /* Backgrounds */
@@ -207,7 +206,6 @@ body {
   --bg-cards: #1d3540;
 }
 
-/* Dark panels floating on a light page need elevation to read as intentional */
 [data-theme='light'] .bg-bg-cards,
 [data-theme='light'] .bg-bg-primary {
   box-shadow: 0 10px 30px -12px rgba(19, 34, 39, 0.35);
