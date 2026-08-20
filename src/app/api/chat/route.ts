@@ -11,7 +11,7 @@ import { convertToModelMessages, streamText, type UIMessage, type TextUIPart } f
 
 export const runtime = 'nodejs'
 
-const MODEL = 'llama-3.3-70b-versatile'
+const MODEL = 'openai/gpt-oss-120b'
 
 function resolveLocale(value: unknown): string {
   return value === Locales.PT_BR ? Locales.PT_BR : Locales.EN
