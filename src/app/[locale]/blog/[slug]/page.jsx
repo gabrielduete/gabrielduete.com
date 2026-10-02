@@ -10,6 +10,7 @@ import { getTranslations } from 'next-intl/server'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 import path from 'path'
+import remarkGfm from 'remark-gfm'
 
 import { getBlogData } from '../helpers/getDataContentFile'
 
@@ -94,6 +95,7 @@ const BlogPost = async ({ params }) => {
       <article>
         <MDXRemote
           source={content}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
           components={{
             h1: props => (
               <h1
@@ -145,6 +147,26 @@ const BlogPost = async ({ params }) => {
             pre: props => (
               <pre
                 className='bg-green-black text-white p-base rounded mb-large overflow-x-auto'
+                {...props}
+              />
+            ),
+            table: props => (
+              <div className='overflow-x-auto mb-large'>
+                <table
+                  className='w-full text-left border-collapse text-base'
+                  {...props}
+                />
+              </div>
+            ),
+            th: props => (
+              <th
+                className='border-b border-gray-600 py-xxsmall pr-base font-semibold text-blog'
+                {...props}
+              />
+            ),
+            td: props => (
+              <td
+                className='border-b border-gray-800 py-xxsmall pr-base'
                 {...props}
               />
             ),
