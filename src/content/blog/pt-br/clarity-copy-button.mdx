@@ -1,0 +1,210 @@
+---
+title: 'Como um heatmap me mostrou uma dor que ninguém tinha reportado'
+description:
+  'Um padrão de rage click no mapa de calor do Clarity virou um botão de copiar.
+  Dois meses e meio depois, a seleção manual praticamente desapareceu: 93% das
+  cópias passam pelo botão.'
+date: '02-10-2026'
+category: 'Engenharia'
+tags: ['product', 'analytics', 'ux', 'data']
+---
+
+Fala, pessoal! Tudo certo?
+
+Ultimamente venho tentando empurrar meu trabalho pro lado mais _product
+engineer_ e menos "pega o card e entrega". Na prática isso tem significado uma
+coisa bem específica: olhar dado de comportamento do usuário pra achar dor que
+ninguém abriu chamado reclamando.
+
+Esse post é sobre a primeira vez que isso deu certo de ponta a ponta — da
+leitura do mapa de calor até a medição dois meses e meio depois do deploy.
+
+# O sinal
+
+Estava vasculhando o [Microsoft Clarity](https://clarity.microsoft.com/) de uma
+aplicação da área de saúde, olhando os últimos 90 dias, sem hipótese nenhuma na
+cabeça. Só varrendo mapa de calor atrás de padrão estranho.
+
+E aí tinha uma faixa vermelha num lugar que não fazia sentido nenhum: em cima de
+um identificador numérico longo, dentro de um bloco de informações do usuário.
+Texto estático. Sem link, sem botão, sem nada clicável.
+
+**2.198 cliques**, 0,13% de todos os cliques da página.
+
+![Mapa de calor do Clarity mostrando concentração de cliques sobre o campo de identificador](/assets/images/blog/copy-button/clarity-heatmap-1.jpg)
+
+Um elemento que não faz nada ser um dos pontos mais clicados da tela é um sinal
+muito barulhento. O Clarity classifica parte disso como _rage click_ — vários
+cliques seguidos no mesmo ponto, que normalmente indica frustração.
+
+Vale registrar de onde isso veio: não foi chamado, não foi pedido de usuário,
+não foi reunião de priorização. Foi de olhar comportamento.
+
+# Da leitura à hipótese
+
+Dado quantitativo te diz **onde**. Ele não te diz **por quê**. Essa parte é
+leitura sua, e é onde você pode errar feio.
+
+Minha leitura foi: o usuário está tentando **selecionar e copiar** aquele número
+pra levar pra outro sistema. Ele clica, arrasta, erra a seleção, clica de novo,
+pega metade, tenta mais uma vez. Cada cópia bem-sucedida custa vários cliques.
+
+O que me deu confiança nessa leitura:
+
+- O padrão aparecia em outras seções da página também — só que com frequência
+  muito menor. O que mudava nessa seção específica era que o conteúdo é um
+  número longo que o usuário precisa levar pra outro lugar.
+- Número comprido é exatamente o tipo de conteúdo que dá trabalho pra selecionar
+  com o mouse, principalmente quando está colado em outros elementos.
+- Não existia nenhuma outra ação possível naquele elemento. Clique ali só pode
+  ser seleção.
+
+Hipótese fechada: **não tem ação de copiar, então o usuário copia na mão, e
+copiar na mão custa caro**.
+
+# A proposta
+
+A solução é das mais simples que existem: um botão de copiar do lado do número.
+Troca N cliques de seleção por 1.
+
+Levei pro time com duas opções desenhadas:
+
+**Opção A — só o ícone**, com tooltip "Copiar número" no hover. Mais limpo, não
+quebra o alinhamento do bloco de informações.
+
+**Opção B — ícone + texto**, com o label trocando pra "Copiado!" depois do
+clique. Mais explícito, mas pesa visualmente numa área que já tem bastante
+informação.
+
+O time aprovou na mesma tarde e escolheu o ícone. Vieram duas sugestões boas da
+discussão, que entraram na implementação:
+
+- manter um feedback visual de "copiado" mesmo na versão só-ícone, porque sem
+  feedback o usuário não sabe se funcionou e clica de novo (ou seja: você
+  resolveria o rage click de um jeito e criaria outro);
+- fazer esse feedback sumir sozinho depois de alguns segundos, voltando ao
+  estado normal.
+
+Abri a PR no mesmo dia. Deploy alguns dias depois.
+
+# A primeira medição
+
+Duas semanas depois do deploy, comparei duas janelas de 6 dias — uma antes e uma
+depois do botão existir:
+
+| Janela                 | Botão | Seleção manual | Total |
+| ---------------------- | ----- | -------------- | ----- |
+| 6 dias **sem** o botão | —     | 1.928          | 1.928 |
+| 6 dias **com** o botão | 284   | 406            | 690   |
+| Variação               | —     | −79%           | −64%  |
+
+Queda de 64% no total de cliques pra copiar o identificador.
+
+Mas o número que me chamou atenção não foi o −64%, foi o **406**. À primeira
+vista parece que 59% das cópias ainda são manuais, o que seria um resultado
+meia-boca.
+
+Só que a essa altura eu não tinha como separar duas explicações possíveis: ou o
+hábito ainda não tinha mudado, ou o botão não estava resolvendo. Seis dias é
+pouco tempo pra saber.
+
+# Dois meses e meio depois
+
+Voltei no Clarity em 02/10 pra fazer a pergunta direito, agora com janelas de 30
+dias. As três janelas têm volume de tráfego praticamente igual, entre 44 e 46
+mil pageviews, então dá pra comparar os números crus sem normalizar nada.
+
+| Janela de 30 dias  | Pageviews | Botão | Manual | % no botão |
+| ------------------ | --------- | ----- | ------ | ---------- |
+| 1º mês com o botão | 45.852    | 762   | 810    | 48%        |
+| 2º mês             | 44.818    | 419   | 302    | 58%        |
+| Últimos 30 dias    | 44.073    | 855   | 69     | 93%        |
+
+![Painel comparando cliques no botão e seleção manual nas três janelas de 30 dias](/assets/images/blog/copy-button/clarity-panel-30d.png)
+
+O que esses números dizem:
+
+**A seleção manual caiu 91%.** De 810 pra 69 cliques por mês. São cerca de 2,3
+cliques manuais por dia em toda a base de usuários — ou seja, virou resíduo.
+
+**O botão virou o caminho padrão.** A fatia dos cliques que vai pra ele subiu de
+48% → 58% → 93%, numa curva consistente mês a mês. Não foi um pico de novidade
+que decaiu; foi adoção subindo.
+
+**O uso cresceu em volume absoluto.** 855 cliques nos últimos 30 dias contra 762
+no primeiro mês, com tráfego ligeiramente menor. Parte disso é que o botão hoje
+existe em duas telas do produto, e no primeiro mês existia em uma só.
+
+Era exatamente a hipótese que eu tinha levantado na primeira medição: a cópia
+manual continuaria alta por um tempo e cairia conforme as pessoas se
+acostumassem. Foi o que aconteceu — só que eu só pude afirmar isso dois meses e
+meio depois.
+
+# Método e ressalvas
+
+Essa parte é chata mas é a que separa "medi" de "contei uma história bonita".
+
+**Como os números foram coletados.** Mapa de calor de cliques do Clarity, visão
+desktop, contando cliques por elemento: a classe do ícone do botão de um lado, e
+a linha do campo de texto do outro. Quando o mesmo elemento aparece em mais de
+uma tela, as ocorrências foram somadas.
+
+**O Clarity limita cada consulta de heatmap a 30 dias.** Por isso a comparação é
+feita em janelas de 30 dias, e não num intervalo único desde o lançamento.
+
+**Duas das janelas se sobrepõem em 12 dias.** O 2º mês e a janela dos últimos 30
+dias compartilham esse pedaço. A tendência não depende disso, mas é honesto
+registrar.
+
+**Os 1.928 cliques da primeira medição não são reproduzíveis hoje.** A amostra
+do heatmap e a identidade do elemento mudaram desde julho. Por isso a comparação
+entre meses usa só janelas medidas agora, com o mesmo método — o número de julho
+fica como contexto histórico, não como base de cálculo.
+
+**Clique não é cópia.** Um clique no botão equivale a uma cópia; vários cliques
+na seleção manual podem equivaler a uma só. Isso significa que a melhora real em
+_esforço por cópia_ é maior do que a queda bruta de cliques sugere — e também
+que eu não posso traduzir nenhum desses números em "número de usuários".
+
+# O que eu levei disso
+
+**Varrer heatmap sem hipótese vale a pena.** Essa dor nunca apareceu em chamado,
+em pesquisa ou em reunião. Ninguém abre ticket dizendo "tive dificuldade de
+selecionar um número com o mouse" — a pessoa só se irrita por três segundos e
+segue a vida. O comportamento dela é o único lugar onde isso fica registrado.
+
+**Clique em elemento não-clicável é sempre uma pergunta.** É o padrão mais fácil
+de achar num mapa de calor e quase sempre significa que o usuário esperava uma
+ação que não existe ali.
+
+**Decida como vai medir antes de subir.** Sem a janela de 6 dias anterior ao
+deploy, eu teria depois um número bonito ("284 cliques no botão!") sem nenhuma
+base de comparação.
+
+**E volte a medir depois.** Essa é a parte que eu quase não fiz. Se eu tivesse
+parado em 22/07, teria registrado "−64%, mas 59% ainda copia na mão" e ficado
+com a dúvida. A medição de dois meses e meio é que mostrou que o comportamento
+mudou de verdade, e não só no primeiro impulso de novidade.
+
+E um detalhe técnico que me custou um susto: o ícone do botão vem do Font
+Awesome e ele **não aparece nas gravações de sessão do Clarity** — a área fica
+visualmente vazia no replay. O Clarity detecta o elemento e conta os cliques
+normalmente, mas se você for só assistir gravação pra validar, vai achar que as
+pessoas estão clicando no nada.
+
+# Conclusão
+
+A entrega em si é um botão de copiar. Umas poucas dezenas de linhas, nada de
+especial. O ganho de UX é pequeno e localizado.
+
+O que mudou pra mim não foi o tamanho da entrega, foi de onde ela veio: não
+chegou pronta num card, chegou de olhar um dado que já estava lá há meses
+esperando alguém reparar. Achar o problema foi o trabalho; resolver foi a parte
+fácil. E voltar pra conferir dois meses depois foi o que transformou isso de
+palpite em resultado.
+
+Se você tem Clarity, Hotjar ou qualquer coisa parecida rodando na sua aplicação,
+abre o mapa de calor hoje sem procurar nada específico. Grande chance de ter uma
+faixa vermelha em cima de algo que não devia nem estar sendo clicado.
+
+Qualquer dúvida, estou à disposição. Fiquem com Deus!

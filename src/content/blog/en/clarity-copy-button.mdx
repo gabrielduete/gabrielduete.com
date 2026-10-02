@@ -1,0 +1,213 @@
+---
+title: 'How a Heatmap Showed Me a Pain Point Nobody Had Reported'
+description:
+  'A rage click pattern on a Clarity heatmap turned into a copy button. Two and
+  a half months later, manual selection has all but disappeared: 93% of copies
+  go through the button.'
+date: '10-02-2026'
+category: 'Engineering'
+tags: ['product', 'analytics', 'ux', 'data']
+---
+
+Hey folks, how's it going?
+
+Lately I've been pushing my work toward the _software engineer_ side and away
+from "grab the ticket and ship it". In practice that has meant one very specific
+thing: looking at user behavior data to find pain nobody filed a ticket about.
+
+This post is about the first time that worked end to end — from reading the
+heatmap to the measurement two and a half months after the deploy.
+
+# The signal
+
+I was digging through [Microsoft Clarity](https://clarity.microsoft.com/) on a
+healthcare application, looking at the last 90 days, with no hypothesis in mind.
+Just sweeping heatmaps for odd patterns.
+
+And there was a red streak in a place that made no sense at all: on top of a
+long numeric identifier, inside a block of user information. Static text. No
+link, no button, nothing clickable.
+
+**2,198 clicks**, 0.13% of all clicks on the page.
+
+![Clarity heatmap showing clicks concentrated on the identifier field](/assets/images/blog/copy-button/clarity-heatmap-1.jpg)
+
+An element that does nothing being one of the most clicked spots on the screen
+is a very loud signal. Clarity classifies part of it as a _rage click_ — several
+clicks in a row on the same spot, which usually means frustration.
+
+Worth noting where this came from: not a support ticket, not a user request, not
+a prioritization meeting. It came from looking at behavior.
+
+# From reading to hypothesis
+
+Quantitative data tells you **where**. It does not tell you **why**. That part
+is your own interpretation, and it's where you can get it badly wrong.
+
+My reading: the user is trying to **select and copy** that number to take it
+into another system. They click, drag, miss the selection, click again, grab
+half of it, try once more. Every successful copy costs several clicks.
+
+What made me confident in that reading:
+
+- The pattern showed up in other sections of the page too — just far less
+  frequently. What was different about this section was that the content is a
+  long number the user needs to take somewhere else.
+- A long number is exactly the kind of content that's annoying to select with a
+  mouse, especially when it sits right next to other elements.
+- There was no other possible action on that element. A click there can only be
+  selection.
+
+Hypothesis settled: **there's no copy action, so users copy by hand, and copying
+by hand is expensive**.
+
+# The proposal
+
+The solution is about as simple as it gets: a copy button next to the number.
+Trades N selection clicks for 1.
+
+I brought it to the team with two options drawn up:
+
+**Option A — icon only**, with a "Copy number" tooltip on hover. Cleaner,
+doesn't break the alignment of the information block.
+
+**Option B — icon + label**, with the label switching to "Copied!" after the
+click. More explicit, but visually heavy in an area that's already dense with
+information.
+
+The team approved it that same afternoon and picked the icon. Two good
+suggestions came out of the discussion and made it into the implementation:
+
+- keep a visual "copied" feedback even in the icon-only version, because without
+  feedback the user doesn't know whether it worked and clicks again (meaning:
+  you'd fix one rage click and create another);
+- make that feedback disappear on its own after a few seconds, returning to the
+  normal state.
+
+I opened the PR the same day. Deploy a few days later.
+
+# The first measurement
+
+Two weeks after the deploy, I compared two 6-day windows — one before and one
+after the button existed:
+
+| Window                    | Button | Manual selection | Total |
+| ------------------------- | ------ | ---------------- | ----- |
+| 6 days **without** button | —      | 1,928            | 1,928 |
+| 6 days **with** button    | 284    | 406              | 690   |
+| Change                    | —      | −79%             | −64%  |
+
+A 64% drop in total clicks to copy the identifier.
+
+But the number that caught my attention wasn't the −64%, it was the **406**. At
+first glance it looks like 59% of copies are still manual, which would be a
+mediocre result.
+
+The problem is that at that point I couldn't separate two possible explanations:
+either the habit hadn't shifted yet, or the button wasn't solving anything. Six
+days is too short to know.
+
+# Two and a half months later
+
+I went back to Clarity on October 2nd to ask the question properly, this time
+with 30-day windows. All three windows have nearly identical traffic volume —
+between 44k and 46k pageviews — so the raw numbers are directly comparable with
+no normalization.
+
+| 30-day window         | Pageviews | Button | Manual | % on button |
+| --------------------- | --------- | ------ | ------ | ----------- |
+| 1st month with button | 45,852    | 762    | 810    | 48%         |
+| 2nd month             | 44,818    | 419    | 302    | 58%         |
+| Last 30 days          | 44,073    | 855    | 69     | 93%         |
+
+![Panel comparing button clicks and manual selection across the three 30-day windows](/assets/images/blog/copy-button/clarity-panel-30d.png)
+
+What those numbers say:
+
+**Manual selection dropped 91%.** From 810 to 69 clicks per month. That's about
+2.3 manual clicks per day across the entire user base — it became residue.
+
+**The button became the default path.** The share of clicks going to it climbed
+48% → 58% → 93%, a consistent curve month over month. It wasn't a novelty spike
+that decayed; it was adoption rising.
+
+**Usage grew in absolute volume.** 855 clicks in the last 30 days versus 762 in
+the first month, with slightly less traffic. Part of that is that the button now
+exists on two screens of the product, where in the first month it existed on
+one.
+
+That's exactly the hypothesis I'd raised at the first measurement: manual
+copying would stay high for a while and fall as people got used to the button.
+That's what happened — I just couldn't claim it until two and a half months
+later.
+
+# Method and caveats
+
+This part is boring, but it's what separates "I measured" from "I told a
+flattering story".
+
+**How the numbers were collected.** Clarity click heatmap, desktop view,
+counting clicks per element: the button icon's class on one side, the text field
+row on the other. When the same element appears on more than one screen, the
+occurrences were summed.
+
+**Clarity caps each heatmap query at 30 days.** That's why the comparison uses
+30-day windows rather than one single range since launch.
+
+**Two of the windows overlap by 12 days.** The 2nd month and the last-30-days
+window share that stretch. The trend doesn't hinge on it, but it's fair to
+record.
+
+**The 1,928 clicks from the first measurement aren't reproducible today.** The
+heatmap sample and the element's identity have both changed since July. So the
+month-over-month comparison uses only windows measured now, with the same method
+— the July number stands as historical context, not as a basis for calculation.
+
+**A click is not a copy.** One button click equals one copy; several manual
+selection clicks may equal a single one. That means the real improvement in
+_effort per copy_ is larger than the raw click drop suggests — and also that I
+can't translate any of these numbers into "number of users".
+
+# What I took away
+
+**Sweeping heatmaps with no hypothesis is worth it.** This pain never showed up
+in a ticket, a survey, or a meeting. Nobody opens a ticket saying "I had trouble
+selecting a number with my mouse" — they just get annoyed for three seconds and
+move on. Their behavior is the only place it gets recorded.
+
+**A click on a non-clickable element is always a question.** It's the easiest
+pattern to spot on a heatmap and it almost always means the user expected an
+action that isn't there.
+
+**Decide how you'll measure before you ship.** Without that 6-day window from
+before the deploy, afterwards I'd have had a nice-looking number ("284 button
+clicks!") with no basis for comparison.
+
+**And go back and measure again.** That's the part I almost skipped. If I had
+stopped on July 22nd, I'd have recorded "−64%, but 59% still copying by hand"
+and been left guessing. The two-and-a-half-month measurement is what showed the
+behavior actually changed, and not just on the first novelty impulse.
+
+And one technical detail that gave me a scare: the button's icon comes from Font
+Awesome and it **doesn't render in Clarity's session recordings** — the area
+looks visually empty in the replay. Clarity detects the element and counts
+clicks normally, but if you go validate by watching recordings alone, you'll
+think people are clicking on nothing.
+
+# Conclusion
+
+The deliverable itself is a copy button. A few dozen lines, nothing special. The
+UX gain is small and localized.
+
+What changed for me wasn't the size of the delivery, it was where it came from:
+it didn't arrive ready-made in a ticket, it came from looking at data that had
+been sitting there for months waiting for someone to notice. Finding the problem
+was the work; solving it was the easy part. And going back to check two months
+later is what turned it from a hunch into a result.
+
+If you have Clarity, Hotjar, or anything similar running on your application,
+open the heatmap today without looking for anything specific. Good chance
+there's a red streak on top of something that shouldn't be getting clicked at
+all.
+
+Any questions, I'm around. Take care!
