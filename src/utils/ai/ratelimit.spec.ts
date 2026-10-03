@@ -41,6 +41,16 @@ describe('checkRateLimit', () => {
     await expect(checkRateLimit('5.6.7.8')).resolves.toEqual({ success: false })
   })
 
+  it('allows the request when the limiter is unavailable', async () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    limitMock.mockRejectedValue(new Error('getaddrinfo ENOTFOUND'))
+
+    await expect(checkRateLimit('1.2.3.4')).resolves.toEqual({ success: true })
+    expect(errorSpy).toHaveBeenCalled()
+
+    errorSpy.mockRestore()
+  })
+
   it('builds the limiter only once', async () => {
     limitMock.mockResolvedValue({ success: true })
     const callsBefore = (Ratelimit as unknown as jest.Mock).mock.calls.length

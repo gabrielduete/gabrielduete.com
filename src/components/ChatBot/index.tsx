@@ -79,11 +79,13 @@ const ChatBot = () => {
     }
   }, [messages])
 
+  // The list only exists while the panel is open, so re-run on open to land
+  // on the latest message of a restored conversation
   useEffect(() => {
     if (listRef.current?.scrollTo) {
       listRef.current.scrollTo({ top: listRef.current.scrollHeight })
     }
-  }, [messages, isBusy])
+  }, [messages, isBusy, isOpen])
 
   // Autofocus the input when the panel opens
   useEffect(() => {
