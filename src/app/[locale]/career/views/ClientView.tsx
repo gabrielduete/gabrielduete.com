@@ -20,6 +20,9 @@ const matchesFilter = (type: string, filter: ExperienceFilter) =>
 
 const EXPERIENCE_HASH_PREFIX = '#experience-'
 
+// Collapse transition (500ms) plus a frame of slack
+const ANCHOR_DURATION_MS = 550
+
 const parseExperienceFromHash = (hash: string): IExperiences | null =>
   experiences.find(
     experience => `${EXPERIENCE_HASH_PREFIX}${experience.id}` === hash,
@@ -50,37 +53,40 @@ const CarrerView = () => {
     matchesFilter(experience.type, typeFilter),
   )
 
-  const [openIds, setOpenIds] = useState<Set<IExperiences>>(() => new Set())
+  const [openId, setOpenId] = useState<IExperiences | null>(null)
   const pendingScrollRef = useRef<IExperiences | null>(null)
+  const anchorFrameRef = useRef(0)
 
-  const allVisibleOpen =
-    visibleExperiences.length > 0 &&
-    visibleExperiences.every(experience => openIds.has(experience.id))
+  useEffect(() => () => cancelAnimationFrame(anchorFrameRef.current), [])
 
-  const toggleExperience = (id: IExperiences) => {
-    setOpenIds(current => {
-      const next = new Set(current)
+  // Closing the card above shifts the clicked one up while the panel
+  // animates, so keep it where it was on screen until the height settles.
+  const keepInPlace = (element: HTMLElement) => {
+    cancelAnimationFrame(anchorFrameRef.current)
 
-      if (next.has(id)) {
-        next.delete(id)
-      } else {
-        next.add(id)
+    const initialTop = element.getBoundingClientRect().top
+    const start = performance.now()
+
+    const tick = (now: number) => {
+      window.scrollBy(0, element.getBoundingClientRect().top - initialTop)
+
+      if (now - start < ANCHOR_DURATION_MS) {
+        anchorFrameRef.current = requestAnimationFrame(tick)
       }
+    }
 
-      return next
-    })
+    anchorFrameRef.current = requestAnimationFrame(tick)
   }
 
-  const toggleAll = () => {
-    setOpenIds(current => {
-      const next = new Set(current)
+  const toggleExperience = (id: IExperiences) => {
+    const willOpen = openId !== id
+    const element = document.getElementById(`experience-${id}`)
 
-      visibleExperiences.forEach(experience =>
-        allVisibleOpen ? next.delete(experience.id) : next.add(experience.id),
-      )
+    if (willOpen && openId && element) {
+      keepInPlace(element)
+    }
 
-      return next
-    })
+    setOpenId(willOpen ? id : null)
   }
 
   const openExperience = (id: IExperiences) => {
@@ -90,7 +96,7 @@ const CarrerView = () => {
       handleTypeFilter('all')
     }
 
-    setOpenIds(current => new Set(current).add(id))
+    setOpenId(id)
     pendingScrollRef.current = id
     window.history.replaceState(null, '', `${EXPERIENCE_HASH_PREFIX}${id}`)
   }
@@ -99,7 +105,7 @@ const CarrerView = () => {
     const id = parseExperienceFromHash(window.location.hash)
 
     if (id) {
-      setOpenIds(current => new Set(current).add(id))
+      setOpenId(id)
     }
   }, [])
 
@@ -118,7 +124,7 @@ const CarrerView = () => {
       behavior: prefersReduced ? 'auto' : 'smooth',
       block: 'start',
     })
-  }, [openIds, typeFilter])
+  }, [openId, typeFilter])
 
   const handleTypeFilter = (type: ExperienceFilter) => {
     setTypeFilter(type)
@@ -151,56 +157,47 @@ const CarrerView = () => {
           >
             {t('Feed.title')}
           </h2>
-          <div className='flex flex-wrap items-center justify-between gap-base'>
-            <ul
-              aria-label={t('Feed.filtersLabel')}
-              className='flex flex-wrap gap-xsmall'
-            >
-              {experienceFilters.map(filter => {
-                const isSelected = typeFilter === filter
-                const count = experiences.filter(experience =>
-                  matchesFilter(experience.type, filter),
-                ).length
+          <ul
+            aria-label={t('Feed.filtersLabel')}
+            className='flex flex-wrap gap-xsmall'
+          >
+            {experienceFilters.map(filter => {
+              const isSelected = typeFilter === filter
+              const count = experiences.filter(experience =>
+                matchesFilter(experience.type, filter),
+              ).length
 
-                return (
-                  <li key={filter}>
-                    <button
-                      type='button'
-                      onClick={() => handleTypeFilter(filter)}
-                      aria-pressed={isSelected}
+              return (
+                <li key={filter}>
+                  <button
+                    type='button'
+                    onClick={() => handleTypeFilter(filter)}
+                    aria-pressed={isSelected}
+                    className={clsx(
+                      'flex cursor-pointer items-center gap-xsmall rounded-full border px-base py-xsmall text-medium',
+                      'transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+                      isSelected
+                        ? 'border-secondary bg-bg-cards text-white'
+                        : 'border-green-weak-border text-primary hover:border-secondary hover:text-secondary',
+                    )}
+                  >
+                    {t(`Filters.${filter}`)}
+                    <span
+                      aria-hidden
                       className={clsx(
-                        'flex cursor-pointer items-center gap-xsmall rounded-full border px-base py-xsmall text-medium',
-                        'transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+                        'rounded-full px-xsmall text-small',
                         isSelected
-                          ? 'border-secondary bg-bg-cards text-white'
-                          : 'border-green-weak-border text-primary hover:border-secondary hover:text-secondary',
+                          ? 'bg-card-accent/20 text-card-accent'
+                          : 'bg-green-weak',
                       )}
                     >
-                      {t(`Filters.${filter}`)}
-                      <span
-                        aria-hidden
-                        className={clsx(
-                          'rounded-full px-xsmall text-small',
-                          isSelected
-                            ? 'bg-card-accent/20 text-card-accent'
-                            : 'bg-green-weak',
-                        )}
-                      >
-                        {count}
-                      </span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-            <button
-              type='button'
-              onClick={toggleAll}
-              className='cursor-pointer text-medium text-primary underline-offset-4 hover:text-secondary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary'
-            >
-              {allVisibleOpen ? t('Feed.collapseAll') : t('Feed.expandAll')}
-            </button>
-          </div>
+                      {count}
+                    </span>
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
         </header>
 
         <p className='sr-only' aria-live='polite'>
@@ -214,7 +211,7 @@ const CarrerView = () => {
               experience={experience}
               currentMonth={currentMonth}
               index={index}
-              isOpen={openIds.has(experience.id)}
+              isOpen={openId === experience.id}
               onToggle={toggleExperience}
             />
           ))}

@@ -223,20 +223,37 @@ describe('<ClientView />', () => {
     ).not.toHaveClass('is-focused')
   })
 
-  it('should expand and collapse every visible experience at once', () => {
+  it('should keep a single experience open at a time', () => {
     renderView()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
+    fireEvent.click(getToggle(/^Petlove/))
+    fireEvent.click(getToggle(/^Nimbus Black/))
 
+    expect(getToggle(/^Nimbus Black/)).toHaveAttribute('aria-expanded', 'true')
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'false')
     expect(
       within(getFeed()).getAllByRole('button', { expanded: true }),
-    ).toHaveLength(experiences.length)
+    ).toHaveLength(1)
+  })
 
-    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
+  it('should toggle from anywhere in the summary, but not from links or the open details', () => {
+    renderView()
 
-    expect(
-      within(getFeed()).queryAllByRole('button', { expanded: true }),
-    ).toHaveLength(0)
+    const card = document.getElementById('experience-petlove')!
+
+    fireEvent.click(within(card).getByText('Microsoft Clarity'))
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.click(within(card).getByText('UX Optimization & Analytics'))
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.click(
+      within(card).getByRole('link', { name: /petlove\.com\.br/ }),
+    )
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.click(within(card).getByText('−91% manual extraction'))
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'false')
   })
 
   it('should open the experience from a highlight, even when filtered out', () => {

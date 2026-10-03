@@ -88,8 +88,6 @@
       "newTab": "(abre em nova aba)",
       "ongoing": "Atuação contínua",
       "now": "Hoje",
-      "expandAll": "Expandir todas",
-      "collapseAll": "Recolher todas",
       "contributionsCount": "{count, plural, one {# contribuição} other {# contribuições}}"
     },
     "Filters": {
@@ -118,7 +116,7 @@
       "petlove": {
         "company": "Petlove",
         "role": "Engenheiro de Software Fullstack",
-        "location": "São Paulo, Brasil",
+        "location": "São Paulo, Brasil · Remoto",
         "metrics": {
           "manualExtraction": "−91% extração manual",
           "lighthouse": "Lighthouse ~64 → ~97",
@@ -197,7 +195,7 @@
       "juntos-somos-mais": {
         "company": "Juntos Somos Mais",
         "role": "Engenheiro de Software Front-end",
-        "location": "São Paulo, Brasil",
+        "location": "São Paulo, Brasil · Remoto",
         "metrics": {
           "buildTime": "−80% build time (1h → 12min)",
           "vulnerabilities": "Redução de vulnerabilidades críticas"

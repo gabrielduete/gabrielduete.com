@@ -1,6 +1,6 @@
 'use client'
 
-import { CSSProperties } from 'react'
+import { CSSProperties, MouseEvent } from 'react'
 
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
@@ -52,6 +52,17 @@ const ExperienceCard = ({
   )
   const styles = typeStyles[type]
 
+  // Lets the whole summary toggle the card, not only the header button,
+  // while links, buttons, the open details and text selection keep working.
+  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement
+
+    if (target.closest(`a, button, #${panelId}`)) return
+    if (window.getSelection?.()?.toString()) return
+
+    onToggle(id)
+  }
+
   const periodLabel = period
     ? formatPeriod(period, tPeriod, currentMonth)
     : t('Feed.ongoing')
@@ -86,8 +97,9 @@ const ExperienceCard = ({
       <article
         aria-labelledby={headingId}
         onMouseMove={trackSpotlight}
+        onClick={handleCardClick}
         className={clsx(
-          'spotlight-card flex flex-col rounded-sm border border-green-weak-border bg-bg-primary p-large text-white md:p-xxlarge',
+          'group spotlight-card flex cursor-pointer flex-col rounded-sm border border-green-weak-border bg-bg-primary p-large text-white md:p-xxlarge',
           isOpen && 'is-focused',
         )}
       >
@@ -113,7 +125,7 @@ const ExperienceCard = ({
               aria-expanded={isOpen}
               aria-controls={panelId}
               onClick={() => onToggle(id)}
-              className='group flex w-full cursor-pointer items-start justify-between gap-base text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-card-accent'
+              className='flex w-full cursor-pointer items-start justify-between gap-base text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-card-accent'
             >
               <span className='flex flex-col gap-xsmall'>
                 <span className='flex flex-col gap-xxsmall'>

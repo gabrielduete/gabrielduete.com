@@ -35,7 +35,7 @@ const CollapsePanel = ({ id, isOpen, children }: CollapsePanelProps) => {
       id={id}
       inert={!isOpen}
       style={{ height: isOpen ? height : 0 }}
-      className='overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none'
+      className='cursor-auto overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none'
     >
       <div ref={contentRef}>{children}</div>
     </div>
