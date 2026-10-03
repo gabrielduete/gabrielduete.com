@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import { FiArrowRight, FiArrowUpRight, FiGlobe, FiMapPin } from 'react-icons/fi'
+import { FiArrowRight, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
 
 import { careerLinks } from '../data'
 import { IExperienceLink, IExperiences } from '../types'
@@ -160,7 +160,6 @@ const CareerHighlights = ({ onOpenExperience }: CareerHighlightsProps) => {
           experience='nimbus-black'
           onOpenExperience={onOpenExperience}
         >
-          <FiGlobe aria-hidden className='h-8 w-8 text-amber-300' />
           <p className='flex flex-col gap-xxsmall'>
             <span className='text-title-headline font-bold'>
               {t('international.title')}
