@@ -1,230 +1,130 @@
 'use client'
 
-import {
-  MouseEvent,
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { Locales } from '@/enums/Locales'
 import clsx from 'clsx'
-import { useLocale, useTranslations } from 'next-intl'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import ExternalLink from '../components/ExternalLink'
-import { experienceFilters, experiences, experienceTypes } from '../data'
+import CareerHighlights from '../components/CareerHighlights'
+import ExperienceCard from '../components/ExperienceCard'
+import { experienceFilters, experienceTypeOrder, experiences } from '../data'
 import { ExperienceFilter, IExperiences } from '../types'
+import { getCurrentMonth, sortByPeriod } from '../utils/period'
 
-const COLLAPSED_CONTRIBUTIONS = 5
-const FOCUS_OFFSET_PX = 100
-const FOCUS_DURATION_MS = 500
+const parseTypeFilter = (value: string | null): ExperienceFilter =>
+  experienceFilters.find(filter => filter === value) ?? 'all'
 
-const formatExperienceForUrl = (experience: string): string => {
-  return experience.replace(/\s+/g, '-')
-}
+const matchesFilter = (type: string, filter: ExperienceFilter) =>
+  filter === 'all' || type === filter
 
-const parseExperienceFromUrl = (urlValue: string): IExperiences | null => {
-  const formattedExperience = urlValue.replace(/-/g, ' ')
+const EXPERIENCE_HASH_PREFIX = '#experience-'
 
-  return experiences.find(
-    exp =>
-      formatExperienceForUrl(exp) === urlValue || exp === formattedExperience,
-  ) as IExperiences | null
-}
+// Collapse transition (500ms) plus a frame of slack
+const ANCHOR_DURATION_MS = 550
 
-const CollapsePanel = ({
-  id,
-  isOpen,
-  children,
-}: {
-  id: string
-  isOpen: boolean
-  children: ReactNode
-}) => {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState(0)
-
-  useLayoutEffect(() => {
-    const el = contentRef.current
-    if (!el) return
-
-    const measure = () => setHeight(el.scrollHeight)
-    measure()
-
-    const observer =
-      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
-    observer?.observe(el)
-    window.addEventListener('resize', measure)
-
-    return () => {
-      observer?.disconnect()
-      window.removeEventListener('resize', measure)
-    }
-  }, [children])
-
-  return (
-    <div
-      id={id}
-      style={{ height: isOpen ? height : 0 }}
-      className='overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]'
-    >
-      <div ref={contentRef}>{children}</div>
-    </div>
-  )
-}
+const parseExperienceFromHash = (hash: string): IExperiences | null =>
+  experiences.find(
+    experience => `${EXPERIENCE_HASH_PREFIX}${experience.id}` === hash,
+  )?.id ?? null
 
 const CarrerView = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const locale = useLocale()
-  const isEn = locale === Locales.EN
   const t = useTranslations('CarrerPage')
 
-  const getInitialExperience = (): IExperiences | null => {
-    const filterParam = searchParams.get('filter')
+  const currentMonth = useMemo(() => getCurrentMonth(), [])
 
-    if (filterParam) {
-      const parsed = parseExperienceFromUrl(filterParam)
-      if (parsed) return parsed
-    }
-    return null
-  }
-
-  const [selectedExperience, setSelectedExperience] =
-    useState<IExperiences | null>(getInitialExperience())
-
-  const getInitialTypeFilter = (): ExperienceFilter => {
-    const typeParam = searchParams.get('type')
-    return experienceFilters.find(filter => filter === typeParam) ?? 'all'
-  }
-
-  const [typeFilter, setTypeFilter] = useState<ExperienceFilter>(
-    getInitialTypeFilter(),
+  const [typeFilter, setTypeFilter] = useState<ExperienceFilter>(() =>
+    parseTypeFilter(searchParams.get('type')),
   )
 
-  const visibleExperiences = experiences.filter(
-    experience =>
-      typeFilter === 'all' || experienceTypes[experience] === typeFilter,
+  const orderedExperiences = useMemo(
+    () =>
+      sortByPeriod(experiences, currentMonth).sort(
+        (a, b) =>
+          experienceTypeOrder.indexOf(a.type) -
+          experienceTypeOrder.indexOf(b.type),
+      ),
+    [currentMonth],
   )
 
-  const [showAllFor, setShowAllFor] = useState<Record<string, boolean>>({})
+  const visibleExperiences = orderedExperiences.filter(experience =>
+    matchesFilter(experience.type, typeFilter),
+  )
 
-  const toggleShowAll = (experience: string) =>
-    setShowAllFor(prev => ({ ...prev, [experience]: !prev[experience] }))
+  const [openId, setOpenId] = useState<IExperiences | null>(null)
+  const pendingScrollRef = useRef<IExperiences | null>(null)
+  const anchorFrameRef = useRef(0)
 
-  const timelineRef = useRef<HTMLOListElement>(null)
-  const cardRefs = useRef<Record<string, HTMLLIElement | null>>({})
-  const focusFrameRef = useRef(0)
-  const [timeline, setTimeline] = useState<{
-    width: number
-    height: number
-    dotYs: number[]
-  }>({ width: 0, height: 0, dotYs: [] })
+  useEffect(() => () => cancelAnimationFrame(anchorFrameRef.current), [])
 
-  useLayoutEffect(() => {
-    const ol = timelineRef.current
-    if (!ol) return
+  // Closing the card above shifts the clicked one up while the panel
+  // animates, so keep it where it was on screen until the height settles.
+  const keepInPlace = (element: HTMLElement) => {
+    cancelAnimationFrame(anchorFrameRef.current)
 
-    const measure = () => {
-      const olRect = ol.getBoundingClientRect()
-      const dots = ol.querySelectorAll('[data-timeline-dot]')
-      const dotYs = Array.from(dots).map(dot => {
-        const rect = dot.getBoundingClientRect()
-        return rect.top - olRect.top + rect.height / 2
-      })
-      setTimeline({ width: olRect.width, height: olRect.height, dotYs })
-    }
+    const initialTop = element.getBoundingClientRect().top
+    const start = performance.now()
 
-    measure()
-    window.addEventListener('resize', measure)
+    const tick = (now: number) => {
+      window.scrollBy(0, element.getBoundingClientRect().top - initialTop)
 
-    const observer =
-      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
-    observer?.observe(ol)
-
-    return () => {
-      observer?.disconnect()
-      window.removeEventListener('resize', measure)
-    }
-  }, [selectedExperience, typeFilter])
-
-  useEffect(() => {
-    const filterParam = searchParams.get('filter')
-    if (filterParam) {
-      const parsed = parseExperienceFromUrl(filterParam)
-
-      if (parsed && parsed !== selectedExperience) {
-        setSelectedExperience(parsed)
+      if (now - start < ANCHOR_DURATION_MS) {
+        anchorFrameRef.current = requestAnimationFrame(tick)
       }
     }
-  }, [searchParams])
 
-  const focusCard = (el: HTMLElement) => {
-    cancelAnimationFrame(focusFrameRef.current)
+    anchorFrameRef.current = requestAnimationFrame(tick)
+  }
+
+  const toggleExperience = (id: IExperiences) => {
+    const willOpen = openId !== id
+    const element = document.getElementById(`experience-${id}`)
+
+    if (willOpen && openId && element) {
+      keepInPlace(element)
+    }
+
+    setOpenId(willOpen ? id : null)
+  }
+
+  const openExperience = (id: IExperiences) => {
+    const experience = experiences.find(item => item.id === id)
+
+    if (experience && !matchesFilter(experience.type, typeFilter)) {
+      handleTypeFilter('all')
+    }
+
+    setOpenId(id)
+    pendingScrollRef.current = id
+    window.history.replaceState(null, '', `${EXPERIENCE_HASH_PREFIX}${id}`)
+  }
+
+  useEffect(() => {
+    const id = parseExperienceFromHash(window.location.hash)
+
+    if (id) {
+      setOpenId(id)
+    }
+  }, [])
+
+  useEffect(() => {
+    const id = pendingScrollRef.current
+
+    if (!id) return
+
+    pendingScrollRef.current = null
 
     const prefersReduced = window.matchMedia?.(
       '(prefers-reduced-motion: reduce)',
     ).matches
 
-    const startTop = el.getBoundingClientRect().top
-    if (prefersReduced) {
-      window.scrollBy(0, startTop - FOCUS_OFFSET_PX)
-      return
-    }
-
-    const startTime = performance.now()
-    const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / FOCUS_DURATION_MS, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      const desiredTop = startTop + (FOCUS_OFFSET_PX - startTop) * eased
-      const currentTop = el.getBoundingClientRect().top
-      window.scrollBy(0, currentTop - desiredTop)
-
-      if (progress < 1) {
-        focusFrameRef.current = requestAnimationFrame(tick)
-      }
-    }
-    focusFrameRef.current = requestAnimationFrame(tick)
-  }
-
-  const handleExperienceClick = (experience: IExperiences) => {
-    const next = selectedExperience === experience ? null : experience
-    setSelectedExperience(next)
-
-    if (!next) {
-      setShowAllFor(prev => ({ ...prev, [experience]: false }))
-    } else {
-      const el = cardRefs.current[next]
-      if (el) focusCard(el)
-    }
-
-    const params = new URLSearchParams(searchParams.toString())
-
-    if (next) {
-      params.set('filter', formatExperienceForUrl(next))
-    } else {
-      params.delete('filter')
-    }
-
-    const query = params.toString()
-    router.push(query ? `?${query}` : '?')
-  }
-
-  const handleCardMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    event.currentTarget.style.setProperty(
-      '--mouse-x',
-      `${event.clientX - rect.left}px`,
-    )
-    event.currentTarget.style.setProperty(
-      '--mouse-y',
-      `${event.clientY - rect.top}px`,
-    )
-  }
+    document.getElementById(`experience-${id}`)?.scrollIntoView?.({
+      behavior: prefersReduced ? 'auto' : 'smooth',
+      block: 'start',
+    })
+  }, [openId, typeFilter])
 
   const handleTypeFilter = (type: ExperienceFilter) => {
     setTypeFilter(type)
@@ -237,278 +137,87 @@ const CarrerView = () => {
       params.set('type', type)
     }
 
-    const hidesSelected =
-      selectedExperience &&
-      type !== 'all' &&
-      experienceTypes[selectedExperience] !== type
-
-    if (hidesSelected) {
-      setSelectedExperience(null)
-      params.delete('filter')
-    }
-
     const query = params.toString()
-    router.push(query ? `?${query}` : '?')
+
+    router.push(query ? `?${query}` : '?', { scroll: false })
   }
-
-  const richHandlers = {
-    atomium: (chunks: ReactNode) => (
-      <ExternalLink href='https://github.com/juntossomosmais/atomium'>
-        {chunks}
-      </ExternalLink>
-    ),
-    a: (chunks: ReactNode) => {
-      const extractUrl = (node: ReactNode): string => {
-        if (typeof node === 'string') {
-          return node.trim()
-        }
-        if (Array.isArray(node)) {
-          return node.map(extractUrl).join('').trim()
-        }
-
-        if (node && typeof node === 'object' && 'props' in node) {
-          return extractUrl(node.props?.children || node)
-        }
-
-        return String(node).trim()
-      }
-      const url = extractUrl(chunks)
-      return <ExternalLink href={url}>{chunks}</ExternalLink>
-    },
-  }
-
-  const WAVE_AMPLITUDE = 40
-  const cx = timeline.width / 2
-  const serpentinePath = timeline.dotYs.reduce((path, y, i) => {
-    if (i === 0) return `M ${cx} 0 L ${cx} ${y}`
-    const dir = i % 2 === 0 ? 1 : -1
-    const midY = (timeline.dotYs[i - 1] + y) / 2
-    return `${path} Q ${cx + dir * WAVE_AMPLITUDE} ${midY} ${cx} ${y}`
-  }, '')
-  const fullPath = timeline.dotYs.length
-    ? `${serpentinePath} L ${cx} ${timeline.height}`
-    : ''
 
   return (
-    <section className='flex w-full flex-col gap-xxlarge'>
-      <ul className='flex flex-wrap gap-xxlarge'>
-        {experienceFilters.map(filter => {
-          const isSelected = typeFilter === filter
+    <div className='flex w-full flex-col gap-giant'>
+      <CareerHighlights onOpenExperience={openExperience} />
 
-          return (
-            <li key={filter}>
-              <button
-                type='button'
-                onClick={() => handleTypeFilter(filter)}
-                aria-pressed={isSelected}
-                className={clsx(
-                  'cursor-pointer text-large text-primary hover:text-secondary',
-                  'border-b pb-xxsmall transition-colors',
-                  isSelected
-                    ? 'border-secondary text-secondary'
-                    : 'border-transparent',
-                )}
-              >
-                {t(`Filters.${filter}`)}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
-      <ol ref={timelineRef} className='relative flex flex-col gap-giant'>
-        <span
-          aria-hidden
-          className='absolute top-2 bottom-2 left-[9px] w-0.5 bg-green-weak-border lg:hidden'
-        />
-        <svg
-          aria-hidden
-          viewBox={`0 0 ${timeline.width} ${timeline.height}`}
-          preserveAspectRatio='none'
-          className='pointer-events-none absolute inset-0 hidden h-full w-full lg:block'
-        >
-          <path
-            d={fullPath}
-            fill='none'
-            className='stroke-green-weak-border'
-            strokeWidth={2}
-            vectorEffect='non-scaling-stroke'
-          />
-        </svg>
-        {visibleExperiences.map((experience, index) => {
-          const experienceKey = `Experiences.${experience}`
-          const isActive = selectedExperience === experience
-          const isLeft = index % 2 === 0
-          const total = Number(t(`${experienceKey}.totalContributions`))
-          const contributionKeys = Array.from({ length: total }, (_, i) =>
-            (i + 1).toString(),
-          )
-          const showAll = showAllFor[experience] ?? false
-          const visibleKeys = showAll
-            ? contributionKeys
-            : contributionKeys.slice(0, COLLAPSED_CONTRIBUTIONS)
-          const hiddenCount = total - COLLAPSED_CONTRIBUTIONS
-          const link = t(`${experienceKey}.link`)
-          const hasLink = /https?:\/\//.test(link)
-          const panelId = `experience-panel-${index}`
+      <section
+        aria-labelledby='career-experiences-title'
+        className='flex flex-col gap-xxlarge'
+      >
+        <header className='flex flex-col gap-large'>
+          <h2
+            id='career-experiences-title'
+            className='text-title-giant font-bold text-primary'
+          >
+            {t('Feed.title')}
+          </h2>
+          <ul
+            aria-label={t('Feed.filtersLabel')}
+            className='flex flex-wrap gap-xsmall'
+          >
+            {experienceFilters.map(filter => {
+              const isSelected = typeFilter === filter
+              const count = experiences.filter(experience =>
+                matchesFilter(experience.type, filter),
+              ).length
 
-          return (
-            <li
-              key={experience}
-              ref={el => {
-                cardRefs.current[experience] = el
-              }}
-              className='relative'
-            >
-              <button
-                aria-hidden
-                tabIndex={-1}
-                data-timeline-dot
-                onClick={() =>
-                  handleExperienceClick(experience as IExperiences)
-                }
-                className={clsx(
-                  'absolute top-2 z-10 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-500 ease-[cubic-bezier(0.42,0,0.58,1)]',
-                  'left-0 lg:left-1/2 lg:-translate-x-1/2',
-                  'hover:scale-125 hover:border-secondary',
-                  isActive
-                    ? 'scale-110 border-secondary bg-secondary ring-4 ring-secondary/20'
-                    : 'border-green-white bg-bg-primary',
-                )}
-              >
-                <span
-                  className={clsx(
-                    'h-1.5 w-1.5 rounded-full bg-bg-primary transition-opacity duration-500',
-                    isActive ? 'opacity-100' : 'opacity-0',
-                  )}
-                />
-              </button>
-              <div
-                className={clsx(
-                  'ml-large lg:ml-0 lg:w-[calc(50%-40px)]',
-                  isLeft ? 'lg:mr-auto' : 'lg:ml-auto',
-                )}
-              >
-                <div
-                  onMouseMove={handleCardMouseMove}
-                  className={clsx(
-                    'spotlight-card rounded-sm border-[1px] bg-bg-primary transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1',
-                    isActive
-                      ? 'is-focused border-green-weak-border shadow-[0_10px_30px_-12px_rgba(70,206,122,0.35)]'
-                      : 'border-green-weak-border hover:border-green-white',
-                  )}
-                >
+              return (
+                <li key={filter}>
                   <button
-                    aria-label={experience}
-                    aria-expanded={isActive}
-                    aria-controls={panelId}
-                    onClick={() =>
-                      handleExperienceClick(experience as IExperiences)
-                    }
-                    className='group flex w-full cursor-pointer items-start justify-between gap-small px-large pt-large pb-small text-left'
+                    type='button'
+                    onClick={() => handleTypeFilter(filter)}
+                    aria-pressed={isSelected}
+                    className={clsx(
+                      'flex cursor-pointer items-center gap-xsmall rounded-full border px-base py-xsmall text-medium',
+                      'transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+                      isSelected
+                        ? 'border-secondary bg-bg-cards text-white'
+                        : 'border-green-weak-border text-primary hover:border-secondary hover:text-secondary',
+                    )}
                   >
-                    <span className='flex flex-col gap-2xs'>
-                      <h2
-                        className={clsx(
-                          'text-title-headline transition-colors',
-                          isActive
-                            ? 'text-secondary'
-                            : 'text-white group-hover:text-secondary',
-                        )}
-                      >
-                        {experience}
-                      </h2>
-                      <span className='text-subtitle-small text-white'>
-                        {t(`${experienceKey}.role`)}
-                      </span>
-                      <span className='text-medium text-green-white'>
-                        {t(`${experienceKey}.time`)}
-                      </span>
-                    </span>
-                    <svg
+                    {t(`Filters.${filter}`)}
+                    <span
                       aria-hidden
-                      viewBox='0 0 24 24'
                       className={clsx(
-                        'mt-1 h-5 w-5 flex-shrink-0 text-green-white transition-transform duration-300',
-                        isActive && 'rotate-180',
+                        'rounded-full px-xsmall text-small',
+                        isSelected
+                          ? 'bg-card-accent/20 text-card-accent'
+                          : 'bg-green-weak',
                       )}
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
                     >
-                      <path d='m6 9 6 6 6-6' />
-                    </svg>
+                      {count}
+                    </span>
                   </button>
-                  <CollapsePanel id={panelId} isOpen={isActive}>
-                    <div
-                      className={clsx(
-                        'px-large pb-large transition-opacity duration-500 ease-out',
-                        isActive ? 'opacity-100 delay-200' : 'opacity-0',
-                      )}
-                    >
-                      <p className='mb-small text-medium text-green-white'>
-                        {t(`${experienceKey}.location`)}
-                      </p>
-                      <ul className='flex flex-col gap-small'>
-                        {visibleKeys.map((contribution, itemIndex) => {
-                          const path = `${experienceKey}.contributions.${contribution}`
-                          const content = t.rich(path, richHandlers)
+                </li>
+              )
+            })}
+          </ul>
+        </header>
 
-                          return (
-                            <li
-                              key={contribution}
-                              style={{
-                                transitionDelay: isActive
-                                  ? `${250 + itemIndex * 45}ms`
-                                  : '0ms',
-                              }}
-                              className={clsx(
-                                'text-large text-white transition-all duration-300 ease-out',
-                                isActive
-                                  ? 'translate-x-0 opacity-100'
-                                  : '-translate-x-1 opacity-0',
-                              )}
-                            >
-                              • {content}
-                            </li>
-                          )
-                        })}
-                      </ul>
-                      {total > COLLAPSED_CONTRIBUTIONS && (
-                        <button
-                          type='button'
-                          onClick={() => toggleShowAll(experience)}
-                          className='mt-small cursor-pointer text-medium text-secondary hover:underline'
-                        >
-                          {showAll
-                            ? isEn
-                              ? 'Show less'
-                              : 'Ver menos'
-                            : `${isEn ? 'Show more' : 'Ver mais'} (+${hiddenCount})`}
-                        </button>
-                      )}
-                      {hasLink && (
-                        <div className='mt-small'>
-                          <Link
-                            className='text-gray-400 hover:text-secondary'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            href={link}
-                          >
-                            👉 {isEn ? 'Learn more' : 'Saiba Mais'}
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  </CollapsePanel>
-                </div>
-              </div>
-            </li>
-          )
-        })}
-      </ol>
-    </section>
+        <p className='sr-only' aria-live='polite'>
+          {t('Feed.results', { count: visibleExperiences.length })}
+        </p>
+
+        <ol className='flex flex-col gap-xxlarge'>
+          {visibleExperiences.map((experience, index) => (
+            <ExperienceCard
+              key={`${typeFilter}-${experience.id}`}
+              experience={experience}
+              currentMonth={currentMonth}
+              index={index}
+              isOpen={openId === experience.id}
+              onToggle={toggleExperience}
+            />
+          ))}
+        </ol>
+      </section>
+    </div>
   )
 }
 
