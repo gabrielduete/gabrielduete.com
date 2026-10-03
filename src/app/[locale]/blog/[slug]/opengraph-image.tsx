@@ -17,11 +17,9 @@ export const alt = 'Gabriel Duete — Blog post'
 // Mirrors the dark theme tokens in src/styles/index.css
 const COLORS = {
   bgTheme: '#132227',
-  bgCards: '#193038',
   text: '#ffffff',
   muted: 'rgba(255, 255, 255, 0.7)',
   accent: '#46ce7a',
-  accentWeak: '#46ce7a40',
 }
 
 const loadFont = (file: string) =>
@@ -49,40 +47,21 @@ export default async function OpengraphImage({ params }: Props) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '64px 80px',
-          backgroundImage: `linear-gradient(135deg, ${COLORS.bgTheme} 40%, ${COLORS.bgCards})`,
+          padding: '72px 80px',
+          background: COLORS.bgTheme,
           color: COLORS.text,
           fontFamily: 'Nunito',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-          <div
-            style={{
-              display: 'flex',
-              padding: '10px 36px',
-              background: COLORS.bgCards,
-              border: `3px solid ${COLORS.accent}`,
-              transform: 'rotate(-4deg)',
-              fontFamily: 'Oswald',
-              fontSize: 40,
-              letterSpacing: 1,
-            }}
-          >
-            BLOG POST!
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              marginLeft: 24,
-              marginBottom: 18,
-              fontFamily: 'Oswald',
-              fontSize: 24,
-              color: COLORS.muted,
-            }}
-          >
-            @gabrielduete
-          </div>
-        </div>
+        <div
+          style={{
+            display: 'flex',
+            width: 56,
+            height: 6,
+            borderRadius: 3,
+            background: COLORS.accent,
+          }}
+        />
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
@@ -115,7 +94,7 @@ export default async function OpengraphImage({ params }: Props) {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: 26,
+            fontSize: 24,
             color: COLORS.muted,
           }}
         >
@@ -124,10 +103,7 @@ export default async function OpengraphImage({ params }: Props) {
               <div
                 style={{
                   display: 'flex',
-                  padding: '6px 18px',
-                  marginRight: 20,
-                  borderRadius: 8,
-                  background: COLORS.accentWeak,
+                  marginRight: 16,
                   color: COLORS.accent,
                   fontWeight: 800,
                 }}
@@ -135,22 +111,18 @@ export default async function OpengraphImage({ params }: Props) {
                 {category}
               </div>
             )}
+            {category && date && (
+              <div style={{ display: 'flex', marginRight: 16 }}>·</div>
+            )}
             {date}
           </div>
-          <div style={{ display: 'flex', color: COLORS.accent }}>
-            gabrielduete.com
-          </div>
+          <div style={{ display: 'flex' }}>gabrielduete.com</div>
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        {
-          name: 'Oswald',
-          data: loadFont('oswald-latin-700-normal.woff'),
-          weight: 700,
-        },
         {
           name: 'Nunito',
           data: loadFont('nunito-latin-400-normal.woff'),
