@@ -9,5 +9,3 @@ export const getReadingTime = (content: string): number => {
 
   return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
 }
-
-export default getReadingTime

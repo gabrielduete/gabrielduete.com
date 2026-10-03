@@ -68,6 +68,12 @@ describe('<Card />', () => {
     expect(screen.queryByRole('button', { name: '#d' })).not.toBeInTheDocument()
   })
 
+  it('renders no tag list when the article has no tags', () => {
+    render(<Card {...article} tags={[]} />)
+
+    expect(screen.queryByRole('list')).not.toBeInTheDocument()
+  })
+
   it('toggles the tag filter without navigating when a tag is clicked', () => {
     render(<Card {...article} />)
 

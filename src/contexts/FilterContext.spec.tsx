@@ -52,6 +52,12 @@ const renderProvider = () =>
     </FilterProvider>,
   )
 
+const providerTree = (
+  <FilterProvider>
+    <Consumer />
+  </FilterProvider>
+)
+
 describe('parseTagsParam', () => {
   it('should return an empty list for a missing or empty param', () => {
     expect(parseTagsParam(null)).toEqual([])
@@ -165,6 +171,45 @@ describe('FilterContext', () => {
     })
 
     expect(pushMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps the typed query while a push is still pending', () => {
+    const { rerender } = renderProvider()
+
+    fireEvent.click(screen.getByText('search'))
+
+    currentParams = new URLSearchParams('q=stale')
+    rerender(providerTree)
+
+    expect(screen.getByTestId('query')).toHaveTextContent('gitflow')
+  })
+
+  it('syncs the query back from the url once no push is pending', () => {
+    const { rerender } = renderProvider()
+
+    fireEvent.click(screen.getByText('search'))
+
+    act(() => {
+      jest.advanceTimersByTime(250)
+    })
+
+    currentParams = new URLSearchParams('q=from-url')
+    rerender(providerTree)
+
+    expect(screen.getByTestId('query')).toHaveTextContent('from-url')
+  })
+
+  it('drops a pending push when the provider unmounts', () => {
+    const { unmount } = renderProvider()
+
+    fireEvent.click(screen.getByText('search'))
+    unmount()
+
+    act(() => {
+      jest.advanceTimersByTime(250)
+    })
+
+    expect(pushMock).not.toHaveBeenCalled()
   })
 
   it('reads the selected tags from the url', () => {

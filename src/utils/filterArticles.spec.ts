@@ -40,6 +40,11 @@ describe('matchesQuery', () => {
     expect(matchesQuery(makeArticle({ tags: ['react'] }), 'react')).toBe(true)
   })
 
+  it('should handle an article with no tags', () => {
+    expect(matchesQuery(makeArticle({ tags: [] }), 'gitflow')).toBe(true)
+    expect(matchesQuery(makeArticle({ tags: [] }), 'react')).toBe(false)
+  })
+
   it('should require every term of a multi word query', () => {
     expect(matchesQuery(makeArticle(), 'gitflow fluxo')).toBe(true)
     expect(matchesQuery(makeArticle(), 'gitflow docker')).toBe(false)
@@ -63,12 +68,8 @@ describe('matchesTags', () => {
     expect(matchesTags(makeArticle(), ['react'])).toBe(false)
   })
 
-  it('should handle an article without tags', () => {
-    expect(
-      matchesTags(makeArticle({ tags: undefined as unknown as string[] }), [
-        'git',
-      ]),
-    ).toBe(false)
+  it('should not match an article with no tags', () => {
+    expect(matchesTags(makeArticle({ tags: [] }), ['git'])).toBe(false)
   })
 })
 
@@ -83,7 +84,11 @@ describe('getTagsByFrequency', () => {
     expect(getTagsByFrequency(articles)).toEqual(['react', 'css', 'git'])
   })
 
-  it('should return an empty list when there are no tags', () => {
+  it('should return an empty list when there are no articles', () => {
     expect(getTagsByFrequency([])).toEqual([])
+  })
+
+  it('should skip articles without tags', () => {
+    expect(getTagsByFrequency([makeArticle({ tags: [] })])).toEqual([])
   })
 })

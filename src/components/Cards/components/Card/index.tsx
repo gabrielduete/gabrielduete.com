@@ -19,7 +19,7 @@ const Card = (article: IArticle) => {
   const t = useTranslations('Common')
   const { selectedTags, toggleTag } = useFilter()
 
-  const visibleTags = (tags ?? []).slice(0, MAX_VISIBLE_TAGS)
+  const visibleTags = tags.slice(0, MAX_VISIBLE_TAGS)
 
   const setNavigation = () => {
     if (typeof window !== 'undefined') {
