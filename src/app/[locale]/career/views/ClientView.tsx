@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import ExperienceCard from '../components/ExperienceCard'
-import ExperienceOverview from '../components/ExperienceOverview'
+import ExperienceLanes from '../components/ExperienceLanes'
 import ExternalLink from '../components/ExternalLink'
 import {
   experienceFilters,
@@ -17,6 +17,7 @@ import {
 } from '../data'
 import { ExperienceFilter, IExperiences } from '../types'
 import { getCurrentMonth, sortExperiencesByPeriod } from '../utils/period'
+import { useIsWideScreen } from '../utils/useIsWideScreen'
 
 const FOCUS_OFFSET_PX = 100
 const FOCUS_DURATION_MS = 500
@@ -42,6 +43,7 @@ const CarrerView = () => {
   const t = useTranslations('CarrerPage')
 
   const currentMonth = useMemo(() => getCurrentMonth(), [])
+  const isWideScreen = useIsWideScreen()
 
   const getInitialExperience = (): IExperiences | null => {
     const filterParam = searchParams.get('filter')
@@ -74,6 +76,10 @@ const CarrerView = () => {
 
   const cardRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const focusFrameRef = useRef(0)
+
+  const registerCard = (experience: IExperiences, el: HTMLLIElement | null) => {
+    cardRefs.current[experience] = el
+  }
 
   useEffect(() => {
     const filterParam = searchParams.get('filter')
@@ -228,27 +234,30 @@ const CarrerView = () => {
           )
         })}
       </ul>
-      <ExperienceOverview
-        experiences={visibleExperiences}
-        selectedExperience={selectedExperience}
-        currentMonth={currentMonth}
-        onSelect={handleExperienceClick}
-      />
-      <ol className='flex flex-col gap-large'>
-        {visibleExperiences.map(experience => (
-          <ExperienceCard
-            key={experience}
-            experience={experience}
-            isActive={selectedExperience === experience}
-            currentMonth={currentMonth}
-            richHandlers={richHandlers}
-            onToggle={handleExperienceClick}
-            cardRef={el => {
-              cardRefs.current[experience] = el
-            }}
-          />
-        ))}
-      </ol>
+      {isWideScreen ? (
+        <ExperienceLanes
+          experiences={visibleExperiences}
+          selectedExperience={selectedExperience}
+          currentMonth={currentMonth}
+          richHandlers={richHandlers}
+          registerCard={registerCard}
+          onToggle={handleExperienceClick}
+        />
+      ) : (
+        <ol className='flex flex-col gap-large'>
+          {visibleExperiences.map(experience => (
+            <ExperienceCard
+              key={experience}
+              experience={experience}
+              isActive={selectedExperience === experience}
+              currentMonth={currentMonth}
+              richHandlers={richHandlers}
+              onToggle={handleExperienceClick}
+              cardRef={el => registerCard(experience, el)}
+            />
+          ))}
+        </ol>
+      )}
     </section>
   )
 }

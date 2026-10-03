@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, ReactNode, Ref, useState } from 'react'
+import { CSSProperties, MouseEvent, ReactNode, Ref, useState } from 'react'
 
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
@@ -20,6 +20,9 @@ type ExperienceCardProps = {
   cardRef: Ref<HTMLLIElement>
   richHandlers: Record<string, (chunks: ReactNode) => ReactNode>
   onToggle: (experience: IExperiences) => void
+  rail?: ReactNode
+  className?: string
+  style?: CSSProperties
 }
 
 const ExperienceCard = ({
@@ -29,6 +32,9 @@ const ExperienceCard = ({
   cardRef,
   richHandlers,
   onToggle,
+  rail,
+  className,
+  style,
 }: ExperienceCardProps) => {
   const t = useTranslations('CarrerPage')
   const tPeriod = useTranslations('CarrerPage.Period')
@@ -70,7 +76,8 @@ const ExperienceCard = ({
   }
 
   return (
-    <li ref={cardRef}>
+    <li ref={cardRef} className={clsx('relative', className)} style={style}>
+      {rail}
       <div
         onMouseMove={handleMouseMove}
         className={clsx(

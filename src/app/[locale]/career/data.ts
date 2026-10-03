@@ -35,3 +35,9 @@ export const experiencePeriods: Record<IExperiences, IPeriod> = {
   React4Noobs: { start: '2023-09', end: null },
   'He4rt Team': { start: '2022-06', end: '2023-01' },
 }
+
+export const laneOrder: ExperienceType[] = [
+  'full-time',
+  'freelance',
+  'open-source',
+]

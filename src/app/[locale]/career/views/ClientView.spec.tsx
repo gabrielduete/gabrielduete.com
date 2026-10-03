@@ -244,15 +244,10 @@ describe('<CarrerView />', () => {
     expect(pushMock).toHaveBeenLastCalledWith('?')
   })
 
-  it('expands the experience when its overview bar is clicked', () => {
+  it('renders the single column list on narrow screens', () => {
     render(<ClientView />)
 
-    fireEvent.click(screen.getByRole('button', { name: /^Petlove, / }))
-
-    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    )
+    expect(screen.queryByTestId('experience-lanes')).not.toBeInTheDocument()
   })
 
   it('orders the experiences by the ongoing ones and then by end date', () => {
@@ -493,6 +488,88 @@ describe('<CarrerView />', () => {
     expect(() =>
       fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' })),
     ).not.toThrow()
+  })
+
+  describe('on a wide screen', () => {
+    beforeEach(() => {
+      window.matchMedia = jest.fn().mockReturnValue({
+        matches: true,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      })
+    })
+
+    it('renders one lane per experience type', () => {
+      render(<ClientView />)
+
+      expect(screen.getByTestId('experience-lanes')).toBeInTheDocument()
+      expect(
+        screen.getByRole('list', { name: 'Filters.full-time' }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('list', { name: 'Filters.freelance' }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('list', { name: 'Filters.open-source' }),
+      ).toBeInTheDocument()
+    })
+
+    it('drops the lanes hidden by the type filter', () => {
+      setParams('type=freelance')
+
+      render(<ClientView />)
+
+      expect(
+        screen.getByRole('list', { name: 'Filters.freelance' }),
+      ).toBeInTheDocument()
+      expect(
+        screen.queryByRole('list', { name: 'Filters.full-time' }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('anchors each card to the start of its experience', () => {
+      render(<ClientView />)
+
+      const fullTime = screen.getByRole('list', { name: 'Filters.full-time' })
+      const [juntos, petlove] = Array.from(
+        fullTime.querySelectorAll(':scope > li'),
+      )
+
+      expect(juntos).toHaveStyle({ top: '0px' })
+      expect(petlove).toHaveStyle({ top: `${51 * 15}px` })
+    })
+
+    it('renders the year axis of the whole range', () => {
+      render(<ClientView />)
+
+      const axis = screen.getByTestId('experience-lanes__axis')
+
+      expect(Array.from(axis.children).map(child => child.textContent)).toEqual(
+        ['2021', '2022', '2023', '2024', '2025', '2026'],
+      )
+    })
+
+    it('widens the selected card over the neighbouring lane', () => {
+      render(<ClientView />)
+
+      const card = screen
+        .getByRole('button', { name: 'Nimbus Black' })
+        .closest('li') as HTMLElement
+
+      expect(card).not.toHaveClass('z-10')
+
+      fireEvent.click(screen.getByRole('button', { name: 'Nimbus Black' }))
+
+      expect(card).toHaveClass('z-10')
+    })
+
+    it('keeps the url behaviour of the single column list', () => {
+      render(<ClientView />)
+
+      fireEvent.click(screen.getByRole('button', { name: 'Nimbus Black' }))
+
+      expect(pushMock).toHaveBeenCalledWith('?filter=Nimbus-Black')
+    })
   })
 
   it('works when ResizeObserver is not available', () => {
