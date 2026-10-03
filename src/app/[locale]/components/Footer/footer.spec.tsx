@@ -19,12 +19,9 @@ describe('<Footer />', () => {
     expect(footer).toHaveClass(
       'w-full',
       'h-[60px]',
-      'fixed',
       'border-1',
       'border-green-weak-border',
       'bg-bg-primary',
-      'bottom-0',
-      'left-0',
       'flex',
       'justify-center',
     )
@@ -37,11 +34,12 @@ describe('<Footer />', () => {
     expect(iconsContainer).toBeInTheDocument()
   })
 
-  it('should have correct positioning classes', () => {
+  it('should be fixed to the bottom only on large screens', () => {
     render(<Footer />)
 
     const footer = screen.getByRole('contentinfo')
-    expect(footer).toHaveClass('fixed', 'bottom-0', 'left-0')
+    expect(footer).toHaveClass('lg:fixed', 'lg:bottom-0', 'lg:left-0')
+    expect(footer).not.toHaveClass('fixed')
   })
 
   it('should have correct sizing classes', () => {

@@ -37,32 +37,50 @@ const ToggleLang = () => {
     router.replace(newPath, { locale: lang })
   }
 
-  const isSelect = (lang: Langs) => locale === lang
+  const options: { lang: Langs; label: string; name: string }[] = [
+    { lang: Locales.PT_BR, label: 'PT', name: 'Português' },
+    { lang: Locales.EN, label: 'EN', name: 'English' },
+  ]
+
+  const isEn = locale === Locales.EN
 
   return (
-    <div className='flex gap-2'>
-      <button
-        className={`cursor-pointer uppercase ${
-          isSelect(Locales.PT_BR)
-            ? 'text-secondary'
-            : 'lg:text-primary text-white'
-        }`}
-        onClick={() => switchLanguage(Locales.PT_BR)}
-      >
-        pt-br
-      </button>
-      <p className='lg:text-primary text-white'>/</p>
-      <button
+    <div
+      role='group'
+      aria-label={isEn ? 'Language' : 'Idioma'}
+      className='relative flex rounded-full border border-green-weak-border p-0.5'
+    >
+      <span
+        aria-hidden
         className={clsx(
-          'uppercase cursor-pointer',
-          isSelect(Locales.EN)
-            ? 'text-secondary'
-            : 'lg:text-primary text-white',
+          'absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-secondary',
+          'transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+          isEn && 'translate-x-full',
         )}
-        onClick={() => switchLanguage(Locales.EN)}
-      >
-        en
-      </button>
+      />
+      {options.map(({ lang, label, name }) => {
+        const isActive = locale === lang
+
+        return (
+          <button
+            key={lang}
+            type='button'
+            lang={lang}
+            title={name}
+            aria-pressed={isActive}
+            onClick={() => !isActive && switchLanguage(lang)}
+            className={clsx(
+              'relative z-10 w-10 cursor-pointer rounded-full py-xxsmall text-small font-bold transition-colors duration-300',
+              'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+              isActive
+                ? 'text-green-black'
+                : 'text-primary hover:text-secondary',
+            )}
+          >
+            {label}
+          </button>
+        )
+      })}
     </div>
   )
 }

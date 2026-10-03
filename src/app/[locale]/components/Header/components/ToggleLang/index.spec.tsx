@@ -40,34 +40,52 @@ describe('<ToggleLang />', () => {
     }
   })
 
-  it('renders both language buttons', () => {
+  it('renders both languages as a labelled group', () => {
     render(<ToggleLang />)
 
-    expect(screen.getByText('pt-br')).toBeInTheDocument()
-    expect(screen.getByText('en')).toBeInTheDocument()
+    const group = screen.getByRole('group', { name: 'Language' })
+
+    expect(group).toContainElement(screen.getByRole('button', { name: 'PT' }))
+    expect(group).toContainElement(screen.getByRole('button', { name: 'EN' }))
   })
 
-  it('highlights the active locale', () => {
+  it('marks the active locale as pressed', () => {
     render(<ToggleLang />)
 
-    expect(screen.getByText('en')).toHaveClass('text-secondary')
-    expect(screen.getByText('pt-br')).not.toHaveClass('text-secondary')
+    expect(screen.getByRole('button', { name: 'EN' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByRole('button', { name: 'PT' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    )
   })
 
-  it('highlights pt-br when it is the active locale', () => {
+  it('marks pt-br as pressed when it is the active locale', () => {
     currentLocale = 'pt-br'
 
     render(<ToggleLang />)
 
-    expect(screen.getByText('pt-br')).toHaveClass('text-secondary')
-    expect(screen.getByText('en')).not.toHaveClass('text-secondary')
+    expect(screen.getByRole('group', { name: 'Idioma' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'PT' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+  })
+
+  it('does nothing when the active locale is clicked', () => {
+    render(<ToggleLang />)
+    fireEvent.click(screen.getByRole('button', { name: 'EN' }))
+
+    expect(replaceMock).not.toHaveBeenCalled()
   })
 
   it('replaces the route with the plain pathname when there are no filters yet', () => {
     currentFilters = undefined
 
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('pt-br'))
+    fireEvent.click(screen.getByRole('button', { name: 'PT' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab', { locale: 'pt-br' })
   })
@@ -76,7 +94,7 @@ describe('<ToggleLang />', () => {
     currentParams = new URLSearchParams('filter=Utils')
 
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('pt-br'))
+    fireEvent.click(screen.getByRole('button', { name: 'PT' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab?filter=%C3%9Ateis', {
       locale: 'pt-br',
@@ -88,7 +106,7 @@ describe('<ToggleLang />', () => {
     currentParams = new URLSearchParams('filter=Todos')
 
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('en'))
+    fireEvent.click(screen.getByRole('button', { name: 'EN' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab?filter=All', {
       locale: 'en',
@@ -99,7 +117,7 @@ describe('<ToggleLang />', () => {
     currentParams = new URLSearchParams('filter=Unknown')
 
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('pt-br'))
+    fireEvent.click(screen.getByRole('button', { name: 'PT' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab?filter=Unknown', {
       locale: 'pt-br',
@@ -108,7 +126,7 @@ describe('<ToggleLang />', () => {
 
   it('replaces the route without a filter when the url has none', () => {
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('pt-br'))
+    fireEvent.click(screen.getByRole('button', { name: 'PT' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab?', { locale: 'pt-br' })
   })
@@ -117,7 +135,7 @@ describe('<ToggleLang />', () => {
     currentParams = new URLSearchParams('page=2')
 
     render(<ToggleLang />)
-    fireEvent.click(screen.getByText('pt-br'))
+    fireEvent.click(screen.getByRole('button', { name: 'PT' }))
 
     expect(replaceMock).toHaveBeenCalledWith('/lab?page=2', { locale: 'pt-br' })
   })

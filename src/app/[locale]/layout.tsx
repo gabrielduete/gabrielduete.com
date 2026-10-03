@@ -1,13 +1,12 @@
 import { ReactNode } from 'react'
 
+import ChatBot from '@/components/ChatBot'
+import SelectionToolbar from '@/components/SelectionToolbar'
 import { FilterProvider } from '@/contexts/FilterContext'
 import { routing } from '@/i18n/routing'
 import '@/styles/index.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
-
-import ChatBot from '@/components/ChatBot'
-import SelectionToolbar from '@/components/SelectionToolbar'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -21,6 +20,11 @@ export const metadata = {
     shortcut: '/assets/images/logo.png',
   },
   description: 'Gabriel Duete | Blog',
+}
+
+// Lets the mobile bottom bar reach under the iPhone home indicator
+export const viewport = {
+  viewportFit: 'cover',
 }
 
 type Props = {
@@ -50,12 +54,12 @@ const Layout = async ({ children, params }: Props) => {
           }}
         />
       </head>
-      <body>
+      <body className='pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0'>
         <NextIntlClientProvider>
           <ProgressBar>
             <FilterProvider>
               <Header />
-              <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
+              <main className='w-full max-w-content m-auto px-4 pb-xxlarge lg:px-0 lg:pb-24 mt-giant'>
                 <KeyboardEasterEgg />
                 {children}
               </main>

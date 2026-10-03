@@ -54,7 +54,9 @@ const ToggleTheme = () => {
       Math.max(origin.y, window.innerHeight - origin.y),
     )
 
-    const transition = startViewTransition.call(document, () => applyTheme(next))
+    const transition = startViewTransition.call(document, () =>
+      applyTheme(next),
+    )
 
     transition.ready.then(() => {
       document.documentElement.animate(
