@@ -101,7 +101,7 @@ body {
 /* Card focado (ou com loop no hover): arco de borda girando em loop continuo */
 .spotlight-card.is-focused::before,
 .spotlight-card.spotlight-loop:hover::before,
-.spotlight-card.spotlight-loop:focus-within::before {
+.spotlight-card.spotlight-loop:has(:focus-visible)::before {
   opacity: 1;
   padding: 2px;
   background: conic-gradient(
@@ -169,7 +169,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .career-enter,
   .spotlight-card.spotlight-loop:hover::before,
-  .spotlight-card.spotlight-loop:focus-within::before {
+  .spotlight-card.spotlight-loop:has(:focus-visible)::before {
     animation: none;
   }
 }
