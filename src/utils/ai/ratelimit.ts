@@ -16,7 +16,14 @@ function getLimiter(): Ratelimit {
   return limiter
 }
 
+// Fails open: if Redis is unreachable or misconfigured, let the request through
+// instead of taking the whole chatbot down with it.
 export async function checkRateLimit(ip: string): Promise<{ success: boolean }> {
-  const { success } = await getLimiter().limit(ip)
-  return { success }
+  try {
+    const { success } = await getLimiter().limit(ip)
+    return { success }
+  } catch (err) {
+    console.error('[checkRateLimit] Rate limiter unavailable, allowing request:', err)
+    return { success: true }
+  }
 }

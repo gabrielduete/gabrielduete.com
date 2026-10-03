@@ -268,6 +268,29 @@ describe('<ChatBot />', () => {
     delete (HTMLElement.prototype as { scrollTo?: unknown }).scrollTo
   })
 
+  it('scrolls a restored conversation to the bottom when the panel opens', () => {
+    const scrollTo = jest.fn()
+    Object.defineProperty(HTMLElement.prototype, 'scrollTo', {
+      configurable: true,
+      writable: true,
+      value: scrollTo,
+    })
+    // Stable reference, like the real useChat, so only opening triggers a scroll
+    const messages = [
+      { id: '1', role: 'user', parts: [{ type: 'text', text: 'hello' }] },
+    ]
+    useChatMock.mockImplementation(() => ({ ...defaultChat(), messages }))
+
+    render(<ChatBot />)
+    expect(scrollTo).not.toHaveBeenCalled()
+
+    openPanel()
+
+    expect(scrollTo).toHaveBeenCalledTimes(1)
+
+    delete (HTMLElement.prototype as { scrollTo?: unknown }).scrollTo
+  })
+
   it('restores chat history from localStorage on mount', () => {
     const savedMessages = [
       { id: '1', role: 'user', parts: [{ type: 'text', text: 'hello' }] },
