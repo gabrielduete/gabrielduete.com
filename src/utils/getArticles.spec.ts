@@ -14,9 +14,9 @@ describe('getAllArticles', () => {
   })
 
   it('maps the frontmatter of every mdx file', () => {
-    mockedFs.readdirSync.mockReturnValue([
-      'post.mdx',
-    ] as unknown as ReturnType<typeof fs.readdirSync>)
+    mockedFs.readdirSync.mockReturnValue(['post.mdx'] as unknown as ReturnType<
+      typeof fs.readdirSync
+    >)
     mockedFs.readFileSync.mockReturnValue(
       fileWith(
         [
@@ -40,14 +40,15 @@ describe('getAllArticles', () => {
         slug: 'post',
         locale: 'en',
         pinned: true,
+        readingTime: 1,
       },
     ])
   })
 
   it('falls back to empty values when the frontmatter is incomplete', () => {
-    mockedFs.readdirSync.mockReturnValue([
-      'empty.mdx',
-    ] as unknown as ReturnType<typeof fs.readdirSync>)
+    mockedFs.readdirSync.mockReturnValue(['empty.mdx'] as unknown as ReturnType<
+      typeof fs.readdirSync
+    >)
     mockedFs.readFileSync.mockReturnValue(fileWith('unrelated: 1'))
 
     expect(getAllArticles('pt-br')).toEqual([
@@ -60,8 +61,20 @@ describe('getAllArticles', () => {
         slug: 'empty',
         locale: 'pt-br',
         pinned: false,
+        readingTime: 1,
       },
     ])
+  })
+
+  it('derives the reading time from the content', () => {
+    mockedFs.readdirSync.mockReturnValue(['long.mdx'] as unknown as ReturnType<
+      typeof fs.readdirSync
+    >)
+    mockedFs.readFileSync.mockReturnValue(
+      `---\ntitle: Long\n---\n${Array.from({ length: 401 }, () => 'word').join(' ')}`,
+    )
+
+    expect(getAllArticles('en')[0].readingTime).toBe(3)
   })
 
   it('ignores files that are not mdx', () => {

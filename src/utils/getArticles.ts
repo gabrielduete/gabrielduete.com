@@ -2,6 +2,8 @@ import fs from 'fs'
 import matter from 'gray-matter'
 import path from 'path'
 
+import { getReadingTime } from './readingTime'
+
 const root = process.cwd()
 
 export const getAllArticles = (locale: Langs): IArticle[] => {
@@ -15,7 +17,7 @@ export const getAllArticles = (locale: Langs): IArticle[] => {
       const filePath = path.join(dirPath, filename)
       const source = fs.readFileSync(filePath, 'utf8')
 
-      const { data } = matter(source)
+      const { content, data } = matter(source)
 
       return {
         title: data.title ?? '',
@@ -26,6 +28,7 @@ export const getAllArticles = (locale: Langs): IArticle[] => {
         category: data.category ?? '',
         locale,
         pinned: data.pinned ?? false,
+        readingTime: getReadingTime(content),
       }
     })
 
