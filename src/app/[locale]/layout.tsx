@@ -59,7 +59,7 @@ const Layout = async ({ children, params }: Props) => {
           <ProgressBar>
             <FilterProvider>
               <Header />
-              <main className='w-full max-w-content m-auto px-4 pb-24 lg:px-0 mt-giant'>
+              <main className='w-full max-w-content m-auto px-4 pb-xxlarge lg:px-0 lg:pb-24 mt-giant'>
                 <KeyboardEasterEgg />
                 {children}
               </main>

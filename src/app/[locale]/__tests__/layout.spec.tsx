@@ -126,7 +126,8 @@ describe('<Layout />', () => {
       'max-w-content',
       'm-auto',
       'px-4',
-      'pb-24',
+      'pb-xxlarge',
+      'lg:pb-24',
       'lg:px-0',
       'mt-giant',
     )
