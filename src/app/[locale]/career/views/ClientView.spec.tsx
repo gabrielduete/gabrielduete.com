@@ -62,27 +62,29 @@ const renderView = (locale = 'en') => {
 const getFeed = () =>
   screen.getByRole('region', { name: 'Experience' }).querySelector('ol')!
 
-const getCompanies = () =>
-  within(getFeed())
-    .getAllByRole('heading', { level: 3 })
-    .map(heading => heading.textContent)
+const getExperienceIds = () =>
+  Array.from(getFeed().children).map(item => item.id.replace('experience-', ''))
+
+const getToggle = (company: RegExp) =>
+  within(getFeed()).getByRole('button', { name: company })
 
 describe('<ClientView />', () => {
   beforeEach(() => {
     pushMock.mockClear()
     currentParams = new URLSearchParams()
+    window.history.replaceState(null, '', '/')
   })
 
   it('should group the experiences by type, each ordered by period', () => {
     renderView()
 
-    expect(getCompanies()).toEqual([
-      'Petlove',
-      'Juntos Somos Mais',
-      'Nimbus Black',
-      'React4Noobs',
-      'He4rt Team',
-      'Open Source & Community',
+    expect(getExperienceIds()).toEqual([
+      'petlove',
+      'juntos-somos-mais',
+      'nimbus-black',
+      'react4noobs',
+      'he4rt-team',
+      'open-source',
     ])
   })
 
@@ -118,7 +120,7 @@ describe('<ClientView />', () => {
     expect(
       screen.getByRole('heading', {
         level: 3,
-        name: 'Open Source & Comunidade',
+        name: /^Open Source & Comunidade/,
       }),
     ).toBeInTheDocument()
   })
@@ -147,7 +149,7 @@ describe('<ClientView />', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Full-time/ }))
 
-    expect(getCompanies()).toEqual(['Petlove', 'Juntos Somos Mais'])
+    expect(getExperienceIds()).toEqual(['petlove', 'juntos-somos-mais'])
     expect(screen.getByRole('button', { name: /Full-time/ })).toHaveAttribute(
       'aria-pressed',
       'true',
@@ -159,7 +161,7 @@ describe('<ClientView />', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /All/ }))
 
-    expect(getCompanies()).toHaveLength(experiences.length)
+    expect(getExperienceIds()).toHaveLength(experiences.length)
     expect(pushMock).toHaveBeenLastCalledWith('?', { scroll: false })
   })
 
@@ -167,10 +169,10 @@ describe('<ClientView />', () => {
     currentParams = new URLSearchParams('type=open-source')
     renderView()
 
-    expect(getCompanies()).toEqual([
-      'React4Noobs',
-      'He4rt Team',
-      'Open Source & Community',
+    expect(getExperienceIds()).toEqual([
+      'react4noobs',
+      'he4rt-team',
+      'open-source',
     ])
   })
 
@@ -178,6 +180,85 @@ describe('<ClientView />', () => {
     currentParams = new URLSearchParams('type=nope')
     renderView()
 
-    expect(getCompanies()).toHaveLength(experiences.length)
+    expect(getExperienceIds()).toHaveLength(experiences.length)
+  })
+
+  it('should start with every experience collapsed and its details inert', () => {
+    renderView()
+
+    within(getFeed())
+      .getAllByRole('button', { expanded: false })
+      .forEach(toggle => {
+        expect(
+          document.getElementById(toggle.getAttribute('aria-controls')!),
+        ).toHaveAttribute('inert')
+      })
+    expect(
+      within(getFeed()).queryAllByRole('button', { expanded: true }),
+    ).toHaveLength(0)
+  })
+
+  it('should open and close one experience without touching the others', () => {
+    renderView()
+
+    fireEvent.click(getToggle(/^Petlove/))
+
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'true')
+    expect(
+      document.getElementById('experience-petlove-panel'),
+    ).not.toHaveAttribute('inert')
+    expect(document.querySelector('#experience-petlove article')).toHaveClass(
+      'is-focused',
+    )
+    expect(getToggle(/^Juntos Somos Mais/)).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
+
+    fireEvent.click(getToggle(/^Petlove/))
+
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'false')
+    expect(
+      document.querySelector('#experience-petlove article'),
+    ).not.toHaveClass('is-focused')
+  })
+
+  it('should expand and collapse every visible experience at once', () => {
+    renderView()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
+
+    expect(
+      within(getFeed()).getAllByRole('button', { expanded: true }),
+    ).toHaveLength(experiences.length)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
+
+    expect(
+      within(getFeed()).queryAllByRole('button', { expanded: true }),
+    ).toHaveLength(0)
+  })
+
+  it('should open the experience from a highlight, even when filtered out', () => {
+    const scrollIntoView = jest.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    currentParams = new URLSearchParams('type=open-source')
+    renderView()
+
+    fireEvent.click(
+      screen.getByRole('link', { name: /See experience\s?: Petlove/ }),
+    )
+
+    expect(getExperienceIds()).toHaveLength(experiences.length)
+    expect(getToggle(/^Petlove/)).toHaveAttribute('aria-expanded', 'true')
+    expect(window.location.hash).toBe('#experience-petlove')
+    expect(scrollIntoView).toHaveBeenCalledTimes(1)
+  })
+
+  it('should open the experience named in the url hash', () => {
+    window.history.replaceState(null, '', '/#experience-nimbus-black')
+    renderView()
+
+    expect(getToggle(/^Nimbus Black/)).toHaveAttribute('aria-expanded', 'true')
   })
 })

@@ -87,7 +87,10 @@
       "website": "Site da empresa",
       "newTab": "(abre em nova aba)",
       "ongoing": "Atuação contínua",
-      "now": "Hoje"
+      "now": "Hoje",
+      "expandAll": "Expandir todas",
+      "collapseAll": "Recolher todas",
+      "contributionsCount": "{count, plural, one {# contribuição} other {# contribuições}}"
     },
     "Filters": {
       "all": "Todos",

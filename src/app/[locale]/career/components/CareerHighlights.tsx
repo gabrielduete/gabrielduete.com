@@ -15,6 +15,7 @@ import { linkIcons } from './ExternalLink'
 type BentoCardProps = {
   eyebrow: string
   experience: IExperiences
+  onOpenExperience: (id: IExperiences) => void
   className?: string
   children: ReactNode
 }
@@ -22,6 +23,7 @@ type BentoCardProps = {
 const BentoCard = ({
   eyebrow,
   experience,
+  onOpenExperience,
   className,
   children,
 }: BentoCardProps) => {
@@ -41,6 +43,10 @@ const BentoCard = ({
       <div className='flex flex-1 flex-col gap-base'>{children}</div>
       <Link
         href={`#experience-${experience}`}
+        onClick={event => {
+          event.preventDefault()
+          onOpenExperience(experience)
+        }}
         className='group flex w-fit items-center gap-xxsmall text-xsmall text-gray-300 hover:text-card-accent'
       >
         <span>
@@ -92,7 +98,11 @@ const openSourceLinks: {
   { link: careerLinks.he4rt, name: 'he4rt', detail: 'he4rtDetail' },
 ]
 
-const CareerHighlights = () => {
+type CareerHighlightsProps = {
+  onOpenExperience: (id: IExperiences) => void
+}
+
+const CareerHighlights = ({ onOpenExperience }: CareerHighlightsProps) => {
   const t = useTranslations('CarrerPage.Highlights')
   const tFeed = useTranslations('CarrerPage.Feed')
 
@@ -117,6 +127,7 @@ const CareerHighlights = () => {
         <BentoCard
           eyebrow={t('petlove.eyebrow')}
           experience='petlove'
+          onOpenExperience={onOpenExperience}
           className='md:col-span-2'
         >
           <div className={statsGridClassName}>
@@ -147,6 +158,7 @@ const CareerHighlights = () => {
         <BentoCard
           eyebrow={t('international.eyebrow')}
           experience='nimbus-black'
+          onOpenExperience={onOpenExperience}
         >
           <FiGlobe aria-hidden className='h-8 w-8 text-amber-300' />
           <p className='flex flex-col gap-xxsmall'>
@@ -166,6 +178,7 @@ const CareerHighlights = () => {
         <BentoCard
           eyebrow={t('juntosSomosMais.eyebrow')}
           experience='juntos-somos-mais'
+          onOpenExperience={onOpenExperience}
           className='md:col-span-2'
         >
           <div className={statsGridClassName}>
@@ -212,7 +225,11 @@ const CareerHighlights = () => {
           </div>
         </BentoCard>
 
-        <BentoCard eyebrow={t('openSource.eyebrow')} experience='open-source'>
+        <BentoCard
+          eyebrow={t('openSource.eyebrow')}
+          experience='open-source'
+          onOpenExperience={onOpenExperience}
+        >
           <p className='text-subtitle font-bold'>{t('openSource.title')}</p>
           <ul className='grid gap-xsmall sm:grid-cols-2 md:grid-cols-1'>
             {openSourceLinks.map(({ link, name, detail }) => {

@@ -87,7 +87,10 @@
       "website": "Company website",
       "newTab": "(opens in a new tab)",
       "ongoing": "Ongoing",
-      "now": "Now"
+      "now": "Now",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all",
+      "contributionsCount": "{count, plural, one {# contribution} other {# contributions}}"
     },
     "Filters": {
       "all": "All",
