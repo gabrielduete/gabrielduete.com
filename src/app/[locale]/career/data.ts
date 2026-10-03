@@ -13,7 +13,7 @@ export const careerLinks = {
   },
   unleashPr: {
     key: 'unleashPr',
-    href: 'https://l1nq.com/unleash-pr',
+    href: 'https://github.com/Unleash/unleash-js-sdk/pull/264',
     kind: 'pull-request',
   },
   atomiumRepo: {

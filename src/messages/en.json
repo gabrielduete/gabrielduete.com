@@ -64,7 +64,7 @@
         "nuxt": "Nuxt.js",
         "nuxtDetail": "Issue #32494",
         "unleash": "Unleash",
-        "unleashDetail": "PR to the JS SDK",
+        "unleashDetail": "PR #264 to the JS SDK",
         "atomium": "Atomium DS",
         "atomiumDetail": "Design System",
         "he4rt": "He4rt Developers",
@@ -103,7 +103,7 @@
     },
     "Links": {
       "nuxtIssue": "nuxt/nuxt#32494",
-      "unleashPr": "Pull Request to Unleash",
+      "unleashPr": "Unleash/unleash-js-sdk#264",
       "atomiumRepo": "juntossomosmais/atomium",
       "atomiumContributions": "My contributions to Atomium",
       "atomiumXss": "XSS fix in Atomium",
