@@ -14,12 +14,14 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 export const alt = 'Gabriel Duete — Blog post'
 
+// Mirrors the dark theme tokens in src/styles/index.css
 const COLORS = {
-  bgFrom: '#132227',
-  bgTo: '#22404a',
+  bgTheme: '#132227',
+  bgCards: '#193038',
   text: '#ffffff',
-  muted: '#b8c7cc',
+  muted: 'rgba(255, 255, 255, 0.7)',
   accent: '#46ce7a',
+  accentWeak: '#46ce7a40',
 }
 
 const loadFont = (file: string) =>
@@ -48,7 +50,7 @@ export default async function OpengraphImage({ params }: Props) {
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: '64px 80px',
-          backgroundImage: `linear-gradient(90deg, ${COLORS.bgFrom}, ${COLORS.bgTo})`,
+          backgroundImage: `linear-gradient(135deg, ${COLORS.bgTheme} 40%, ${COLORS.bgCards})`,
           color: COLORS.text,
           fontFamily: 'Nunito',
         }}
@@ -58,8 +60,8 @@ export default async function OpengraphImage({ params }: Props) {
             style={{
               display: 'flex',
               padding: '10px 36px',
-              background: '#000000',
-              border: '3px solid #d9d9d9',
+              background: COLORS.bgCards,
+              border: `3px solid ${COLORS.accent}`,
               transform: 'rotate(-4deg)',
               fontFamily: 'Oswald',
               fontSize: 40,
@@ -118,16 +120,22 @@ export default async function OpengraphImage({ params }: Props) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div
-              style={{
-                width: 14,
-                height: 14,
-                borderRadius: 7,
-                background: COLORS.accent,
-                marginRight: 14,
-              }}
-            />
-            {[category, date].filter(Boolean).join(' · ')}
+            {category && (
+              <div
+                style={{
+                  display: 'flex',
+                  padding: '6px 18px',
+                  marginRight: 20,
+                  borderRadius: 8,
+                  background: COLORS.accentWeak,
+                  color: COLORS.accent,
+                  fontWeight: 800,
+                }}
+              >
+                {category}
+              </div>
+            )}
+            {date}
           </div>
           <div style={{ display: 'flex', color: COLORS.accent }}>
             gabrielduete.com
