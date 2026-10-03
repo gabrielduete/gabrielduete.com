@@ -37,7 +37,6 @@ export async function generateMetadata({ params }) {
 
   const baseUrl = 'https://gabrielduete.com'
   const url = `${baseUrl}/${locale}/blog/${slug}`
-  const imageUrl = `${baseUrl}/assets/images/post.jpg`
 
   return {
     title,
@@ -47,14 +46,6 @@ export async function generateMetadata({ params }) {
       description,
       url,
       siteName: 'Gabriel Duete',
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
       locale: locale,
       type: 'article',
       publishedTime: date,
@@ -65,7 +56,6 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title,
       description,
-      images: [imageUrl],
       creator: '@gabrielduetedev',
     },
     alternates: {
