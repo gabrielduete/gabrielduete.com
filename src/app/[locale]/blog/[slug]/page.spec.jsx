@@ -1,7 +1,6 @@
-import fs from 'fs'
-
 import { Paths } from '@/enums/Paths'
 import { render, screen } from '@testing-library/react'
+import fs from 'fs'
 import { notFound } from 'next/navigation'
 
 import { getBlogData } from '../helpers/getDataContentFile'
@@ -46,6 +45,8 @@ jest.mock('@/components/TabTitleWatcher/TabTitleWatcher', () => {
     return <div data-testid='tab-title-watcher' data-title={originalTitle} />
   }
 })
+
+jest.mock('remark-gfm', () => ({ __esModule: true, default: () => null }))
 
 jest.mock('next-mdx-remote/rsc', () => ({
   MDXRemote: function MockMDXRemote({ source, components }) {
