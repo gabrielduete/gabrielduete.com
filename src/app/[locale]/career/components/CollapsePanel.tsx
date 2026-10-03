@@ -2,6 +2,11 @@
 
 import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
 
+export const COLLAPSE_OPEN_MS = 600
+export const COLLAPSE_CLOSE_MS = 450
+// Ease-out that settles slowly, so the end of the motion feels soft
+export const COLLAPSE_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)'
+
 type CollapsePanelProps = {
   id: string
   isOpen: boolean
@@ -34,8 +39,12 @@ const CollapsePanel = ({ id, isOpen, children }: CollapsePanelProps) => {
     <div
       id={id}
       inert={!isOpen}
-      style={{ height: isOpen ? height : 0 }}
-      className='cursor-auto overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none'
+      style={{
+        height: isOpen ? height : 0,
+        transitionDuration: `${isOpen ? COLLAPSE_OPEN_MS : COLLAPSE_CLOSE_MS}ms`,
+        transitionTimingFunction: COLLAPSE_EASING,
+      }}
+      className='cursor-auto overflow-hidden transition-[height] motion-reduce:transition-none'
     >
       <div ref={contentRef}>{children}</div>
     </div>

@@ -19,10 +19,16 @@ import {
   getDurationInMonths,
 } from '../utils/period'
 import { trackSpotlight } from '../utils/spotlight'
-import CollapsePanel from './CollapsePanel'
+import CollapsePanel, {
+  COLLAPSE_CLOSE_MS,
+  COLLAPSE_EASING,
+  COLLAPSE_OPEN_MS,
+} from './CollapsePanel'
 import ExternalLink from './ExternalLink'
 
 const ENTER_STAGGER_MS = 70
+const GROUP_REVEAL_DELAY_MS = 120
+const GROUP_STAGGER_MS = 60
 
 type ExperienceCardProps = {
   experience: IExperience
@@ -160,8 +166,12 @@ const ExperienceCard = ({
                 </span>
                 <FiChevronDown
                   aria-hidden
+                  style={{
+                    transitionDuration: `${isOpen ? COLLAPSE_OPEN_MS : COLLAPSE_CLOSE_MS}ms`,
+                    transitionTimingFunction: COLLAPSE_EASING,
+                  }}
                   className={clsx(
-                    'h-5 w-5 transition-transform duration-300',
+                    'h-5 w-5 transition-transform motion-reduce:transition-none',
                     isOpen && 'rotate-180',
                   )}
                 />
@@ -204,8 +214,22 @@ const ExperienceCard = ({
         <CollapsePanel id={panelId} isOpen={isOpen}>
           <div className='pt-large'>
             <div className='flex flex-col gap-large border-t border-green-weak-border pt-large'>
-              {groups.map(group => (
-                <section key={group.key} className='flex flex-col gap-xsmall'>
+              {groups.map((group, groupIndex) => (
+                <section
+                  key={group.key}
+                  style={{
+                    transitionDelay: isOpen
+                      ? `${GROUP_REVEAL_DELAY_MS + groupIndex * GROUP_STAGGER_MS}ms`
+                      : '0ms',
+                    transitionDuration: isOpen ? '400ms' : '150ms',
+                  }}
+                  className={clsx(
+                    'flex flex-col gap-xsmall transition-[opacity,transform] ease-out motion-reduce:transition-none',
+                    isOpen
+                      ? 'translate-y-0 opacity-100'
+                      : '-translate-y-2 opacity-0',
+                  )}
+                >
                   <h4 className='text-xsmall font-bold tracking-wider text-card-accent uppercase'>
                     {t(`${key}.groups.${group.key}.title`)}
                   </h4>

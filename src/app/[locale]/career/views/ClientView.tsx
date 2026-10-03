@@ -7,6 +7,10 @@ import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import CareerHighlights from '../components/CareerHighlights'
+import {
+  COLLAPSE_CLOSE_MS,
+  COLLAPSE_OPEN_MS,
+} from '../components/CollapsePanel'
 import ExperienceCard from '../components/ExperienceCard'
 import { experienceFilters, experienceTypeOrder, experiences } from '../data'
 import { ExperienceFilter, IExperiences } from '../types'
@@ -20,8 +24,8 @@ const matchesFilter = (type: string, filter: ExperienceFilter) =>
 
 const EXPERIENCE_HASH_PREFIX = '#experience-'
 
-// Collapse transition (500ms) plus a frame of slack
-const ANCHOR_DURATION_MS = 550
+// Longest collapse transition plus a few frames of slack
+const ANCHOR_DURATION_MS = Math.max(COLLAPSE_OPEN_MS, COLLAPSE_CLOSE_MS) + 50
 
 const parseExperienceFromHash = (hash: string): IExperiences | null =>
   experiences.find(
