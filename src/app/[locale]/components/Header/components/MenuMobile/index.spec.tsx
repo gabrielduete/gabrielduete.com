@@ -1,14 +1,16 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import MenuMobile from '.'
 
+let mockLocale = 'en'
+
+jest.mock('next-intl', () => ({
+  useLocale: () => mockLocale,
+}))
+
 jest.mock('../Navigator/Mobile', () => {
-  return function MockNavigatorMobile({ closeMenu }: { closeMenu: () => void }) {
-    return (
-      <div data-testid='navigator-mobile'>
-        <button onClick={closeMenu}>close from navigator</button>
-      </div>
-    )
+  return function MockNavigatorMobile() {
+    return <div data-testid='navigator-mobile' />
   }
 })
 
@@ -25,70 +27,42 @@ jest.mock('../ToggleTheme', () => {
 })
 
 describe('MenuMobile', () => {
-  it('renders the mobile menu component', () => {
+  beforeEach(() => {
+    mockLocale = 'en'
+  })
+
+  it('renders the navigation as a bar fixed to the bottom', () => {
+    render(<MenuMobile />)
+
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' })
+
+    expect(nav).toHaveClass('fixed', 'bottom-0')
+    expect(within(nav).getByTestId('navigator-mobile')).toBeInTheDocument()
+  })
+
+  it('keeps the language and theme toggles at the top, outside the bar', () => {
     render(<MenuMobile />)
 
     const nav = screen.getByRole('navigation')
-    expect(nav).toBeInTheDocument()
+
+    expect(screen.getByTestId('toggle-lang')).toBeInTheDocument()
+    expect(screen.getByTestId('toggle-theme')).toBeInTheDocument()
+    expect(within(nav).queryByTestId('toggle-lang')).not.toBeInTheDocument()
+    expect(within(nav).queryByTestId('toggle-theme')).not.toBeInTheDocument()
   })
 
-  it('renders hamburger and close buttons', () => {
-    render(<MenuMobile />)
+  it('only shows on small screens', () => {
+    const { container } = render(<MenuMobile />)
 
-    const hamburgerButton = screen.getByLabelText('Open Menu')
-    const closeButton = screen.getByLabelText('Close Menu')
-
-    expect(hamburgerButton).toBeInTheDocument()
-    expect(closeButton).toHaveClass('hidden')
+    expect(container.firstChild).toHaveClass('lg:hidden')
   })
 
-  it('toggles menu visibility when hamburger is clicked', () => {
+  it('labels the navigation in portuguese for the pt-br locale', () => {
+    mockLocale = 'pt-br'
     render(<MenuMobile />)
 
-    const hamburgerButton = screen.getByLabelText('Open Menu')
-    fireEvent.click(hamburgerButton)
-
-    const closeButton = screen.getByLabelText('Close Menu')
-    expect(closeButton).toBeInTheDocument()
-  })
-
-  it('renders all child components', () => {
-    render(<MenuMobile />)
-
-    const navigatorMobile = screen.getByTestId('navigator-mobile')
-    const toggleLang = screen.getByTestId('toggle-lang')
-    const toggleTheme = screen.getByTestId('toggle-theme')
-
-    expect(navigatorMobile).toBeInTheDocument()
-    expect(toggleLang).toBeInTheDocument()
-    expect(toggleTheme).toBeInTheDocument()
-  })
-
-  it('has correct mobile styling', () => {
-    render(<MenuMobile />)
-
-    const nav = screen.getByRole('navigation')
-    expect(nav).toHaveClass('lg:hidden', 'flex')
-  })
-
-  it('closes the menu when the close icon is clicked', () => {
-    render(<MenuMobile />)
-
-    fireEvent.click(screen.getByLabelText('Open Menu'))
-    expect(screen.getByLabelText('Open Menu')).toHaveClass('hidden')
-
-    fireEvent.click(screen.getByLabelText('Close Menu'))
-
-    expect(screen.getByLabelText('Close Menu')).toHaveClass('hidden')
-    expect(screen.getByLabelText('Open Menu')).toHaveClass('block')
-  })
-
-  it('closes the menu when the navigator asks for it', () => {
-    render(<MenuMobile />)
-
-    fireEvent.click(screen.getByLabelText('Open Menu'))
-    fireEvent.click(screen.getByText('close from navigator'))
-
-    expect(screen.getByLabelText('Close Menu')).toHaveClass('hidden')
+    expect(
+      screen.getByRole('navigation', { name: 'Navegação principal' }),
+    ).toBeInTheDocument()
   })
 })

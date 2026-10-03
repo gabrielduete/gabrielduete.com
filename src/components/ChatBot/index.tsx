@@ -8,8 +8,8 @@ import { UIMessage } from 'ai'
 import { useTranslations } from 'next-intl'
 import { FaPaperPlane, FaRobot, FaTimes } from 'react-icons/fa'
 
-import { ASK_BOT_EVENT } from './askBot'
 import MarkdownMessage from './MarkdownMessage'
+import { ASK_BOT_EVENT } from './askBot'
 import { useCurrentPost } from './useCurrentPost'
 
 const STORAGE_KEY = 'chatbot-history'
@@ -51,7 +51,10 @@ const ChatBot = () => {
     () =>
       new DefaultChatTransport({
         api: '/api/chat',
-        body: () => ({ currentSlug: slugRef.current, locale: localeRef.current }),
+        body: () => ({
+          currentSlug: slugRef.current,
+          locale: localeRef.current,
+        }),
       }),
     [],
   )
@@ -140,7 +143,7 @@ const ChatBot = () => {
       <button
         aria-label={t('open')}
         onClick={() => setIsOpen(true)}
-        className='fixed bottom-24 right-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-green-black text-secondary shadow-lg transition-transform hover:scale-105 hover:opacity-90'
+        className='fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] right-6 z-50 lg:bottom-24 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-green-black text-secondary shadow-lg transition-transform hover:scale-105 hover:opacity-90'
       >
         <FaRobot size={22} />
       </button>
@@ -160,10 +163,7 @@ const ChatBot = () => {
         </button>
       </header>
 
-      <div
-        ref={listRef}
-        className='flex-1 space-y-4 overflow-y-auto px-4 py-4'
-      >
+      <div ref={listRef} className='flex-1 space-y-4 overflow-y-auto px-4 py-4'>
         {messages.length === 0 && (
           <p className='mt-2 text-sm leading-relaxed text-gray-400'>
             {t('empty')}
