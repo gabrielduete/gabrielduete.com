@@ -1,13 +1,51 @@
-import { ReactNode, createElement } from 'react'
-
+import en from '@/messages/en.json'
+import ptBr from '@/messages/pt-br.json'
 import '@testing-library/jest-dom'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
+import { experiences } from '../data'
 import ClientView from './ClientView'
+
+type Messages = Record<string, unknown>
+
+type ExperienceMessages = {
+  groups: Record<string, { items: Record<string, string> }>
+}
+
+let currentMessages: Messages = en
+
+const resolve = (path: string): string => {
+  const value = path
+    .split('.')
+    .reduce<unknown>(
+      (node, segment) => (node as Messages | undefined)?.[segment],
+      currentMessages,
+    )
+
+  if (typeof value !== 'string') {
+    throw new Error(`Missing message: ${path}`)
+  }
+
+  return value
+}
+
+const format = (message: string, values: Record<string, unknown> = {}) =>
+  message
+    .replace(
+      /\{(\w+), plural, one \{([^}]*)\} other \{([^}]*)\}\}/g,
+      (_, name, one, other) =>
+        (values[name] === 1 ? one : other).replace('#', String(values[name])),
+    )
+    .replace(/\{(\w+)\}/g, (_, name) => String(values[name]))
+
+jest.mock('next-intl', () => ({
+  useTranslations:
+    (namespace: string) => (key: string, values?: Record<string, unknown>) =>
+      format(resolve(`${namespace}.${key}`), values),
+}))
 
 const pushMock = jest.fn()
 let currentParams = new URLSearchParams()
-let currentLocale = 'en'
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock, replace: jest.fn() }),
@@ -15,570 +53,131 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => currentParams,
 }))
 
-const contributionsByExperience: Record<string, number> = {
-  Petlove: 1,
-  'Juntos Somos Mais': 8,
-  'Nimbus Black': 1,
-  React4Noobs: 2,
-  'He4rt Team': 1,
+const renderView = (locale = 'en') => {
+  currentMessages = locale === 'en' ? en : ptBr
+
+  return render(<ClientView />)
 }
 
-type RichHandlers = {
-  atomium: (chunks: ReactNode) => ReactNode
-  a: (chunks: ReactNode) => ReactNode
-}
+const getFeed = () =>
+  screen.getByRole('region', { name: 'Experience' }).querySelector('ol')!
 
-const richNodes: Record<string, ReactNode> = {
-  '1': 'https://one.com',
-  '2': ['https://', 'two.com'] as unknown as ReactNode,
-  '3': createElement('span', null, 'https://three.com'),
-  '4': 42 as unknown as ReactNode,
-  '6': createElement('span'),
-}
+const getCompanies = () =>
+  within(getFeed())
+    .getAllByRole('heading', { level: 3 })
+    .map(heading => heading.textContent)
 
-const MONTHS: Record<string, Record<string, string>> = {
-  en: {
-    '1': 'Jan',
-    '3': 'Mar',
-    '6': 'Jun',
-    '8': 'Aug',
-    '9': 'Sep',
-    '12': 'Dec',
-  },
-  'pt-br': {
-    '1': 'Jan',
-    '3': 'Mar',
-    '6': 'Jun',
-    '8': 'Ago',
-    '9': 'Set',
-    '12': 'Dez',
-  },
-}
-
-const LABELS: Record<string, Record<string, string>> = {
-  en: {
-    'Contributions.showMore': 'Show more (+{count})',
-    'Contributions.showLess': 'Show less',
-    'Contributions.learnMore': 'Learn more',
-    'Overview.title': 'Timeline',
-    'Overview.description': 'When each experience ran.',
-    'Overview.selectExperience': '{experience}, {period}',
-    monthYear: '{month} {year}',
-    present: 'Present',
-    durationJoin: '{years} and {months}',
-  },
-  'pt-br': {
-    'Contributions.showMore': 'Ver mais (+{count})',
-    'Contributions.showLess': 'Ver menos',
-    'Contributions.learnMore': 'Saiba Mais',
-    'Overview.title': 'Linha do tempo',
-    'Overview.description': 'Periodos de cada experiencia.',
-    'Overview.selectExperience': '{experience}, {period}',
-    monthYear: '{month} de {year}',
-    present: 'o momento',
-    durationJoin: '{years} e {months}',
-  },
-}
-
-const pluralize = (count: number, one: string, other: string) =>
-  `${count} ${count === 1 ? one : other}`
-
-jest.mock('next-intl', () => ({
-  useLocale: () => currentLocale,
-  useTranslations: () => {
-    const t = (key: string, values?: Record<string, unknown>) => {
-      const totalMatch = key.match(/^Experiences\.(.+)\.totalContributions$/)
-      if (totalMatch)
-        return String(contributionsByExperience[totalMatch[1]] ?? 1)
-
-      if (key === 'Experiences.Petlove.link')
-        return 'https://www.petlove.com.br/'
-      if (key.endsWith('.link')) return ''
-
-      const isEn = currentLocale === 'en'
-
-      if (key === 'yearsCount') {
-        return pluralize(
-          Number(values?.count),
-          isEn ? 'year' : 'ano',
-          isEn ? 'years' : 'anos',
-        )
-      }
-
-      if (key === 'monthsCount') {
-        return pluralize(
-          Number(values?.count),
-          isEn ? 'month' : 'mês',
-          isEn ? 'months' : 'meses',
-        )
-      }
-
-      const monthMatch = key.match(/^months\.(\d+)$/)
-      if (monthMatch)
-        return MONTHS[currentLocale][monthMatch[1]] ?? monthMatch[1]
-
-      const template = LABELS[currentLocale][key]
-      if (!template) return key
-
-      return Object.entries(values ?? {}).reduce(
-        (text, [token, value]) => text.replace(`{${token}}`, String(value)),
-        template,
-      )
-    }
-
-    t.rich = (key: string, handlers: RichHandlers) => {
-      const contribution = key.split('.').pop() as string
-
-      if (contribution === '5') return handlers.atomium('atomium')
-
-      return handlers.a(richNodes[contribution] ?? 'https://fallback.com')
-    }
-
-    return t
-  },
-}))
-
-const setParams = (search: string) => {
-  currentParams = new URLSearchParams(search)
-}
-
-describe('<CarrerView />', () => {
+describe('<ClientView />', () => {
   beforeEach(() => {
     pushMock.mockClear()
-    setParams('')
-    currentLocale = 'en'
-    window.scrollBy = jest.fn()
-
-    global.ResizeObserver = class {
-      observe = jest.fn()
-      unobserve = jest.fn()
-      disconnect = jest.fn()
-    } as unknown as typeof ResizeObserver
+    currentParams = new URLSearchParams()
   })
 
-  afterEach(() => {
-    delete (window as { matchMedia?: unknown }).matchMedia
-  })
+  it('should group the experiences by type, each ordered by period', () => {
+    renderView()
 
-  it('renders every experience collapsed when there is no filter in the url', () => {
-    render(<ClientView />)
-
-    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    )
-  })
-
-  it('pre-selects the experience coming from the url filter param', () => {
-    setParams('filter=Juntos-Somos-Mais')
-
-    render(<ClientView />)
-
-    expect(
-      screen.getByRole('button', { name: 'Juntos Somos Mais' }),
-    ).toHaveAttribute('aria-expanded', 'true')
-  })
-
-  it('pre-selects the experience when the url filter uses spaces', () => {
-    setParams('filter=Nimbus Black')
-
-    render(<ClientView />)
-
-    expect(
-      screen.getByRole('button', { name: 'Nimbus Black' }),
-    ).toHaveAttribute('aria-expanded', 'true')
-  })
-
-  it('ignores an unknown filter param', () => {
-    setParams('filter=not-an-experience')
-
-    render(<ClientView />)
-
-    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    )
-  })
-
-  it('pre-selects the type filter coming from the url', () => {
-    setParams('type=freelance')
-
-    render(<ClientView />)
-
-    expect(
-      screen.getByRole('button', { name: 'Nimbus Black' }),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('button', { name: 'Petlove' }),
-    ).not.toBeInTheDocument()
-  })
-
-  it('falls back to the "all" type filter when the url value is unknown', () => {
-    setParams('type=unknown')
-
-    render(<ClientView />)
-
-    expect(screen.getByRole('button', { name: 'Petlove' })).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: 'Nimbus Black' }),
-    ).toBeInTheDocument()
-  })
-
-  it('pushes the selected experience to the url when expanding', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Nimbus Black' }))
-
-    expect(pushMock).toHaveBeenCalledWith('?filter=Nimbus-Black')
-  })
-
-  it('removes the filter from the url when collapsing the selected experience', () => {
-    render(<ClientView />)
-
-    const button = screen.getByRole('button', { name: 'Nimbus Black' })
-    fireEvent.click(button)
-    pushMock.mockClear()
-    fireEvent.click(button)
-
-    expect(button).toHaveAttribute('aria-expanded', 'false')
-    expect(pushMock).toHaveBeenLastCalledWith('?')
-  })
-
-  it('renders the single column list on narrow screens', () => {
-    render(<ClientView />)
-
-    expect(screen.queryByTestId('experience-lanes')).not.toBeInTheDocument()
-  })
-
-  it('orders the experiences by the ongoing ones and then by end date', () => {
-    render(<ClientView />)
-
-    const titles = screen
-      .getAllByRole('heading', { level: 2 })
-      .map(heading => heading.textContent)
-
-    expect(titles).toEqual([
+    expect(getCompanies()).toEqual([
       'Petlove',
-      'React4Noobs',
       'Juntos Somos Mais',
       'Nimbus Black',
+      'React4Noobs',
       'He4rt Team',
+      'Open Source & Community',
     ])
   })
 
-  it('derives the period of each experience from its dates', () => {
-    render(<ClientView />)
+  it('should render every contribution of every experience', () => {
+    renderView()
 
+    const total = experiences.reduce(
+      (sum, experience) =>
+        sum +
+        experience.groups.reduce((acc, group) => acc + group.items.length, 0),
+      0,
+    )
+
+    const items = experiences.flatMap(experience =>
+      experience.groups.flatMap(group =>
+        group.items.map(
+          item =>
+            (en.CarrerPage.Experiences as Record<string, ExperienceMessages>)[
+              experience.id
+            ].groups[group.key].items[item.key],
+        ),
+      ),
+    )
+
+    expect(items).toHaveLength(total)
+    items.forEach(text =>
+      expect(screen.getAllByText(text).length).toBeGreaterThan(0),
+    )
+  })
+
+  it('should resolve every message in both locales', () => {
+    expect(() => renderView('pt-br')).not.toThrow()
     expect(
-      screen.getByText('Dec 2021 - Mar 2026 · 4 years and 4 months'),
+      screen.getByRole('heading', {
+        level: 3,
+        name: 'Open Source & Comunidade',
+      }),
     ).toBeInTheDocument()
-    expect(screen.getByText('Sep 2023 - Present')).toBeInTheDocument()
   })
 
-  it('derives the period in portuguese', () => {
-    currentLocale = 'pt-br'
+  it('should render the highlights with links to the experiences', () => {
+    renderView()
 
-    render(<ClientView />)
+    const highlights = screen.getByRole('region', { name: 'Highlights' })
 
+    expect(within(highlights).getByText('−80%')).toBeInTheDocument()
+    expect(within(highlights).getByText('−91%')).toBeInTheDocument()
+    expect(within(highlights).getByText('Atomium')).toBeInTheDocument()
+    expect(within(highlights).getByText('DevSecOps & AI')).toBeInTheDocument()
     expect(
-      screen.getByText('Dez de 2021 - Mar de 2026 · 4 anos e 4 meses'),
-    ).toBeInTheDocument()
+      within(highlights).getByRole('link', { name: /Issue #32494/ }),
+    ).toHaveAttribute('href', 'https://github.com/nuxt/nuxt/issues/32494')
+    expect(
+      within(highlights).getByRole('link', {
+        name: /See experience\s?: Petlove/,
+      }),
+    ).toHaveAttribute('href', '#experience-petlove')
   })
 
-  it('animates the scroll to the focused card until the duration elapses', () => {
-    render(<ClientView />)
+  it('should filter by type and sync the url', () => {
+    renderView()
 
-    const startedAt = performance.now()
-    let frame = 0
-    const rafSpy = jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation(callback => {
-        frame += 1
-        callback(startedAt + frame * 400)
-        return frame
-      })
+    fireEvent.click(screen.getByRole('button', { name: /Full-time/ }))
 
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-
-    expect(rafSpy).toHaveBeenCalledTimes(2)
-    expect(window.scrollBy).toHaveBeenCalled()
-
-    rafSpy.mockRestore()
-  })
-
-  it('jumps straight to the card when the user prefers reduced motion', () => {
-    window.matchMedia = jest.fn().mockReturnValue({ matches: true })
-
-    render(<ClientView />)
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-
-    expect(window.scrollBy).toHaveBeenCalledWith(0, -100)
-  })
-
-  it('syncs the selected experience when the url filter changes', () => {
-    const { rerender } = render(<ClientView />)
-
-    setParams('filter=React4Noobs')
-    rerender(<ClientView />)
-
-    expect(screen.getByRole('button', { name: 'React4Noobs' })).toHaveAttribute(
-      'aria-expanded',
+    expect(getCompanies()).toEqual(['Petlove', 'Juntos Somos Mais'])
+    expect(screen.getByRole('button', { name: /Full-time/ })).toHaveAttribute(
+      'aria-pressed',
       'true',
     )
-  })
-
-  it('filters the experiences by type and pushes the type to the url', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Filters.open-source' }))
-
-    expect(pushMock).toHaveBeenCalledWith('?type=open-source')
-    expect(
-      screen.getByRole('button', { name: 'React4Noobs' }),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('button', { name: 'Petlove' }),
-    ).not.toBeInTheDocument()
-  })
-
-  it('removes the type from the url when going back to "all"', () => {
-    setParams('type=freelance')
-
-    render(<ClientView />)
-    fireEvent.click(screen.getByRole('button', { name: 'Filters.all' }))
-
-    expect(pushMock).toHaveBeenLastCalledWith('?')
-    expect(screen.getByRole('button', { name: 'Petlove' })).toBeInTheDocument()
-  })
-
-  it('clears the selected experience when the new type filter hides it', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-    pushMock.mockClear()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Filters.freelance' }))
-
-    expect(pushMock).toHaveBeenLastCalledWith('?type=freelance')
-    expect(
-      screen.getByRole('button', { name: 'Nimbus Black' }),
-    ).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('keeps the selected experience when the new type filter still shows it', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Filters.full-time' }))
-
-    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    )
-  })
-
-  it('tracks the pointer position on the card for the spotlight effect', () => {
-    const { container } = render(<ClientView />)
-
-    const card = container.querySelector('.spotlight-card') as HTMLElement
-    fireEvent.mouseMove(card, { clientX: 30, clientY: 12 })
-
-    expect(card.style.getPropertyValue('--mouse-x')).toBe('30px')
-    expect(card.style.getPropertyValue('--mouse-y')).toBe('12px')
-  })
-
-  it('toggles the extra contributions of an experience', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
-
-    const showMore = screen.getByRole('button', { name: 'Show more (+3)' })
-    fireEvent.click(showMore)
-
-    expect(
-      screen.getByRole('button', { name: 'Show less' }),
-    ).toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Show less' }))
-
-    expect(
-      screen.getByRole('button', { name: 'Show more (+3)' }),
-    ).toBeInTheDocument()
-  })
-
-  it('resets the expanded contributions when the experience is collapsed', () => {
-    render(<ClientView />)
-
-    const experience = screen.getByRole('button', { name: 'Juntos Somos Mais' })
-    fireEvent.click(experience)
-    fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' }))
-    fireEvent.click(experience)
-    fireEvent.click(experience)
-
-    expect(
-      screen.getByRole('button', { name: 'Show more (+3)' }),
-    ).toBeInTheDocument()
-  })
-
-  it('renders the show more label in portuguese', () => {
-    currentLocale = 'pt-br'
-
-    render(<ClientView />)
-    fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
-
-    expect(
-      screen.getByRole('button', { name: 'Ver mais (+3)' }),
-    ).toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Ver mais (+3)' }))
-
-    expect(
-      screen.getByRole('button', { name: 'Ver menos' }),
-    ).toBeInTheDocument()
-  })
-
-  it('renders the learn more link only for experiences that have one', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-
-    expect(screen.getByRole('link', { name: '👉 Learn more' })).toHaveAttribute(
-      'href',
-      'https://www.petlove.com.br/',
-    )
-  })
-
-  it('renders the learn more link in portuguese', () => {
-    currentLocale = 'pt-br'
-
-    render(<ClientView />)
-    fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
-
-    expect(
-      screen.getByRole('link', { name: '👉 Saiba Mais' }),
-    ).toBeInTheDocument()
-  })
-
-  it('turns every contribution chunk shape into an external link', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' }))
-
-    const hrefs = screen
-      .getAllByRole('link')
-      .map(link => link.getAttribute('href'))
-
-    expect(hrefs).toEqual(
-      expect.arrayContaining([
-        'https://one.com',
-        'https://two.com',
-        'https://three.com',
-        '42',
-        'https://github.com/juntossomosmais/atomium',
-      ]),
-    )
-  })
-
-  it('does not recurse forever on a chunk element without children', () => {
-    render(<ClientView />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
-
-    expect(() =>
-      fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' })),
-    ).not.toThrow()
-  })
-
-  describe('on a wide screen', () => {
-    beforeEach(() => {
-      window.matchMedia = jest.fn().mockReturnValue({
-        matches: true,
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-      })
+    expect(screen.getByText('2 experiences')).toBeInTheDocument()
+    expect(pushMock).toHaveBeenCalledWith('?type=full-time', {
+      scroll: false,
     })
 
-    it('renders one lane per experience type', () => {
-      render(<ClientView />)
+    fireEvent.click(screen.getByRole('button', { name: /All/ }))
 
-      expect(screen.getByTestId('experience-lanes')).toBeInTheDocument()
-      expect(
-        screen.getByRole('list', { name: 'Filters.full-time' }),
-      ).toBeInTheDocument()
-      expect(
-        screen.getByRole('list', { name: 'Filters.freelance' }),
-      ).toBeInTheDocument()
-      expect(
-        screen.getByRole('list', { name: 'Filters.open-source' }),
-      ).toBeInTheDocument()
-    })
-
-    it('drops the lanes hidden by the type filter', () => {
-      setParams('type=freelance')
-
-      render(<ClientView />)
-
-      expect(
-        screen.getByRole('list', { name: 'Filters.freelance' }),
-      ).toBeInTheDocument()
-      expect(
-        screen.queryByRole('list', { name: 'Filters.full-time' }),
-      ).not.toBeInTheDocument()
-    })
-
-    it('anchors each card to the start of its experience', () => {
-      render(<ClientView />)
-
-      const fullTime = screen.getByRole('list', { name: 'Filters.full-time' })
-      const [juntos, petlove] = Array.from(
-        fullTime.querySelectorAll(':scope > li'),
-      )
-
-      expect(juntos).toHaveStyle({ top: '0px' })
-      expect(petlove).toHaveStyle({ top: `${51 * 15}px` })
-    })
-
-    it('renders the year axis of the whole range', () => {
-      render(<ClientView />)
-
-      const axis = screen.getByTestId('experience-lanes__axis')
-
-      expect(Array.from(axis.children).map(child => child.textContent)).toEqual(
-        ['2021', '2022', '2023', '2024', '2025', '2026'],
-      )
-    })
-
-    it('widens the selected card over the neighbouring lane', () => {
-      render(<ClientView />)
-
-      const card = screen
-        .getByRole('button', { name: 'Nimbus Black' })
-        .closest('li') as HTMLElement
-
-      expect(card).not.toHaveClass('z-10')
-
-      fireEvent.click(screen.getByRole('button', { name: 'Nimbus Black' }))
-
-      expect(card).toHaveClass('z-10')
-    })
-
-    it('keeps the url behaviour of the single column list', () => {
-      render(<ClientView />)
-
-      fireEvent.click(screen.getByRole('button', { name: 'Nimbus Black' }))
-
-      expect(pushMock).toHaveBeenCalledWith('?filter=Nimbus-Black')
-    })
+    expect(getCompanies()).toHaveLength(experiences.length)
+    expect(pushMock).toHaveBeenLastCalledWith('?', { scroll: false })
   })
 
-  it('works when ResizeObserver is not available', () => {
-    const original = global.ResizeObserver
-    // @ts-expect-error forcing the environment without ResizeObserver
-    delete global.ResizeObserver
+  it('should start from the type in the url', () => {
+    currentParams = new URLSearchParams('type=open-source')
+    renderView()
 
-    expect(() => render(<ClientView />)).not.toThrow()
+    expect(getCompanies()).toEqual([
+      'React4Noobs',
+      'He4rt Team',
+      'Open Source & Community',
+    ])
+  })
 
-    global.ResizeObserver = original
+  it('should ignore an unknown type in the url', () => {
+    currentParams = new URLSearchParams('type=nope')
+    renderView()
+
+    expect(getCompanies()).toHaveLength(experiences.length)
   })
 })

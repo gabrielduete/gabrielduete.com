@@ -77,26 +77,34 @@ export const formatPeriod = (
   return `${range} · ${formatDuration(getDurationInMonths(period, currentMonth), t)}`
 }
 
-export const sortExperiencesByPeriod = <T extends string>(
-  experiences: T[],
-  periods: Record<T, IPeriod>,
+const compareByPeriod = (
+  a: IPeriod,
+  b: IPeriod,
+  currentMonth: string,
+): number => {
+  if (!a.end !== !b.end) {
+    return a.end ? 1 : -1
+  }
+
+  const byEnd =
+    toMonthIndex(getPeriodEnd(b, currentMonth)) -
+    toMonthIndex(getPeriodEnd(a, currentMonth))
+
+  if (byEnd !== 0) {
+    return byEnd
+  }
+
+  return toMonthIndex(b.start) - toMonthIndex(a.start)
+}
+
+export const sortByPeriod = <T extends { period: IPeriod | null }>(
+  items: T[],
   currentMonth: string,
 ): T[] =>
-  [...experiences].sort((a, b) => {
-    const endA = periods[a].end
-    const endB = periods[b].end
-
-    if (!endA !== !endB) {
-      return endA ? 1 : -1
+  [...items].sort((a, b) => {
+    if (!a.period || !b.period) {
+      return Number(!a.period) - Number(!b.period)
     }
 
-    const byEnd =
-      toMonthIndex(getPeriodEnd(periods[b], currentMonth)) -
-      toMonthIndex(getPeriodEnd(periods[a], currentMonth))
-
-    if (byEnd !== 0) {
-      return byEnd
-    }
-
-    return toMonthIndex(periods[b].start) - toMonthIndex(periods[a].start)
+    return compareByPeriod(a.period, b.period, currentMonth)
   })

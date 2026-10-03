@@ -1,4 +1,3 @@
-import { IPeriod } from '../types'
 import {
   formatDuration,
   formatMonthYear,
@@ -7,7 +6,7 @@ import {
   getCurrentMonth,
   getDurationInMonths,
   getPeriodEnd,
-  sortExperiencesByPeriod,
+  sortByPeriod,
   toMonthIndex,
 } from './period'
 
@@ -125,42 +124,41 @@ describe('formatPeriod', () => {
   })
 })
 
-describe('sortExperiencesByPeriod', () => {
-  const periods: Record<string, IPeriod> = {
-    Petlove: { start: '2026-03', end: null },
-    'Juntos Somos Mais': { start: '2021-12', end: '2026-03' },
-    'Nimbus Black': { start: '2024-08', end: '2025-03' },
-    React4Noobs: { start: '2023-09', end: null },
-    'He4rt Team': { start: '2022-06', end: '2023-01' },
-  }
+describe('sortByPeriod', () => {
+  const items = [
+    { id: 'open-source', period: null },
+    { id: 'jsm', period: { start: '2021-12', end: '2026-03' } },
+    { id: 'nimbus', period: { start: '2024-08', end: '2025-03' } },
+    { id: 'petlove', period: { start: '2026-03', end: null } },
+    { id: 'he4rt', period: { start: '2022-06', end: '2023-01' } },
+  ]
 
-  it('should put the ongoing experiences first, then order by end date', () => {
-    expect(
-      sortExperiencesByPeriod(Object.keys(periods), periods, '2026-10'),
-    ).toEqual([
-      'Petlove',
-      'React4Noobs',
-      'Juntos Somos Mais',
-      'Nimbus Black',
-      'He4rt Team',
+  it('should put the ongoing experiences first, then order by end date and leave the undated ones last', () => {
+    expect(sortByPeriod(items, '2026-10').map(item => item.id)).toEqual([
+      'petlove',
+      'jsm',
+      'nimbus',
+      'he4rt',
+      'open-source',
     ])
   })
 
   it('should break a tie on the end date by the most recent start', () => {
-    const tied: Record<string, IPeriod> = {
-      older: { start: '2020-01', end: '2024-01' },
-      newer: { start: '2023-01', end: '2024-01' },
-    }
+    const tied = [
+      { id: 'older', period: { start: '2020-01', end: '2024-01' } },
+      { id: 'newer', period: { start: '2023-01', end: '2024-01' } },
+    ]
 
-    expect(
-      sortExperiencesByPeriod(['older', 'newer'], tied, '2026-10'),
-    ).toEqual(['newer', 'older'])
+    expect(sortByPeriod(tied, '2026-10').map(item => item.id)).toEqual([
+      'newer',
+      'older',
+    ])
   })
 
   it('should not mutate the given list', () => {
-    const list = ['He4rt Team', 'Petlove']
-    sortExperiencesByPeriod(list, periods, '2026-10')
+    const list = [...items]
+    sortByPeriod(list, '2026-10')
 
-    expect(list).toEqual(['He4rt Team', 'Petlove'])
+    expect(list).toEqual(items)
   })
 })

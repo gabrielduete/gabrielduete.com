@@ -98,8 +98,10 @@ body {
   inherits: false;
 }
 
-/* Card focado: arco de borda girando em loop continuo */
-.spotlight-card.is-focused::before {
+/* Card focado (ou com loop no hover): arco de borda girando em loop continuo */
+.spotlight-card.is-focused::before,
+.spotlight-card.spotlight-loop:hover::before,
+.spotlight-card.spotlight-loop:focus-within::before {
   opacity: 1;
   padding: 2px;
   background: conic-gradient(
@@ -145,6 +147,31 @@ body {
 .spotlight-card > * {
   position: relative;
   z-index: 2;
+}
+
+/* Entrada dos cards da carreira ao trocar o filtro */
+@keyframes career-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.career-enter {
+  animation: career-enter 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-enter,
+  .spotlight-card.spotlight-loop:hover::before,
+  .spotlight-card.spotlight-loop:focus-within::before {
+    animation: none;
+  }
 }
 
 /* Theme toggle: circular reveal via the View Transitions API.
@@ -224,6 +251,8 @@ body {
   --color-green-strong: #193038;
   --color-green-weak: #46ce7a40;
   --color-green-neutral: var(--secondary);
+  /* Accent for text on the dark cards, readable in both themes */
+  --color-card-accent: #46ce7a;
 
   /* Backgrounds */
   --color-bg-primary: var(--bg-primary);

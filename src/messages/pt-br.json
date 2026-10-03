@@ -9,91 +9,341 @@
     "viewAllPosts": "Ver todos os posts"
   },
   "CarrerPage": {
-    "Experiences": {
-      "Petlove": {
-        "title": "Petlove",
-        "role": "Desenvolvedor Front-end Pleno",
-        "location": "São Paulo, Brasil · Remoto",
-        "totalContributions": "4",
-        "contributions": {
-          "1": "Identifiquei via heatmaps do Microsoft Clarity um padrão de cliques repetidos em um campo de alto uso: 1.928 cliques em 6 dias, indicando atrito na forma como os usuários extraíam a informação. Implementei uma solução dedicada ao caso, reduzindo para 690 cliques no mesmo período (−64%).",
-          "2": "Conduzi auditoria e correção de acessibilidade no portal de central de saúde, elevando o score médio de acessibilidade no Lighthouse de ~64 para ~97 em mais de 10 páginas, corrigindo associações de labels, estrutura ARIA, landmarks e atributos semânticos em componentes Vue.",
-          "3": "Atuei na triagem e correção de bugs monitorados via Honeybadger, analisando exceções em produção, levantando estimativas de cada bug e alerta com apoio de I.A. (Claude) e organizando a fila de correções por criticidade e esforço.",
-          "4": "Documentei regras de negócio e fluxos de funcionalidades no Confluence, centralizando critérios de comportamento e especificações técnicas como referência para o time."
+    "Highlights": {
+      "title": "Destaques",
+      "description": "Resultados que mais me orgulham, medidos em produção.",
+      "seeExperience": "Ver experiência",
+      "petlove": {
+        "eyebrow": "Petlove · Tempo integral",
+        "ux": {
+          "area": "UX & Analytics",
+          "value": "−91%",
+          "label": "de extração manual em 2,5 meses",
+          "detail": "−64% de cliques logo após a entrega · 93% das interações já no novo fluxo"
         },
-        "link": "https://www.petlove.com.br/"
+        "accessibility": {
+          "area": "Acessibilidade",
+          "value": "97",
+          "label": "no Lighthouse, antes ~64",
+          "detail": "Auditoria e correção em mais de 10 páginas: labels, ARIA, landmarks e semântica"
+        },
+        "devsecops": {
+          "area": "DevSecOps & IA",
+          "value": "Automação",
+          "label": "semanal de segurança de dependências, construída com IA (Cursor)",
+          "detail": "Findings críticos do audit zerados no primeiro ciclo, com PR unificada e alerta no Slack"
+        }
       },
-      "Juntos Somos Mais": {
-        "title": "Juntos Somos Mais",
-        "role": "Desenvolvedor Front-end",
-        "location": "São Paulo, Brasil · Remoto",
-        "totalContributions": "15",
-        "contributions": {
-          "1": "Desenvolvi features críticas para plataforma de e-commerce, aumentando conversão e satisfação do cliente.",
-          "2": "Otimizei o pipeline de CI/CD ao paralelizar a execução de testes e análise de código (Sonar), reduzindo o tempo de build/deploy de ~1h para ~12 minutos (~80% de redução) e eliminando gargalos no processo de entrega.",
-          "3": "Contribuí para o Nuxt.js reportando e documentando uma issue, auxiliando na identificação de um problema no build da versão 3.16.0+ e na discussão da solução (<a>https://github.com/nuxt/nuxt/issues/32494</a>).",
-          "4": "Contribuí para o Unleash (SDK JS) com um Pull Request, melhorando a biblioteca e colaborando com o core do projeto. A alteração foi feita para prover benefícios no nosso uso do Unleash nas nossas aplicações (<a>https://l1nq.com/unleash-pr</a>).",
-          "5": "Resolvi um problema de segurança no redirecionamento da aplicação, evitando que os cookies/cache do usuário sejam invadidos por links externos.",
-          "6": "Resolvi um problema de XSS em um web-component, evitando que seja possível aplicar HTML Injection pelos campos do componente (<a>https://sl1nk.com/atomium</a>).",
-          "7": "Trabalhei no desenvolvimento de componentes no Design System Atomium (open-source), resultando em 40% redução no tempo de desenvolvimento de novas features. Priorizando demandas, desenvolvendo componentes, resolvendo issues e revisando PRs. Contribuições: <a>https://shre.ink/Mliv</a>.",
-          "8": "Reformulei o processo de documentação do time de engenharia de front. Na intenção de criar e centralizar ADR's e documentações diversas.",
-          "9": "Criei e documentei soluções de segurança front-end, reduzindo vulnerabilidades críticas em 100% e estabelecendo padrões de segurança para o time.",
-          "10": "Desenvolvi POCs técnicas para avaliar a viabilidade de novas funcionalidades, incluindo a implementação de animações, orientando decisões arquiteturais.",
-          "11": "Redução de débito técnico por meio de refatorações, otimizações e melhorias de performance.",
-          "12": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas para os objetivos do negócio.",
-          "13": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks.",
-          "14": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
-          "15": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal."
+      "juntosSomosMais": {
+        "eyebrow": "Juntos Somos Mais · Tempo integral",
+        "cicd": {
+          "area": "CI/CD",
+          "value": "−80%",
+          "label": "no tempo de build/deploy",
+          "before": "Antes",
+          "beforeValue": "~1h",
+          "after": "Depois",
+          "afterValue": "~12min"
         },
-        "link": "https://g.co/kgs/eVwdD6s"
+        "security": {
+          "area": "Segurança",
+          "value": "XSS",
+          "label": "e redirecionamento inseguro corrigidos",
+          "detail": "Redução de vulnerabilidades críticas, com padrões de segurança documentados para o time"
+        },
+        "designSystem": {
+          "area": "Design System",
+          "value": "Atomium",
+          "label": "design system open-source",
+          "detail": "Componentes, issues e code review, reduzindo o tempo de desenvolvimento de novas features"
+        }
       },
-      "Nimbus Black": {
-        "title": "Nimbus Black",
-        "role": "Product-minded Frontend Developer",
-        "location": "Massachusetts, Estados Unidos · Remoto",
-        "totalContributions": "6",
-        "contributions": {
-          "1": "Liderei o desenvolvimento frontend de um MVP SaaS de cloud backup voltado para MSPs e empresas de setores regulados.",
-          "2": "Desenhei e implementei a UI/UX, criando layouts, fluxos de usuário e um design system escalável (cores, tipografia, espaçamentos e padrões de componentes) no Figma.",
-          "3": "Defini decisões de arquitetura frontend, documentando escolhas técnicas e estabelecendo padrões.",
-          "4": "Colaborei com stakeholders na definição e refinamento de regras de negócio e fluxos do produto.",
-          "5": "Integrei o frontend com APIs de cloud, incluindo gestão de usuários, fluxos de autenticação e operações CRUD principais.",
-          "6": "Garanti consistência entre requisitos de produto, decisões de UX e implementação técnica."
-        },
-        "link": ""
+      "openSource": {
+        "eyebrow": "Open Source & Comunidade",
+        "title": "Contribuições em projetos usados por muita gente",
+        "nuxt": "Nuxt.js",
+        "nuxtDetail": "Issue #32494",
+        "unleash": "Unleash",
+        "unleashDetail": "PR no SDK JS",
+        "atomium": "Atomium DS",
+        "atomiumDetail": "Design System",
+        "he4rt": "He4rt Developers",
+        "he4rtDetail": "Comunidade"
       },
-      "React4Noobs": {
-        "title": "React4Noobs",
-        "role": "Colaborador",
-        "location": "Remoto",
-        "totalContributions": "3",
-        "contributions": {
-          "1": "Criação de artigos sobre conceitos de Design Patterns em React, como Compound Components, Error Boundaries, etc...",
-          "2": "Melhorias do projeto, como gerenciamento de arquitetura e organização.",
-          "3": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas."
-        },
-        "link": "https://github.com/he4rt/react4noobs"
-      },
-      "He4rt Team": {
-        "title": "He4rt Team",
-        "role": "Desenvolvedor Front-end",
-        "location": "Remoto",
-        "totalContributions": "5",
-        "contributions": {
-          "1": "Contribuição no desenvolvimento front-end para o site que estava em andamento, mas acabou que o projeto teve que ser pausado.",
-          "2": "Participação e contribuição nas melhorias do projeto.",
-          "3": "Participação de reuniões com o objetivo de melhorar a comunicação e poder tomar direção para o desenvolvimento do projeto junto com o time.",
-          "4": "Oportunidade de trabalhar com um time dedicado e acolhedor, onde tive espaço até mesmo para aprender tecnologias do zero.",
-          "5": "Tecnologias mais utilizadas: Javascript ES6+, Next.js, ReactJs, Chakra UI, git e github."
-        },
-        "link": ""
+      "international": {
+        "eyebrow": "Internacional · Freelance",
+        "title": "Product Engineer",
+        "company": "Nimbus Black",
+        "product": "SaaS de Cloud Backup",
+        "location": "Massachusetts, EUA · Remoto"
       }
+    },
+    "Feed": {
+      "title": "Experiências",
+      "filtersLabel": "Filtrar experiências por tipo",
+      "results": "{count, plural, one {# experiência} other {# experiências}}",
+      "metricsLabel": "Resultados",
+      "techsLabel": "Tecnologias",
+      "website": "Site da empresa",
+      "newTab": "(abre em nova aba)",
+      "ongoing": "Atuação contínua",
+      "now": "Hoje"
     },
     "Filters": {
       "all": "Todos",
       "full-time": "Tempo integral",
       "freelance": "Freelance",
       "open-source": "Open Source"
+    },
+    "Types": {
+      "full-time": "Tempo integral",
+      "freelance": "Freelance / Contract",
+      "open-source": "Open Source"
+    },
+    "Links": {
+      "nuxtIssue": "nuxt/nuxt#32494",
+      "unleashPr": "Pull Request no Unleash",
+      "atomiumRepo": "juntossomosmais/atomium",
+      "atomiumContributions": "Minhas contribuições no Atomium",
+      "atomiumXss": "Correção de XSS no Atomium",
+      "he4rt": "He4rt Developers",
+      "petlove": "petlove.com.br",
+      "juntosSomosMais": "Juntos Somos Mais",
+      "react4noobs": "he4rt/react4noobs"
+    },
+    "Experiences": {
+      "petlove": {
+        "company": "Petlove",
+        "role": "Engenheiro de Software Fullstack",
+        "location": "São Paulo, Brasil",
+        "metrics": {
+          "manualExtraction": "−91% extração manual",
+          "lighthouse": "Lighthouse ~64 → ~97",
+          "criticalFindings": "Findings críticos zerados"
+        },
+        "groups": {
+          "ux": {
+            "title": "Otimização de UX & Analytics",
+            "items": {
+              "clarity": "Identifiquei via heatmaps do Microsoft Clarity um padrão de cliques repetidos em um campo de alto uso: 1.928 cliques em 6 dias, indicando atrito na forma como os usuários extraíam a informação. Implementei uma solução dedicada ao caso, com queda imediata de 64% nos cliques. Dois meses e meio depois, o novo caminho responde por 93% das interações e a extração manual caiu 91%."
+            }
+          },
+          "accessibility": {
+            "title": "Acessibilidade Web",
+            "items": {
+              "audit": "Conduzi auditoria e correção de acessibilidade no portal de central de saúde, elevando o score médio de acessibilidade no Lighthouse de ~64 para ~97 em mais de 10 páginas, corrigindo associações de labels, estrutura ARIA, landmarks e atributos semânticos em componentes Vue."
+            }
+          },
+          "devsecops": {
+            "title": "DevSecOps & IA",
+            "items": {
+              "dependencies": "Implantei, com apoio de I.A. (Cursor), uma automação semanal de segurança de dependências (front e back), com PR unificada de patch compatível e alerta no Slack só para crítico ou all-clear, reduzindo o acompanhamento manual de atualizações. No primeiro ciclo, zerou os findings críticos do audit e padronizou o ritual de review do time."
+            }
+          },
+          "observability": {
+            "title": "Observabilidade & IA",
+            "items": {
+              "honeybadger": "Atuei na triagem e correção de bugs monitorados via Honeybadger, analisando exceções em produção, levantando estimativas de cada bug e alerta com apoio de I.A. (Claude) e organizando a fila de correções por criticidade e esforço."
+            }
+          },
+          "documentation": {
+            "title": "Documentação Técnica",
+            "items": {
+              "confluence": "Documentei regras de negócio e fluxos de funcionalidades no Confluence, centralizando critérios de comportamento e especificações técnicas como referência para o time."
+            }
+          }
+        }
+      },
+      "nimbus-black": {
+        "company": "Nimbus Black",
+        "role": "Product Engineer",
+        "location": "Massachusetts, EUA · Remoto",
+        "metrics": {
+          "mvp": "MVP SaaS liderado",
+          "designSystem": "Design system do zero"
+        },
+        "groups": {
+          "leadership": {
+            "title": "Liderança Técnica & Arquitetura",
+            "items": {
+              "mvp": "Liderei o desenvolvimento frontend de um MVP SaaS de cloud backup voltado para MSPs e empresas de setores regulados.",
+              "architecture": "Defini decisões de arquitetura frontend, documentando escolhas técnicas e estabelecendo padrões."
+            }
+          },
+          "design": {
+            "title": "UI/UX & Design System",
+            "items": {
+              "uiux": "Desenhei e implementei a UI/UX, criando layouts, fluxos de usuário e um design system escalável (cores, tipografia, espaçamentos e padrões de componentes) no Figma."
+            }
+          },
+          "product": {
+            "title": "Produto & Negócio",
+            "items": {
+              "stakeholders": "Colaborei com stakeholders na definição e refinamento de regras de negócio e fluxos do produto.",
+              "consistency": "Garanti consistência entre requisitos de produto, decisões de UX e implementação técnica."
+            }
+          },
+          "integrations": {
+            "title": "Integrações",
+            "items": {
+              "cloudApis": "Integrei o frontend com APIs de cloud, incluindo gestão de usuários, fluxos de autenticação e operações CRUD principais."
+            }
+          }
+        }
+      },
+      "juntos-somos-mais": {
+        "company": "Juntos Somos Mais",
+        "role": "Engenheiro de Software Front-end",
+        "location": "São Paulo, Brasil",
+        "metrics": {
+          "buildTime": "−80% build time (1h → 12min)",
+          "vulnerabilities": "Redução de vulnerabilidades críticas"
+        },
+        "groups": {
+          "cicd": {
+            "title": "Performance de CI/CD",
+            "items": {
+              "pipeline": "Otimizei o pipeline de CI/CD ao paralelizar a execução de testes e análise de código (Sonar), reduzindo o tempo de build/deploy de ~1h para ~12 minutos (~80% de redução) e eliminando gargalos no processo de entrega."
+            }
+          },
+          "security": {
+            "title": "Segurança Front-end",
+            "items": {
+              "redirect": "Resolvi um problema de segurança no redirecionamento da aplicação, evitando que os cookies/cache do usuário sejam invadidos por links externos.",
+              "xss": "Resolvi um problema de XSS em um web-component, evitando que seja possível aplicar HTML Injection pelos campos do componente."
+            }
+          },
+          "designSystem": {
+            "title": "Design System",
+            "items": {
+              "atomium": "Trabalhei no desenvolvimento de componentes no Design System Atomium (open-source), resultando na redução no tempo de desenvolvimento de novas features. Priorizando demandas, desenvolvendo componentes, resolvendo issues e revisando PRs."
+            }
+          },
+          "openSource": {
+            "title": "Contribuições Open Source",
+            "items": {
+              "nuxt": "Contribuí para o Nuxt.js reportando e documentando uma issue, auxiliando na identificação de um problema no build da versão 3.16.0+ e na discussão da solução.",
+              "unleash": "Contribuí para o Unleash (SDK JS) com um Pull Request, melhorando a biblioteca e colaborando com o core do projeto. A alteração foi feita para prover benefícios no nosso uso do Unleash nas nossas aplicações."
+            }
+          },
+          "documentation": {
+            "title": "Documentação & Padrões",
+            "items": {
+              "adrs": "Reformulei o processo de documentação do time de engenharia de front, centralizando ADRs e documentações diversas. Criei e documentei soluções de segurança front-end, reduzindo vulnerabilidades críticas em 100% e estabelecendo padrões para o time."
+            }
+          },
+          "features": {
+            "title": "Features & Negócio",
+            "items": {
+              "marketplace": "Desenvolvi features críticas para plataforma de marketplace e site (juntosomosmais.com.br), aumentando conversão e satisfação do cliente."
+            }
+          },
+          "pocs": {
+            "title": "POCs & Inovação",
+            "items": {
+              "feasibility": "Desenvolvi POCs técnicas para avaliar a viabilidade de novas funcionalidades (incluindo animações), orientando decisões arquiteturais e reduzindo débito técnico."
+            }
+          },
+          "quality": {
+            "title": "Qualidade & Débito Técnico",
+            "items": {
+              "refactoring": "Redução de débito técnico por meio de refatorações, otimizações e melhorias de performance.",
+              "chunkErrors": "Atuei na redução de débito técnico por meio de refatorações, otimizações, correções de segurança e melhorias de performance, como tratativa de erros de chunks."
+            }
+          },
+          "collaboration": {
+            "title": "Colaboração & Crescimento",
+            "items": {
+              "alignment": "Colaboração com produto, UI/UX e engenharia para alinhar soluções técnicas para os objetivos do negócio.",
+              "squadFlow": "Contribuí com o time para melhorar o fluxo da squad tanto individualmente quanto em conjunto.",
+              "events": "Participei em reuniões e eventos voltados para front-end e outros temas abrangentes, tendo contato com profissionais que impulsionam meu desenvolvimento técnico e interpessoal."
+            }
+          }
+        }
+      },
+      "react4noobs": {
+        "company": "React4Noobs",
+        "role": "Colaborador",
+        "location": "Remoto",
+        "groups": {
+          "content": {
+            "title": "Conteúdo Técnico",
+            "items": {
+              "articles": "Criação de artigos sobre conceitos de Design Patterns em React, como Compound Components, Error Boundaries, etc..."
+            }
+          },
+          "maintenance": {
+            "title": "Manutenção do Projeto",
+            "items": {
+              "architecture": "Melhorias do projeto, como gerenciamento de arquitetura e organização.",
+              "reviews": "Revisões/Merge de Pull requestes, fazendo sugestões e tirando dúvidas."
+            }
+          }
+        }
+      },
+      "he4rt-team": {
+        "company": "He4rt Team",
+        "role": "Desenvolvedor Front-end",
+        "location": "Remoto",
+        "groups": {
+          "development": {
+            "title": "Desenvolvimento",
+            "items": {
+              "website": "Contribuição no desenvolvimento front-end para o site que estava em andamento, mas acabou que o projeto teve que ser pausado.",
+              "improvements": "Participação e contribuição nas melhorias do projeto."
+            }
+          },
+          "team": {
+            "title": "Time & Colaboração",
+            "items": {
+              "meetings": "Participação de reuniões com o objetivo de melhorar a comunicação e poder tomar direção para o desenvolvimento do projeto junto com o time.",
+              "learning": "Oportunidade de trabalhar com um time dedicado e acolhedor, onde tive espaço até mesmo para aprender tecnologias do zero."
+            }
+          },
+          "stack": {
+            "title": "Stack",
+            "items": {
+              "technologies": "Tecnologias mais utilizadas: Javascript ES6+, Next.js, ReactJs, Chakra UI, git e github."
+            }
+          }
+        }
+      },
+      "open-source": {
+        "company": "Open Source & Comunidade",
+        "role": "Contribuidor Ativo & Core Maintainer",
+        "location": "Remoto",
+        "metrics": {
+          "nuxt": "Nuxt.js core",
+          "unleash": "Unleash SDK",
+          "designSystems": "2 design systems"
+        },
+        "groups": {
+          "nuxt": {
+            "title": "Nuxt.js Core",
+            "items": {
+              "issue": "Contribuí para o Nuxt.js reportando e documentando uma issue, auxiliando na identificação de um problema no build da versão 3.16.0+ e na discussão da solução."
+            }
+          },
+          "unleash": {
+            "title": "Unleash SDK",
+            "items": {
+              "pullRequest": "Contribuí para o Unleash (SDK JS) com um Pull Request, melhorando a biblioteca e colaborando com o core do projeto para beneficiar o uso da aplicação."
+            }
+          },
+          "designSystems": {
+            "title": "Design Systems Open Source",
+            "items": {
+              "contributions": "Contribuições ativas nos Design Systems Atomium e Venice (componentes, documentação e code review)."
+            }
+          },
+          "community": {
+            "title": "Produção de Conteúdo & Comunidade",
+            "items": {
+              "content": "Autor de artigos técnicos (Blog, DEV.TO, TabNews), participante ativo e palestrante/colaborador em projetos da comunidade He4rt Developers, além de resposta a dúvidas técnicas no Stack Overflow (EN e PT-BR)."
+            }
+          }
+        }
+      }
     },
     "Period": {
       "months": {
@@ -115,16 +365,6 @@
       "yearsCount": "{count, plural, one {# ano} other {# anos}}",
       "monthsCount": "{count, plural, one {# mês} other {# meses}}",
       "durationJoin": "{years} e {months}"
-    },
-    "Overview": {
-      "title": "Linha do tempo",
-      "description": "Períodos de cada experiência. Clique em uma barra para abrir os detalhes.",
-      "selectExperience": "{experience}, {period}"
-    },
-    "Contributions": {
-      "showMore": "Ver mais (+{count})",
-      "showLess": "Ver menos",
-      "learnMore": "Saiba Mais"
     }
   },
   "ChatBot": {
