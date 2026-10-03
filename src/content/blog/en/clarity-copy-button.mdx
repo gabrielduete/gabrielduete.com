@@ -1,5 +1,5 @@
 ---
-title: 'How a Heatmap Showed Me a Pain Point Nobody Had Reported'
+title: 'From a Clarity Heatmap to a Copy Button'
 description:
   'A rage click pattern on a Clarity heatmap turned into a copy button. Two and
   a half months later, manual selection has all but disappeared: 93% of copies
@@ -12,8 +12,8 @@ tags: ['product', 'analytics', 'ux', 'data']
 Hey folks, how's it going?
 
 Lately I've been pushing my work toward the _product engineer_ side. In practice
-that has meant looking at user behavior data to find pain nobody ever filed a
-ticket about.
+that has meant looking at user behavior data to find possible pain points and
+improvements.
 
 This post is about a recent case of mine that worked out really well! From
 reading the heatmap to the measurement two and a half months after the deploy.
@@ -37,8 +37,8 @@ is a very loud signal. Clarity classifies part of it as a
 [_rage click_](https://clarity.microsoft.com/blog/rage-clicks-user-behavior/),
 several clicks in a row on the same spot, which usually means frustration.
 
-Worth noting this didn't come from a ticket, a meeting or a user request. It
-came from watching user behavior data.
+Worth pointing out this didn't come from a ticket, a meeting or a user request.
+It came from watching user behavior data.
 
 # Reading the data
 
@@ -59,8 +59,8 @@ What made me confident in that reading:
 - There was no other possible action on that element. A click there can only be
   selection.
 
-Closing the hypothesis: there's no copy action, so the user copies by hand. And
-copying by hand is expensive.
+The hypothesis I landed on: there's no copy action, so the user copies by hand.
+That may well point to frustration.
 
 # The proposal
 
@@ -131,9 +131,7 @@ residue! \o/
 rising.
 
 **Usage grew in absolute volume.** 855 clicks in the last 30 days against 762 in
-the first month, with slightly less traffic. Part of that is the button now
-exists on two screens of the product, and in the first month it existed on only
-one.
+the first month, with slightly less traffic.
 
 That's exactly the hypothesis I had raised at the first measurement: manual
 copying would stay high for a while and fall as people got used to the button.
@@ -146,13 +144,6 @@ later.
 counting clicks per element: the button icon's class on one side, the text field
 row on the other. When the same element appears on more than one screen, the
 occurrences were summed.
-
-**Clarity caps each heatmap query at 30 days.** That's why I compared 30-day
-windows instead of one single range since launch.
-
-**Two of the windows overlap by 12 days.** The 2nd month and the last-30-days
-window share that stretch. The trend doesn't hinge on it, but it's fair to
-record.
 
 **The 1,928 clicks from the first measurement aren't reproducible today.** The
 heatmap sample and the element's identity have both changed since July. So the
@@ -187,22 +178,19 @@ the metrics of what already shipped, the impact, etc... If I had stopped on July
 guessing. The two-and-a-half-month measurement is what showed the behavior
 actually changed, and not just on the first novelty impulse.
 
-And one technical detail that gave me a scare: the button's icon comes from Font
-Awesome and it **doesn't render in Clarity's session recordings**, the area
-looks visually empty in the replay. Clarity detects the element and counts
-clicks normally, but if you go validate by watching recordings alone, you'll
-think people are clicking on nothing.
+And a technical detail: the button's icon comes from Font Awesome and it
+**doesn't render in Clarity's session recordings**, the area looks visually
+empty in the replay. Clarity detects the element and counts clicks normally, but
+if you go validate by watching recordings alone, you'll think people are
+clicking on nothing.
 
 # Conclusion
 
 The deliverable itself is a copy button. A few lines of code. The UX gain is
 small and localized.
 
-What changed for me wasn't the size of the delivery, it was where it came from:
-it didn't arrive ready-made in a ticket, it came from looking at data that was
-already sitting there. Finding the problem was the work, solving it was much
-easier. And going back to check two months later is what turned it from a hunch
-into a result.
+Finding the problem was the work, solving it was much easier. And going back to
+check two months later is what really let me put numbers on the delivery.
 
 If you have Clarity, Hotjar or anything similar running on your application,
 it's worth opening the heatmap when you have some time, without looking for
