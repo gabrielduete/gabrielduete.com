@@ -8,3 +8,8 @@ export type IExperiences =
 export type ExperienceType = 'full-time' | 'freelance' | 'open-source'
 
 export type ExperienceFilter = 'all' | ExperienceType
+
+export type IPeriod = {
+  start: string
+  end: string | null
+}

@@ -13,7 +13,6 @@
       "Petlove": {
         "title": "Petlove",
         "role": "Mid-level Front-end Developer",
-        "time": "Mar 2026 - Present",
         "location": "São Paulo, Brazil · Remote",
         "totalContributions": "4",
         "contributions": {
@@ -27,7 +26,6 @@
       "Juntos Somos Mais": {
         "title": "Juntos Somos Mais",
         "role": "Front-end Developer",
-        "time": "Dec 2021 - Mar 2026 · 4 years and 4 months",
         "location": "São Paulo, Brazil · Remote",
         "totalContributions": "15",
         "contributions": {
@@ -52,7 +50,6 @@
       "Nimbus Black": {
         "title": "Nimbus Black",
         "role": "Product-minded Frontend Developer",
-        "time": "Aug 2024 - Mar 2025 · 8 months",
         "location": "Massachusetts, United States · Remote",
         "totalContributions": "5",
         "contributions": {
@@ -68,7 +65,6 @@
       "React4Noobs": {
         "title": "React4Noobs",
         "role": "Contributor",
-        "time": "Sep 2023 - Present",
         "location": "Remote",
         "totalContributions": "3",
         "contributions": {
@@ -81,7 +77,6 @@
       "He4rt Team": {
         "title": "He4rt Team",
         "role": "Front-end Developer",
-        "time": "Jun 2022 - Jan 2023 · 8 months",
         "location": "Remote",
         "totalContributions": "5",
         "contributions": {
@@ -99,6 +94,37 @@
       "full-time": "Full-time",
       "freelance": "Freelance",
       "open-source": "Open Source"
+    },
+    "Period": {
+      "months": {
+        "1": "Jan",
+        "2": "Feb",
+        "3": "Mar",
+        "4": "Apr",
+        "5": "May",
+        "6": "Jun",
+        "7": "Jul",
+        "8": "Aug",
+        "9": "Sep",
+        "10": "Oct",
+        "11": "Nov",
+        "12": "Dec"
+      },
+      "monthYear": "{month} {year}",
+      "present": "Present",
+      "yearsCount": "{count, plural, one {# year} other {# years}}",
+      "monthsCount": "{count, plural, one {# month} other {# months}}",
+      "durationJoin": "{years} and {months}"
+    },
+    "Overview": {
+      "title": "Timeline",
+      "description": "When each experience ran. Click a bar to open its details.",
+      "selectExperience": "{experience}, {period}"
+    },
+    "Contributions": {
+      "showMore": "Show more (+{count})",
+      "showLess": "Show less",
+      "learnMore": "Learn more"
     }
   },
   "ChatBot": {

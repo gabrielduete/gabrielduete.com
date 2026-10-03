@@ -17,7 +17,7 @@ jest.mock('next/navigation', () => ({
 
 const contributionsByExperience: Record<string, number> = {
   Petlove: 1,
-  'Juntos Somos Mais': 7,
+  'Juntos Somos Mais': 8,
   'Nimbus Black': 1,
   React4Noobs: 2,
   'He4rt Team': 1,
@@ -33,19 +33,97 @@ const richNodes: Record<string, ReactNode> = {
   '2': ['https://', 'two.com'] as unknown as ReactNode,
   '3': createElement('span', null, 'https://three.com'),
   '4': 42 as unknown as ReactNode,
+  '6': createElement('span'),
 }
+
+const MONTHS: Record<string, Record<string, string>> = {
+  en: {
+    '1': 'Jan',
+    '3': 'Mar',
+    '6': 'Jun',
+    '8': 'Aug',
+    '9': 'Sep',
+    '12': 'Dec',
+  },
+  'pt-br': {
+    '1': 'Jan',
+    '3': 'Mar',
+    '6': 'Jun',
+    '8': 'Ago',
+    '9': 'Set',
+    '12': 'Dez',
+  },
+}
+
+const LABELS: Record<string, Record<string, string>> = {
+  en: {
+    'Contributions.showMore': 'Show more (+{count})',
+    'Contributions.showLess': 'Show less',
+    'Contributions.learnMore': 'Learn more',
+    'Overview.title': 'Timeline',
+    'Overview.description': 'When each experience ran.',
+    'Overview.selectExperience': '{experience}, {period}',
+    monthYear: '{month} {year}',
+    present: 'Present',
+    durationJoin: '{years} and {months}',
+  },
+  'pt-br': {
+    'Contributions.showMore': 'Ver mais (+{count})',
+    'Contributions.showLess': 'Ver menos',
+    'Contributions.learnMore': 'Saiba Mais',
+    'Overview.title': 'Linha do tempo',
+    'Overview.description': 'Periodos de cada experiencia.',
+    'Overview.selectExperience': '{experience}, {period}',
+    monthYear: '{month} de {year}',
+    present: 'o momento',
+    durationJoin: '{years} e {months}',
+  },
+}
+
+const pluralize = (count: number, one: string, other: string) =>
+  `${count} ${count === 1 ? one : other}`
 
 jest.mock('next-intl', () => ({
   useLocale: () => currentLocale,
   useTranslations: () => {
-    const t = (key: string) => {
+    const t = (key: string, values?: Record<string, unknown>) => {
       const totalMatch = key.match(/^Experiences\.(.+)\.totalContributions$/)
-      if (totalMatch) return String(contributionsByExperience[totalMatch[1]] ?? 1)
+      if (totalMatch)
+        return String(contributionsByExperience[totalMatch[1]] ?? 1)
 
-      if (key === 'Experiences.Petlove.link') return 'https://www.petlove.com.br/'
+      if (key === 'Experiences.Petlove.link')
+        return 'https://www.petlove.com.br/'
       if (key.endsWith('.link')) return ''
 
-      return key
+      const isEn = currentLocale === 'en'
+
+      if (key === 'yearsCount') {
+        return pluralize(
+          Number(values?.count),
+          isEn ? 'year' : 'ano',
+          isEn ? 'years' : 'anos',
+        )
+      }
+
+      if (key === 'monthsCount') {
+        return pluralize(
+          Number(values?.count),
+          isEn ? 'month' : 'mês',
+          isEn ? 'months' : 'meses',
+        )
+      }
+
+      const monthMatch = key.match(/^months\.(\d+)$/)
+      if (monthMatch)
+        return MONTHS[currentLocale][monthMatch[1]] ?? monthMatch[1]
+
+      const template = LABELS[currentLocale][key]
+      if (!template) return key
+
+      return Object.entries(values ?? {}).reduce(
+        (text, [token, value]) => text.replace(`{${token}}`, String(value)),
+        template,
+      )
     }
 
     t.rich = (key: string, handlers: RichHandlers) => {
@@ -63,9 +141,6 @@ jest.mock('next-intl', () => ({
 const setParams = (search: string) => {
   currentParams = new URLSearchParams(search)
 }
-
-const findDots = (container: HTMLElement) =>
-  Array.from(container.querySelectorAll('[data-timeline-dot]'))
 
 describe('<CarrerView />', () => {
   beforeEach(() => {
@@ -88,9 +163,10 @@ describe('<CarrerView />', () => {
   it('renders every experience collapsed when there is no filter in the url', () => {
     render(<ClientView />)
 
-    expect(
-      screen.getByRole('button', { name: 'Petlove' }),
-    ).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
   })
 
   it('pre-selects the experience coming from the url filter param', () => {
@@ -118,9 +194,10 @@ describe('<CarrerView />', () => {
 
     render(<ClientView />)
 
-    expect(
-      screen.getByRole('button', { name: 'Petlove' }),
-    ).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
   })
 
   it('pre-selects the type filter coming from the url', () => {
@@ -128,8 +205,12 @@ describe('<CarrerView />', () => {
 
     render(<ClientView />)
 
-    expect(screen.getByRole('button', { name: 'Nimbus Black' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Petlove' })).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Nimbus Black' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Petlove' }),
+    ).not.toBeInTheDocument()
   })
 
   it('falls back to the "all" type filter when the url value is unknown', () => {
@@ -138,7 +219,9 @@ describe('<CarrerView />', () => {
     render(<ClientView />)
 
     expect(screen.getByRole('button', { name: 'Petlove' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Nimbus Black' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Nimbus Black' }),
+    ).toBeInTheDocument()
   })
 
   it('pushes the selected experience to the url when expanding', () => {
@@ -161,14 +244,50 @@ describe('<CarrerView />', () => {
     expect(pushMock).toHaveBeenLastCalledWith('?')
   })
 
-  it('expands the experience when its timeline dot is clicked', () => {
-    const { container } = render(<ClientView />)
+  it('expands the experience when its overview bar is clicked', () => {
+    render(<ClientView />)
 
-    fireEvent.click(findDots(container)[0])
+    fireEvent.click(screen.getByRole('button', { name: /^Petlove, / }))
+
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
+  })
+
+  it('orders the experiences by the ongoing ones and then by end date', () => {
+    render(<ClientView />)
+
+    const titles = screen
+      .getAllByRole('heading', { level: 2 })
+      .map(heading => heading.textContent)
+
+    expect(titles).toEqual([
+      'Petlove',
+      'React4Noobs',
+      'Juntos Somos Mais',
+      'Nimbus Black',
+      'He4rt Team',
+    ])
+  })
+
+  it('derives the period of each experience from its dates', () => {
+    render(<ClientView />)
 
     expect(
-      screen.getByRole('button', { name: 'Petlove' }),
-    ).toHaveAttribute('aria-expanded', 'true')
+      screen.getByText('Dec 2021 - Mar 2026 · 4 years and 4 months'),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Sep 2023 - Present')).toBeInTheDocument()
+  })
+
+  it('derives the period in portuguese', () => {
+    currentLocale = 'pt-br'
+
+    render(<ClientView />)
+
+    expect(
+      screen.getByText('Dez de 2021 - Mar de 2026 · 4 anos e 4 meses'),
+    ).toBeInTheDocument()
   })
 
   it('animates the scroll to the focused card until the duration elapses', () => {
@@ -207,9 +326,10 @@ describe('<CarrerView />', () => {
     setParams('filter=React4Noobs')
     rerender(<ClientView />)
 
-    expect(
-      screen.getByRole('button', { name: 'React4Noobs' }),
-    ).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'React4Noobs' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
   })
 
   it('filters the experiences by type and pushes the type to the url', () => {
@@ -218,8 +338,12 @@ describe('<CarrerView />', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Filters.open-source' }))
 
     expect(pushMock).toHaveBeenCalledWith('?type=open-source')
-    expect(screen.getByRole('button', { name: 'React4Noobs' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Petlove' })).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'React4Noobs' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Petlove' }),
+    ).not.toBeInTheDocument()
   })
 
   it('removes the type from the url when going back to "all"', () => {
@@ -252,9 +376,10 @@ describe('<CarrerView />', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
     fireEvent.click(screen.getByRole('button', { name: 'Filters.full-time' }))
 
-    expect(
-      screen.getByRole('button', { name: 'Petlove' }),
-    ).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Petlove' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
   })
 
   it('tracks the pointer position on the card for the spotlight effect', () => {
@@ -272,14 +397,18 @@ describe('<CarrerView />', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
 
-    const showMore = screen.getByRole('button', { name: 'Show more (+2)' })
+    const showMore = screen.getByRole('button', { name: 'Show more (+3)' })
     fireEvent.click(showMore)
 
-    expect(screen.getByRole('button', { name: 'Show less' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Show less' }),
+    ).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Show less' }))
 
-    expect(screen.getByRole('button', { name: 'Show more (+2)' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Show more (+3)' }),
+    ).toBeInTheDocument()
   })
 
   it('resets the expanded contributions when the experience is collapsed', () => {
@@ -287,11 +416,13 @@ describe('<CarrerView />', () => {
 
     const experience = screen.getByRole('button', { name: 'Juntos Somos Mais' })
     fireEvent.click(experience)
-    fireEvent.click(screen.getByRole('button', { name: 'Show more (+2)' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' }))
     fireEvent.click(experience)
     fireEvent.click(experience)
 
-    expect(screen.getByRole('button', { name: 'Show more (+2)' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Show more (+3)' }),
+    ).toBeInTheDocument()
   })
 
   it('renders the show more label in portuguese', () => {
@@ -300,11 +431,15 @@ describe('<CarrerView />', () => {
     render(<ClientView />)
     fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
 
-    expect(screen.getByRole('button', { name: 'Ver mais (+2)' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Ver mais (+3)' }),
+    ).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Ver mais (+2)' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Ver mais (+3)' }))
 
-    expect(screen.getByRole('button', { name: 'Ver menos' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Ver menos' }),
+    ).toBeInTheDocument()
   })
 
   it('renders the learn more link only for experiences that have one', () => {
@@ -312,9 +447,10 @@ describe('<CarrerView />', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
 
-    expect(
-      screen.getByRole('link', { name: '👉 Learn more' }),
-    ).toHaveAttribute('href', 'https://www.petlove.com.br/')
+    expect(screen.getByRole('link', { name: '👉 Learn more' })).toHaveAttribute(
+      'href',
+      'https://www.petlove.com.br/',
+    )
   })
 
   it('renders the learn more link in portuguese', () => {
@@ -323,14 +459,16 @@ describe('<CarrerView />', () => {
     render(<ClientView />)
     fireEvent.click(screen.getByRole('button', { name: 'Petlove' }))
 
-    expect(screen.getByRole('link', { name: '👉 Saiba Mais' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: '👉 Saiba Mais' }),
+    ).toBeInTheDocument()
   })
 
   it('turns every contribution chunk shape into an external link', () => {
     render(<ClientView />)
 
     fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Show more (+2)' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' }))
 
     const hrefs = screen
       .getAllByRole('link')
@@ -345,6 +483,16 @@ describe('<CarrerView />', () => {
         'https://github.com/juntossomosmais/atomium',
       ]),
     )
+  })
+
+  it('does not recurse forever on a chunk element without children', () => {
+    render(<ClientView />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Juntos Somos Mais' }))
+
+    expect(() =>
+      fireEvent.click(screen.getByRole('button', { name: 'Show more (+3)' })),
+    ).not.toThrow()
   })
 
   it('works when ResizeObserver is not available', () => {

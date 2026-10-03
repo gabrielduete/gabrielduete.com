@@ -1,4 +1,9 @@
-import { ExperienceFilter, ExperienceType, IExperiences } from './types'
+import {
+  ExperienceFilter,
+  ExperienceType,
+  IExperiences,
+  IPeriod,
+} from './types'
 
 export const experiences = [
   'Petlove',
@@ -22,3 +27,11 @@ export const experienceFilters: ExperienceFilter[] = [
   'freelance',
   'open-source',
 ]
+
+export const experiencePeriods: Record<IExperiences, IPeriod> = {
+  Petlove: { start: '2026-03', end: null },
+  'Juntos Somos Mais': { start: '2021-12', end: '2026-03' },
+  'Nimbus Black': { start: '2024-08', end: '2025-03' },
+  React4Noobs: { start: '2023-09', end: null },
+  'He4rt Team': { start: '2022-06', end: '2023-01' },
+}
