@@ -134,6 +134,15 @@
     "noResults": "No results found.",
     "goToPage": "Go to page {page}",
     "previousPage": "Previous page",
-    "nextPage": "Next page"
+    "nextPage": "Next page",
+    "searchLabel": "Search posts",
+    "searchPlaceholder": "Search by title, description or tag…",
+    "clearSearch": "Clear search",
+    "tagsLabel": "Filter by tags",
+    "clearTags": "Clear tags",
+    "readingTime": "{minutes} min read",
+    "pinned": "Pinned",
+    "showMoreTags": "+{count} tags",
+    "showLessTags": "Show less tags"
   }
 }

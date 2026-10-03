@@ -14,6 +14,7 @@ declare global {
     slug: string
     locale: Langs
     pinned?: boolean
+    readingTime: number
   }
 
   type LocaleFilters = Array<{

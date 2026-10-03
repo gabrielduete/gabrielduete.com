@@ -6,6 +6,9 @@ import Cards from '.'
 const pushMock = jest.fn()
 let currentParams = new URLSearchParams()
 let currentFilter = 'All'
+let currentQuery = ''
+let currentTags: string[] = []
+const toggleTagMock = jest.fn()
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
@@ -19,7 +22,12 @@ jest.mock('next-intl', () => ({
 }))
 
 jest.mock('@/contexts/FilterContext', () => ({
-  useFilter: () => ({ selectedFilter: currentFilter }),
+  useFilter: () => ({
+    selectedFilter: currentFilter,
+    query: currentQuery,
+    selectedTags: currentTags,
+    toggleTag: toggleTagMock,
+  }),
 }))
 
 const makeArticle = (overrides: Partial<IArticle>): IArticle => ({
@@ -31,6 +39,7 @@ const makeArticle = (overrides: Partial<IArticle>): IArticle => ({
   slug: 'slug',
   locale: 'en',
   pinned: false,
+  readingTime: 3,
   ...overrides,
 })
 
@@ -47,6 +56,9 @@ describe('<Cards />', () => {
     pushMock.mockClear()
     currentParams = new URLSearchParams()
     currentFilter = 'All'
+    currentQuery = ''
+    currentTags = []
+    toggleTagMock.mockClear()
   })
 
   it('renders the empty state when nothing matches the filter', () => {
@@ -125,6 +137,74 @@ describe('<Cards />', () => {
     render(<Cards articles={articles} />)
 
     expect(screen.getByText('Article 9')).toBeInTheDocument()
+  })
+
+  it('filters the articles by the search query', () => {
+    currentQuery = 'article 3'
+
+    render(<Cards articles={articles} />)
+
+    expect(screen.getByText('Article 3')).toBeInTheDocument()
+    expect(screen.queryByText('Article 9')).not.toBeInTheDocument()
+  })
+
+  it('filters the articles by the selected tags with an OR semantic', () => {
+    currentTags = ['react', 'css']
+
+    render(
+      <Cards
+        articles={[
+          makeArticle({ title: 'React', slug: 'react', tags: ['react'] }),
+          makeArticle({ title: 'Css', slug: 'css', tags: ['css'] }),
+          makeArticle({ title: 'Git', slug: 'git', tags: ['git'] }),
+        ]}
+      />,
+    )
+
+    expect(screen.getByText('React')).toBeInTheDocument()
+    expect(screen.getByText('Css')).toBeInTheDocument()
+    expect(screen.queryByText('Git')).not.toBeInTheDocument()
+  })
+
+  it('combines the category, tag and query filters', () => {
+    currentFilter = 'Engineering'
+    currentTags = ['react']
+    currentQuery = 'hooks'
+
+    render(
+      <Cards
+        articles={[
+          makeArticle({
+            title: 'React hooks',
+            slug: 'react-hooks',
+            tags: ['react'],
+          }),
+          makeArticle({
+            title: 'React router',
+            slug: 'react-router',
+            tags: ['react'],
+          }),
+          makeArticle({
+            title: 'Css hooks',
+            slug: 'css-hooks',
+            category: 'Front-end',
+            tags: ['react'],
+          }),
+        ]}
+      />,
+    )
+
+    expect(screen.getByText('React hooks')).toBeInTheDocument()
+    expect(screen.queryByText('React router')).not.toBeInTheDocument()
+    expect(screen.queryByText('Css hooks')).not.toBeInTheDocument()
+  })
+
+  it('renders the empty state when the query matches nothing', () => {
+    currentQuery = 'kubernetes'
+
+    render(<Cards articles={articles} />)
+
+    expect(screen.getByTestId('cards__empty')).toBeInTheDocument()
   })
 
   it('hides the pagination when a single page holds every article', () => {

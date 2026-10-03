@@ -1,11 +1,11 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-
 import Pagination from '@/components/Pagination'
 import { useFilter } from '@/contexts/FilterContext'
+import { matchesQuery, matchesTags } from '@/utils/filterArticles'
 import { parseArticleDate } from '@/utils/formatterDate'
 import { useLocale, useTranslations } from 'next-intl'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import Card from './components/Card'
 
@@ -32,19 +32,24 @@ const Cards = ({ articles }: CardsProps) => {
       params.set('page', String(page))
     }
 
-    const query = params.toString()
+    const search = params.toString()
 
-    router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+    router.push(search ? `${pathname}?${search}` : pathname, { scroll: false })
   }
 
-  const { selectedFilter } = useFilter()
+  const { selectedFilter, query, selectedTags } = useFilter()
 
   const articlesPerPage = 4
 
   const filteredArticles = articles.filter(article => {
     const isAll = selectedFilter === 'Todos' || selectedFilter === 'All'
+    const matchesCategory = isAll || article.category === selectedFilter
 
-    return isAll || article.category === selectedFilter
+    return (
+      matchesCategory &&
+      matchesTags(article, selectedTags) &&
+      matchesQuery(article, query)
+    )
   })
 
   const orderArticles = [...filteredArticles].sort((a, b) => {
@@ -81,7 +86,7 @@ const Cards = ({ articles }: CardsProps) => {
 
   return (
     <>
-      <div className='flex gap-xxlarge flex-wrap justify-center lg:justify-start'>
+      <div className='grid grid-cols-1 gap-xxlarge justify-items-center lg:grid-cols-2'>
         {currentArticles.map(article => (
           <Card key={article.title} {...article} />
         ))}
